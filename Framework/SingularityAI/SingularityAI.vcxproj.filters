@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{1735dbcf-08f1-4dac-87e5-1ea7b441998a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{6dd2dd45-1985-4b40-8e5a-56510a762f9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Navigation">
+      <UniqueIdentifier>{2ec109e3-09c4-44f8-b676-b6586a6a6da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Navigation">
+      <UniqueIdentifier>{fedd8318-6c21-44f1-9bec-ad39885cc249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\BehaviorTree">
+      <UniqueIdentifier>{d5d1e84e-eb20-48d5-9899-2db294d3a0ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\BehaviorTree">
+      <UniqueIdentifier>{436c547a-d921-4f15-b60d-e5e73ae8563f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\FiniteStateMachine">
+      <UniqueIdentifier>{2171799b-aafd-44dd-bdd3-ab6f243957f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\FiniteStateMachine">
+      <UniqueIdentifier>{5689c7bb-47c0-44a2-a32f-f1bfb3e64262}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Precompiled.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\SingularityAI.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Common.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Navigation.h">
+      <Filter>Inc\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\NavigationContext.h">
+      <Filter>Inc\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\NavigationGraph.h">
+      <Filter>Inc\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\NavigationNode.h">
+      <Filter>Inc\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\NavigationTypes.h">
+      <Filter>Inc\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\NavigationVolume.h">
+      <Filter>Inc\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\NavigationGrid.h">
+      <Filter>Inc\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\BehaviorNode.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\BehaviorTree.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\BehaviorTypes.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Decorator.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ActionNode.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Composite.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Selector.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Sequence.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\SimpleParralel.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\BlackBoard.h">
+      <Filter>Inc\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\FiniteStateMachine.h">
+      <Filter>Inc\FiniteStateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\AIEntity.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\AITelegram.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\EntityManager.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\EntityMessageDispatcher.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\NavAgent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\Precompiled.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Navigation.cpp">
+      <Filter>Src\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NavigationContext.cpp">
+      <Filter>Src\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NavigationGraph.cpp">
+      <Filter>Src\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NavigationNode.cpp">
+      <Filter>Src\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NavigationVolume.cpp">
+      <Filter>Src\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NavigationGrid.cpp">
+      <Filter>Src\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\BehaviorNode.cpp">
+      <Filter>Src\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Decorator.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AIEntity.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AITelegram.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EntityManager.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EntityMessageDispatcher.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FiniteStateMachine.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Composite.cpp" />
+  </ItemGroup>
+</Project>

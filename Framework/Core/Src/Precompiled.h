@@ -1,0 +1,8 @@
+#ifndef INCLUDED_CORE_PRECOMPILED_H
+#define INCLUDED_CORE_PRECOMPILED_H
+
+#include "Common.h"
+
+
+#endif // #INCLUDED_CORE_PRECOMPILED_H
+
