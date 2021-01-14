@@ -60,7 +60,7 @@ namespace SingularityEngine::Math
 				Vector3 b;
 				Vector3 c;
 			};
-			Vector3 points[3];
+			Vector3 points[3] = { {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f} };
 		};
 		inline Triangle() {}
 
@@ -72,7 +72,7 @@ namespace SingularityEngine::Math
 			normal.Normalize();
 			return normal;
 		}
-		inline Triangle(const Vector3& p1, const Vector3& p2, const Vector3& p3) : a(p1), b(p2), c(p3) {}
+		inline Triangle(const Vector3& p1, const Vector3& p2, const Vector3& p3) : a(p1), b(p2), c(p3) { points[0] = a; points[1] = b; points[2] = c; }
 	};
 
 	struct Plane

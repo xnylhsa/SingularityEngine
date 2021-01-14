@@ -44,6 +44,8 @@
     <ClInclude Include="Inc\MetaRegistry.h" />
     <ClInclude Include="Inc\MetaType.h" />
     <ClInclude Include="Inc\MetaUtil.h" />
+    <ClInclude Include="Inc\OperatingSystemAgnostic.h" />
+    <ClInclude Include="Inc\PageAllocator.h" />
     <ClInclude Include="Inc\SerializationUtil.h" />
     <ClInclude Include="Inc\ECSSystem.h" />
     <ClInclude Include="Inc\Timer.h" />

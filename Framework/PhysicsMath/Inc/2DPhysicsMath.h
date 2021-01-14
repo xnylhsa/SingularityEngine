@@ -263,7 +263,8 @@ namespace SingularityEngine::Math
 
 	inline Circle ContainingCircle(const Vector2* positions, size_t numPositions)
 	{
-		ASSERT(sizeof(positions) / sizeof(Vector2) == numPositions, "[Math::Physics] Passed in incorrect size of position array!");
+		size_t sizeOf = sizeof(positions);
+		ASSERT(sizeOf / sizeof(Vector2) == numPositions, "[Math::Physics] Passed in incorrect size of position array!");
 
 		Vector2 center(0.0f,0.0f);
 		for (size_t i = 0; i < numPositions; i++)
@@ -284,9 +285,10 @@ namespace SingularityEngine::Math
 		return result;
 	}
 
-	inline Rectangle ContaintingRectangle(const Vector2* positions, size_t numPositions)
+	inline Rectangle ContainingRectangle(const Vector2* positions, size_t numPositions)
 	{
-		ASSERT(sizeof(positions) / sizeof(Vector2) == numPositions, "[Math::Physics] Passed in incorrect size of position array!");
+		size_t sizeOf = sizeof(positions);
+		ASSERT(sizeOf /sizeof(Vector2) == numPositions, "[Math::Physics] Passed in incorrect size of position array!");
 
 		Vector2 min = positions[0];
 		Vector2 max = positions[0];

@@ -89,6 +89,8 @@
     <ClInclude Include="Src\ECSEntityManager.cpp" />
     <ClInclude Include="Inc\ECSComponentManager.h" />
     <ClInclude Include="Inc\ECSComponentArray.h" />
+    <ClInclude Include="Inc\PageAllocator.h" />
+    <ClInclude Include="Inc\OperatingSystemAgnostic.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Inc">

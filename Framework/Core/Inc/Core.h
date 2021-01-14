@@ -16,6 +16,7 @@
 #include "ECSEntityManager.h"
 #include "ECSSystem.h"
 #include "MemoryUtil.h"
+#include "OperatingSystemAgnostic.h"
 #include "Window.h"
 #include "Timer.h"
 #include "Random.h"

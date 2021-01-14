@@ -8,7 +8,7 @@ namespace SingularityEngine::Math
 	struct Vector3
 	{
 		float x, y, z;
-		inline Vector3() {}
+		inline Vector3(): x(0.0f), y(0.0f), z(0.0f) {}
 		inline Vector3(float val) : x(val), y(val), z(val) {}
 
 		inline Vector3(float X, float Y, float Z) : x(X), y(Y), z(Z) {}

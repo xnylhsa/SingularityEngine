@@ -10,7 +10,7 @@ namespace SingularityEngine::Math
 	struct Color
 	{
 		float r, g, b, a;
-		Color() {}
+		Color() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) { }
 		Color(float R, float G, float B, float A) : r(R), g(G), b(B), a(A) {}
 		Color(const Vector3& v3D, float A);
 

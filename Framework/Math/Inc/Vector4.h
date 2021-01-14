@@ -10,7 +10,7 @@ namespace SingularityEngine::Math
 	struct Vector4
 	{
 		float x, y, z, w;
-		inline Vector4() {}
+		inline Vector4() : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {}
 		inline Vector4(float X, float Y, float Z, float W) : x(X), y(Y), z(Z), w(W) {}
 		inline Vector4(const Vector3& v3D, float W);
 
