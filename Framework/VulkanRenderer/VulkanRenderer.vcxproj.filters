@@ -1,31 +1,181 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Inc\VulkanRenderer.h" />
-    <ClInclude Include="Src\Precompiled.h" />
-    <ClInclude Include="Inc\Common.h" />
-    <ClInclude Include="Inc\VulkanFunctions.h" />
-    <ClInclude Include="Inc\GraphicsSystem.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Inc\LibraryLoader.h" />
-    <ClInclude Include="Inc\Instance.h" />
-    <ClInclude Include="Inc\VulkanParameters.h" />
-    <ClInclude Include="Inc\Device.h" />
-    <ClInclude Include="Inc\GraphicsQueue.h" />
+    <ClInclude Include="Inc\BufferView.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\CommandBuffers.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\CommandPool.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Common.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Device.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Fence.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GraphicsQueue.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GraphicsSystem.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Instance.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\LibraryLoader.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\MemBuffer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\MemoryObject.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\PresentationSurface.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Sampler.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Semaphore.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\SwapChain.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanFunctions.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanParameters.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanRenderer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Image2D.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ImageCubeMap.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ImageView.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Image.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\SampledImage.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\CombinedImageSampler.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Precompiled.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\StorageImage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\precompiled.cpp" />
-    <ClCompile Include="Src\VulkanFunctions.cpp" />
-    <ClCompile Include="Src\GraphicsSystem.cpp" />
-    <ClCompile Include="Src\LibraryLoader.cpp" />
-    <ClCompile Include="Src\Instance.cpp" />
-    <ClCompile Include="Src\Device.cpp" />
-    <ClCompile Include="Src\GraphicsQueue.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Inc\ListOfVulkanFunctions.inl" />
+    <ClCompile Include="Src\BufferView.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CommandBuffers.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CommandPool.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Device.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Fence.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GraphicsQueue.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GraphicsSystem.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Instance.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\LibraryLoader.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MemBuffer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MemoryObject.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\precompiled.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PresentationSurface.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Sampler.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Semaphore.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SwapChain.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanFunctions.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CombinedImageSampler.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Image.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Image2D.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ImageCubeMap.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ImageView.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SampledImage.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StorageImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VulkanRenderer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{63722d09-f587-4e84-9975-b291f333caca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{c67db9a2-fbbf-4498-a75d-dd8f2f3e0027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\ImageClasses">
+      <UniqueIdentifier>{adcf78fe-5d55-44b6-b258-8bd636a8e6eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\ImageClasses">
+      <UniqueIdentifier>{071a8511-f6e3-42ac-bb6b-62d39ff0dd03}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Inc\ListOfVulkanFunctions.inl">
+      <Filter>Inc</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -121,7 +121,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -143,11 +143,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Core\Core.vcxproj">
       <Project>{0b165d2d-2bea-455a-bd3b-ad43ced8640c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Input\Input.vcxproj">
+      <Project>{422b1df4-f1a4-4c64-bcdb-3f1baaaaa768}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\Framework\Math\Math.vcxproj">
       <Project>{528a854a-8248-4766-8c67-84e888f5dae3}</Project>
@@ -158,6 +162,9 @@
     <ProjectReference Include="..\..\Framework\VulkanRenderer\VulkanRenderer.vcxproj">
       <Project>{0c89deea-08a7-4c8c-b27f-84ca02294515}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,8 +19,11 @@ void Application::Initialize(HINSTANCE instance, LPCSTR appName, uint32_t window
 {
 	mInstance = instance;
 	mAppName = appName;
-	CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-
+	HRESULT result = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	if (result != S_OK)
+	{
+		return;
+	}
 	OnInitialize(windowWidth, windowHeight);
 }
 void Application::Terminate()

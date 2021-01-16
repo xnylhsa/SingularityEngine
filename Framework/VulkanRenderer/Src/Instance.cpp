@@ -32,6 +32,10 @@ bool Instance::checkAvailableInstanceExtensions(std::vector<VkExtensionPropertie
 
 bool Instance::create(StartupParameters startupInfo)
 {
+	if (enableValidationLayers && !checkValidationlayerSupport()) {
+		ASSERT(false, "validation layers requested, but not available!");
+		return false;
+	}
 	InstanceParameters& parameters = startupInfo.mInstanceParameters;
 
 	std::vector<VkExtensionProperties> availableExtensions;
@@ -48,6 +52,12 @@ bool Instance::create(StartupParameters startupInfo)
 			return false;
 		}
 	}
+	VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
+	if (enableValidationLayers)
+	{
+		populateDebugMessengerCreateInfo(debugCreateInfo);
+	}
+
 	VkApplicationInfo applicationInfo = {
 		VK_STRUCTURE_TYPE_APPLICATION_INFO,
 		nullptr,
@@ -60,11 +70,11 @@ bool Instance::create(StartupParameters startupInfo)
 
 	VkInstanceCreateInfo instanceCreateInfo = {
 		VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-		nullptr,
+		enableValidationLayers ? &debugCreateInfo : nullptr,
 		0,
 		&applicationInfo,
-		0,
-		nullptr,
+		enableValidationLayers ? static_cast<uint32_t>(validationLayers.size()): 0,
+		enableValidationLayers ? validationLayers.data() : nullptr,
 		static_cast<uint32_t>(parameters.mDesiredExtensions.size()),
 		parameters.mDesiredExtensions.size() > 0 ? &parameters.mDesiredExtensions[0] : nullptr
 	};
@@ -79,6 +89,8 @@ bool Instance::create(StartupParameters startupInfo)
 
 bool Instance::destroy()
 {
+	LOG("[Graphics System] Destroying graphics instance");
+
 	if (mActualInstance)
 	{
 		vkDestroyInstance(mActualInstance, nullptr);
@@ -97,4 +109,36 @@ bool Instance::isExtensionSupported(const char* extensionName, const std::vector
 		}
 	}
 	return false;
+}
+
+bool Instance::checkValidationlayerSupport()
+{
+	uint32_t layerCount;
+	vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+	std::vector<VkLayerProperties> availableLayers(layerCount);
+	vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+	for (const char* layerName : validationLayers) {
+		bool layerFound = false;
+
+		for (const auto& layerProperties : availableLayers) {
+			if (strcmp(layerName, layerProperties.layerName) == 0) {
+				layerFound = true;
+				break;
+			}
+		}
+
+		if (!layerFound) {
+			return false;
+		}
+	}
+	return true;
+}
+
+void SingularityEngine::Vulkan::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo)
+{
+	createInfo = {};
+	createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+	createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+	createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+	createInfo.pfnUserCallback = debugCallback;
 }

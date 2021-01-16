@@ -4,39 +4,35 @@
 
 using namespace SingularityEngine::Vulkan;
 
-GraphicsQueue::GraphicsQueue(uint32_t index) : mIndex(index)
+GraphicsQueueFamily::GraphicsQueueFamily()
 {
 
 }
 
-void GraphicsQueue::init(Device& device, uint32_t familyIndex)
+void GraphicsQueueFamily::setQueueFamilyIndex(uint32_t index)
 {
-	ASSERT(mIndex != UINT32_MAX, "Index was never set for queue, initalization will fail!");
-	vkGetDeviceQueue(device(), familyIndex, mIndex, &mQueue);
+	mQueueFamilyIndex = index;
 }
 
-void GraphicsQueue::shutdown()
+uint32_t GraphicsQueueFamily::getQueueFamilyIndex()
 {
-	mIndex = UINT32_MAX;
+	ASSERT(mQueueFamilyIndex.has_value(), "Index was never set for queue, get will fail!");
+	return *mQueueFamilyIndex;
 }
 
-GraphicsQueueFamily::GraphicsQueueFamily(uint32_t familyIndex) : mQueueFamilyIndex(familyIndex)
+void GraphicsQueueFamily::create(VkDevice& device)
 {
-
+	ASSERT(mQueueFamilyIndex.has_value(), "Index was never set for queue, initalization will fail!");
+	vkGetDeviceQueue(device, *mQueueFamilyIndex, 0, &mQueue);
 }
 
-void GraphicsQueueFamily::init(Device& device, std::vector<float> priorities)
+void GraphicsQueueFamily::destroy()
 {
-	mQueues.clear();
-	for (size_t i = 0; i < priorities.size(); i++)
-	{
-		mQueues.push_back(GraphicsQueue(static_cast<uint32_t>(i)));
-		mQueues[i].init(device, mQueueFamilyIndex);
-	}
+	mQueue = VK_NULL_HANDLE;
+	mQueueFamilyIndex.reset();
 }
 
-void GraphicsQueueFamily::shutdown()
+bool GraphicsQueueFamily::hasQueueFamilyIndex()
 {
-	mQueues.clear();
-	mQueueFamilyIndex = UINT32_MAX;
+	return mQueueFamilyIndex.has_value();
 }

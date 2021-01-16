@@ -11,4 +11,5 @@
 #include "framework/Math/Inc/EngineMath.h"
 #include "framework/PhysicsMath/Inc/PhysicsMath.h"
 #include <iostream>
+#include <optional>
 #endif //SINGULARITY_ENGINE_VULKAN_RENDERER

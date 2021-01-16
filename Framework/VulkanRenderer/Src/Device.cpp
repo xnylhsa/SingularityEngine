@@ -1,11 +1,11 @@
 #include "Precompiled.h"
 #include "Device.h"
 #include "VulkanFunctions.h"
-
 using namespace SingularityEngine::Vulkan;
 
-Device::Device() : mLogicalDevice(VK_NULL_HANDLE), mPhysicalDevices(0)
+Device::Device(PresentationSurface& presentSurface) : mLogicalDevice(VK_NULL_HANDLE), mPhysicalDevice(VK_NULL_HANDLE), rPresentationSurface(presentSurface())
 {
+
 }
 
 Device::~Device()
@@ -22,30 +22,35 @@ bool Device::create(StartupParameters& startupInfo, Instance& instance)
 		ASSERT(false, "Error occured during physical device enumeration.");
 		return false;
 	}
-
+	uint32_t heighestScore = 0;
 	//device needs to be chosen here?
 	for (auto&& physicalDevice : availableDevices)
 	{
-		if (checkPhysicalDeviceProperties(physicalDevice, startupInfo))
+		QueueFamilyIndicies deviceQueueFamilyIndicies;
+		uint32_t score = ratePhysicalDeviceProperties(physicalDevice, startupInfo, deviceQueueFamilyIndicies);
+		if(score > heighestScore)
 		{
-			mPhysicalDevices.push_back(physicalDevice);
+			mPhysicalDevice = physicalDevice;
+			mTransferQueue.setQueueFamilyIndex(*deviceQueueFamilyIndicies.transferFamily);
+			mPresentQueue.setQueueFamilyIndex(*deviceQueueFamilyIndicies.presentFamily);
+			mGraphicsQueue.setQueueFamilyIndex(*deviceQueueFamilyIndicies.graphicsFamily);
+			mComputeQueue.setQueueFamilyIndex(*deviceQueueFamilyIndicies.computeFamily);
+
 		}
 	}
-	if (mPhysicalDevices.size() == 0)
+
+	if (mPhysicalDevice == VK_NULL_HANDLE)
 	{
 		ASSERT(false, "Could not obtain physical device requested!");
 		return false;
-
 	}
 
 	std::vector<QueueInfo> queueInfos;
-	for (size_t i = 0; i < startupInfo.mQueueParameters.size(); i++)
+	std::set<uint32_t> uniqueQueueFamilies = { mTransferQueue.getQueueFamilyIndex(), mComputeQueue.getQueueFamilyIndex(), mGraphicsQueue.getQueueFamilyIndex(), mPresentQueue.getQueueFamilyIndex() };
+
+	for (uint32_t queuefamily : uniqueQueueFamilies)
 	{
-		QueueParameters& qParameters = startupInfo.mQueueParameters[i];
-		if (qParameters.mQueueFamilyIndex != UINT32_MAX)
-		{
-			queueInfos.push_back({ qParameters.mQueueFamilyIndex, qParameters.mQueuePriorities });
-		}
+		queueInfos.push_back({ queuefamily, {1.0f} });
 	}
 
 	std::vector<VkDeviceQueueCreateInfo> queueCreateInfo;
@@ -74,7 +79,7 @@ bool Device::create(StartupParameters& startupInfo, Instance& instance)
 		nullptr                                                                           //pEnabledFeatures
 	};
 
-	VkResult result = vkCreateDevice(mPhysicalDevices[0], &deviceCreateInfo, nullptr, &mLogicalDevice);
+	VkResult result = vkCreateDevice(mPhysicalDevice, &deviceCreateInfo, nullptr, &mLogicalDevice);
 	if (result != VK_SUCCESS || mLogicalDevice == VK_NULL_HANDLE) {
 		ASSERT(false, "Could not create logical device!");
 		return false;
@@ -86,6 +91,7 @@ bool Device::destroy()
 {
 	if (mLogicalDevice)
 	{
+		LOG("[Graphics System] Destroying graphics device");
 		vkDestroyDevice(mLogicalDevice, nullptr);
 		mLogicalDevice = VK_NULL_HANDLE;
 	}
@@ -134,24 +140,23 @@ bool Device::checkAvailableDevicesExtensions(VkPhysicalDevice physicalDevice, st
 	return true;
 }
 
-bool Device::checkPhysicalDeviceProperties(VkPhysicalDevice physicalDevice, StartupParameters& startupInfo)
+uint32_t Device::ratePhysicalDeviceProperties(VkPhysicalDevice physicalDevice, StartupParameters& startupInfo, QueueFamilyIndicies& indicies)
 {
+	uint32_t score = 0;
 	DeviceParameters& parameters = startupInfo.mDeviceParameters;
-
 	std::vector<VkExtensionProperties> availableDeviceExtensions;
 	if (!checkAvailableDevicesExtensions(physicalDevice, availableDeviceExtensions))
 	{
 		ASSERT(false, "Could not enumerate device extensions.");
-		return false;
+		return 0;
 	}
-
 
 	for (auto& extension : parameters.mDesiredDeviceExtensions)
 	{
 		if (!isExtensionSupported(extension, availableDeviceExtensions))
 		{
 			ASSERT(false, "Extension named '%s' is not supported.", extension);
-			return false;
+			return 0;
 		}
 	}
 
@@ -162,15 +167,17 @@ bool Device::checkPhysicalDeviceProperties(VkPhysicalDevice physicalDevice, Star
 	vkGetPhysicalDeviceProperties(physicalDevice, &deviceProperties);
 
 	uint32_t majorVersion = VK_VERSION_MAJOR(deviceProperties.apiVersion);
-	if (majorVersion < 1 || deviceProperties.limits.maxImageDimension2D < 4096)
+	if (majorVersion < 1)
 	{
 		ASSERT(false, "device %p does not contain neccesary version, or image dimensions", physicalDevice);
-		return false;
+		return 0;
 	}
+	score += deviceProperties.limits.maxImageDimension2D;
+	score += deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU ? 1000 : 0;
 
 	if (!deviceFeatures.geometryShader)
 	{
-		return false;
+		return 0;
 	}
 	else
 	{
@@ -179,48 +186,64 @@ bool Device::checkPhysicalDeviceProperties(VkPhysicalDevice physicalDevice, Star
 		parameters.mDesiredFeatures = deviceFeatures;
 	}
 
-	uint32_t queueFamiliesCount = 0;
-	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamiliesCount, nullptr);
-	if (queueFamiliesCount == 0)
+	if (!selectQueueMatchingDesiredCapabilities(physicalDevice, indicies))
 	{
-		ASSERT(false, "Physical device %p does not have any queue families.", physicalDevice);
-		return false;
-	}
-	std::vector<VkQueueFamilyProperties> queueFamilyProperties(queueFamiliesCount);
-	std::vector<VkBool32> queuePresentSupport(queueFamiliesCount);
-	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamiliesCount, queueFamilyProperties.data());
-	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamiliesCount, nullptr);
-	if (queueFamiliesCount == 0)
-	{
-		ASSERT(false, "Physical device %p does not have any queue families.", physicalDevice);
-		return false;
+		return 0;
 	}
 
-	for (size_t i = 0; i < startupInfo.mQueueParameters.size(); i++)
-	{
-		QueueParameters& qParameters = startupInfo.mQueueParameters[i];
-		if (!selectQueueMatchingDesiredCapabilities(qParameters.desiredCapabilites, qParameters.mQueueFamilyIndex, queueFamilyProperties))
-		{
-			return false;
-		}
-	}
-
-	return true;
+	return score;
 }
 
-bool Device::selectQueueMatchingDesiredCapabilities(VkQueueFlags desiredCapabilites, uint32_t& queueIndex, std::vector<VkQueueFamilyProperties>& queueFamilyProperties)
+bool Device::selectQueueMatchingDesiredCapabilities(VkPhysicalDevice device, QueueFamilyIndicies& indicies)
 {
+
+	uint32_t queueFamiliesCount = 0;
+	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamiliesCount, nullptr);
+	if (queueFamiliesCount == 0)
+	{
+		ASSERT(false, "Physical device %p does not have any queue families.", device);
+		return 0;
+	}
+	std::vector<VkQueueFamilyProperties> queueFamilyProperties(queueFamiliesCount);
+	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamiliesCount, queueFamilyProperties.data());
+	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamiliesCount, nullptr);
+	if (queueFamiliesCount == 0)
+	{
+		ASSERT(false, "Physical device %p does not have any queue families.", device);
+		return 0;
+	}
+
 	for (size_t i = 0; i < queueFamilyProperties.size(); i++)
 	{
+		VkBool32 presentSupport = VK_FALSE;
+		vkGetPhysicalDeviceSurfaceSupportKHR(device, static_cast<uint32_t>(i), rPresentationSurface, &presentSupport);
 		VkQueueFamilyProperties& properties = queueFamilyProperties[i];
-		if (properties.queueCount > 0 && (properties.queueFlags & desiredCapabilites) == 0)
+		if (properties.queueFlags & VK_QUEUE_TRANSFER_BIT)
 		{
-			queueIndex = static_cast<uint32_t>(i);
+			indicies.transferFamily = static_cast<uint32_t>(i);
+		}
+		if (properties.queueFlags & VK_QUEUE_COMPUTE_BIT)
+		{
+			indicies.computeFamily = static_cast<uint32_t>(i);
+		}
+
+		if (properties.queueFlags & VK_QUEUE_GRAPHICS_BIT && !indicies.graphicsFamily.has_value())
+		{
+			indicies.graphicsFamily = static_cast<uint32_t>(i);
+		}
+		if (presentSupport && !indicies.presentFamily.has_value())
+		{
+			indicies.presentFamily = static_cast<uint32_t>(i);
+		}
+		if (properties.queueFlags & VK_QUEUE_GRAPHICS_BIT && presentSupport)
+		{
+			indicies.graphicsFamily = static_cast<uint32_t>(i);
+			indicies.presentFamily = static_cast<uint32_t>(i);
 		}
 	}
-	if (queueIndex == UINT32_MAX)
+	if (!indicies.isComplete())
 	{
-		ASSERT(false, "Could not find a queue matching the desired parameters");
+		LOG("Could not find queues matching the desired parameters");
 		return false;
 	}
 	return true;
@@ -237,3 +260,29 @@ bool Device::isExtensionSupported(const char* extensionName, const std::vector<V
 	}
 	return false;
 }
+
+bool Device::createDeviceQueues()
+{
+	if (!mPresentQueue.hasQueueFamilyIndex() || !mTransferQueue.hasQueueFamilyIndex() || !mGraphicsQueue.hasQueueFamilyIndex() || !mComputeQueue.hasQueueFamilyIndex())
+	{
+		return false;
+	}
+	mPresentQueue.create(mLogicalDevice);
+	mComputeQueue.create(mLogicalDevice);
+	mGraphicsQueue.create(mLogicalDevice);
+	mTransferQueue.create(mLogicalDevice);
+	return true;
+}
+
+VkDevice& Device::getLogicalDevice()
+{
+	ASSERT(mLogicalDevice != VK_NULL_HANDLE, "{Graphics::Device] Logical Device has not been created yet!");
+	return mLogicalDevice;
+}
+
+VkPhysicalDevice& Device::getPhysicalDevice()
+{
+	ASSERT(mPhysicalDevice != VK_NULL_HANDLE, "{Graphics::Device]Physical Device has not been chosen yet!");
+	return mPhysicalDevice;
+}
+

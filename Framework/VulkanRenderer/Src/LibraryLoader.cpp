@@ -1,7 +1,6 @@
 #include "Precompiled.h"
 #include "LibraryLoader.h"
 #include "VulkanFunctions.h"
-
 bool SingularityEngine::Vulkan::LibraryLoader::init()
 {
 	if (!loadLibrary())
@@ -34,11 +33,14 @@ bool SingularityEngine::Vulkan::LibraryLoader::loadDeviceLevelEntryPoints(VkDevi
 	return true;
 }
 
-bool SingularityEngine::Vulkan::LibraryLoader::loadDeviceLevelExtensionEntryPoints(VkDevice& device)
+bool SingularityEngine::Vulkan::LibraryLoader::loadDeviceLevelExtensionEntryPoints(VkDevice& device, StartupParameters startupInfo)
 {
 	UNREFERENCED_PARAMETER(device);
+	std::vector<const char*>& desiredExtensions = startupInfo.mDeviceParameters.mDesiredDeviceExtensions;
+	UNREFERENCED_PARAMETER(desiredExtensions);
+
 #define DEVICE_LEVEL_VULKAN_FUNCTION_FROM_EXTENSION( name, extension )    \
-for( auto & enabled_extension : mDesiredDeviceExtensions ) {				        \
+for( auto & enabled_extension : desiredExtensions ) {				        \
   if( std::string( enabled_extension ).compare(std::string( extension )) == 0 )        \
   {																	        \
 	name = (PFN_##name)vkGetDeviceProcAddr(device, #name);              \
@@ -73,11 +75,15 @@ if( name == nullptr ) {                                           \
 	return true;
 }
 
-bool SingularityEngine::Vulkan::LibraryLoader::loadExtensionLevelEntryPoints(VkInstance& instance)
+bool SingularityEngine::Vulkan::LibraryLoader::loadExtensionLevelEntryPoints(VkInstance& instance, StartupParameters startupInfo)
 {
 	UNREFERENCED_PARAMETER(instance);
+	std::vector<const char*>& desiredExtensions = startupInfo.mInstanceParameters.mDesiredExtensions;
+	UNREFERENCED_PARAMETER(desiredExtensions);
+
+
 #define INSTANCE_LEVEL_VULKAN_FUNCTION_FROM_EXTENSION( name, extension )    \
-for( auto & enabled_extension : mDesiredExtensions ) {				        \
+for( auto & enabled_extension : desiredExtensions ) {				        \
   if( std::string( enabled_extension ).compare(std::string( extension )) == 0 )        \
   {																	        \
 	name = (PFN_##name)vkGetInstanceProcAddr(instance, #name);              \
@@ -122,6 +128,8 @@ bool SingularityEngine::Vulkan::LibraryLoader::loadInstanceLevelEntryPoints(VkIn
 
 bool SingularityEngine::Vulkan::LibraryLoader::shutdown()
 {
+	LOG("[Graphics System] Releasing Vulkan DLL");
+
 #if defined _WIN32 
 	FreeLibrary(mVulkanLibrary);
 #elif defined __linux 
@@ -144,26 +152,26 @@ bool SingularityEngine::Vulkan::LibraryLoader::loadLibrary()
 	return true;
 }
 
-bool SingularityEngine::Vulkan::LibraryLoader::loadInstanceFuncs(VkInstance& instance)
+bool SingularityEngine::Vulkan::LibraryLoader::loadInstanceFuncs(VkInstance& instance, StartupParameters startupInfo)
 {
 	if (!loadInstanceLevelEntryPoints(instance))
 	{
 		return false;
 	}
-	if (!loadExtensionLevelEntryPoints(instance))
+	if (!loadExtensionLevelEntryPoints(instance, startupInfo))
 	{
 		return false;
 	}
 	return true;
 }
 
-bool SingularityEngine::Vulkan::LibraryLoader::loadDeviceFuncs(VkDevice& device)
+bool SingularityEngine::Vulkan::LibraryLoader::loadDeviceFuncs(VkDevice& device, StartupParameters startupInfo)
 {
 	if (!loadDeviceLevelEntryPoints(device))
 	{
 		return false;
 	}
-	if (!loadDeviceLevelExtensionEntryPoints(device))
+	if (!loadDeviceLevelExtensionEntryPoints(device, startupInfo))
 	{
 		return false;
 	}
