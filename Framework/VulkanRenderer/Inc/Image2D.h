@@ -15,5 +15,5 @@ namespace SingularityEngine::Vulkan
 		MemoryObject* mMemoryObject = nullptr;
 		Image* mImage = nullptr;
 		ImageView* mImageView = nullptr;
-	}
+	};
 }

@@ -490,3 +490,79 @@ bool GraphicsSystem::updateImageWithDeviceLocalMemory(VkDeviceSize dataSize, voi
 
 	return true;
 }
+
+void GraphicsSystem::updateDescriptorSets(std::vector<Descriptors::ImageDescriptorInfo> const& imageDescriptorInfos, std::vector<Descriptors::BufferDescriptorInfo> const& bufferDescriptorInfos, std::vector<Descriptors::TexelBufferDescriptorInfo> const& texelBufferDescriptorInfos, std::vector<Descriptors::CopyDescriptorInfo> const& copyDescriptorInfos)
+{
+	std::vector<VkWriteDescriptorSet> write_descriptors;
+	std::vector<VkCopyDescriptorSet> copy_descriptors;
+
+	// image descriptors
+	for (auto& image_descriptor : imageDescriptorInfos) {
+		write_descriptors.push_back({
+		  VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,                                 // VkStructureType                  sType
+		  nullptr,                                                                // const void                     * pNext
+		  image_descriptor.TargetDescriptorSet,                                   // VkDescriptorSet                  dstSet
+		  image_descriptor.TargetDescriptorBinding,                               // uint32_t                         dstBinding
+		  image_descriptor.TargetArrayElement,                                    // uint32_t                         dstArrayElement
+		  static_cast<uint32_t>(image_descriptor.ImageInfos.size()),              // uint32_t                         descriptorCount
+		  image_descriptor.TargetDescriptorType,                                  // VkDescriptorType                 descriptorType
+		  image_descriptor.ImageInfos.data(),                                     // const VkDescriptorImageInfo    * pImageInfo
+		  nullptr,                                                                // const VkDescriptorBufferInfo   * pBufferInfo
+		  nullptr                                                                 // const VkBufferView             * pTexelBufferView
+			});
+	}
+
+	// buffer descriptors
+	for (auto& buffer_descriptor : bufferDescriptorInfos) {
+		write_descriptors.push_back({
+		  VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,                                 // VkStructureType                  sType
+		  nullptr,                                                                // const void                     * pNext
+		  buffer_descriptor.TargetDescriptorSet,                                  // VkDescriptorSet                  dstSet
+		  buffer_descriptor.TargetDescriptorBinding,                              // uint32_t                         dstBinding
+		  buffer_descriptor.TargetArrayElement,                                   // uint32_t                         dstArrayElement
+		  static_cast<uint32_t>(buffer_descriptor.BufferInfos.size()),            // uint32_t                         descriptorCount
+		  buffer_descriptor.TargetDescriptorType,                                 // VkDescriptorType                 descriptorType
+		  nullptr,                                                                // const VkDescriptorImageInfo    * pImageInfo
+		  buffer_descriptor.BufferInfos.data(),                                   // const VkDescriptorBufferInfo   * pBufferInfo
+		  nullptr                                                                 // const VkBufferView             * pTexelBufferView
+			});
+	}
+
+	// texel buffer descriptors
+	for (auto& texel_buffer_descriptor : texelBufferDescriptorInfos) {
+		write_descriptors.push_back({
+		  VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,                                 // VkStructureType                  sType
+		  nullptr,                                                                // const void                     * pNext
+		  texel_buffer_descriptor.TargetDescriptorSet,                            // VkDescriptorSet                  dstSet
+		  texel_buffer_descriptor.TargetDescriptorBinding,                        // uint32_t                         dstBinding
+		  texel_buffer_descriptor.TargetArrayElement,                             // uint32_t                         dstArrayElement
+		  static_cast<uint32_t>(texel_buffer_descriptor.TexelBufferViews.size()), // uint32_t                         descriptorCount
+		  texel_buffer_descriptor.TargetDescriptorType,                           // VkDescriptorType                 descriptorType
+		  nullptr,                                                                // const VkDescriptorImageInfo    * pImageInfo
+		  nullptr,                                                                // const VkDescriptorBufferInfo   * pBufferInfo
+		  texel_buffer_descriptor.TexelBufferViews.data()                         // const VkBufferView             * pTexelBufferView
+			});
+	}
+
+	// copy descriptors
+	for (auto& copy_descriptor : copyDescriptorInfos) {
+		copy_descriptors.push_back({
+		  VK_STRUCTURE_TYPE_COPY_DESCRIPTOR_SET,                                  // VkStructureType    sType
+		  nullptr,                                                                // const void       * pNext
+		  copy_descriptor.SourceDescriptorSet,                                    // VkDescriptorSet    srcSet
+		  copy_descriptor.SourceDescriptorBinding,                                // uint32_t           srcBinding
+		  copy_descriptor.SourceArrayElement,                                     // uint32_t           srcArrayElement
+		  copy_descriptor.TargetDescriptorSet,                                    // VkDescriptorSet    dstSet
+		  copy_descriptor.TargetDescriptorBinding,                                // uint32_t           dstBinding
+		  copy_descriptor.TargetArrayElement,                                     // uint32_t           dstArrayElement
+		  copy_descriptor.DescriptorCount                                         // uint32_t           descriptorCount
+			});
+	}
+	
+	vkUpdateDescriptorSets(mVulkanDevice->getLogicalDevice(), static_cast<uint32_t>(write_descriptors.size()), write_descriptors.data(), static_cast<uint32_t>(copy_descriptors.size()), copy_descriptors.data());
+}
+
+void GraphicsSystem::bindDescriptorSet(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineType, VkPipelineLayout pipelineLayout, std::vector<VkDescriptorSet>const& descriptorSets, uint32_t indexOfFirstSet, std::vector<uint32_t> const& dynamicOffsets)
+{
+	vkCmdBindDescriptorSets(commandBuffer, pipelineType, pipelineLayout, indexOfFirstSet, static_cast<uint32_t>(descriptorSets.size()), descriptorSets.data(), static_cast<uint32_t>(dynamicOffsets.size()), dynamicOffsets.data());
+}

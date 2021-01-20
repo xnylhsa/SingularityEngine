@@ -12,10 +12,10 @@ namespace SingularityEngine::Vulkan
 		{
 			VkImageType type;
 			VkFormat format;
-			VkExtent2D size; 
+			VkExtent3D size;
 			uint32_t numMipMaps;
 			uint32_t numLayers;
-			bool cubemap; 
+			bool cubemap;
 			VkImageViewType viewType;
 			VkImageUsageFlags usage;
 			VkImageAspectFlags aspect;
@@ -23,10 +23,11 @@ namespace SingularityEngine::Vulkan
 		};
 		SampledImage(VkPhysicalDevice physicalDevice, VkDevice device, SampleImageParams params);
 		bool destroy(VkDevice device);
+		VkImageView getImageView() { return mImageView->get(); }
 		~SampledImage();
 	private:
 		MemoryObject* mMemoryObject = nullptr;
 		Image* mImage = nullptr;
 		ImageView* mImageView = nullptr;
-	}
+	};
 }

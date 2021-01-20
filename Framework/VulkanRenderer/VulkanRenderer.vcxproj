@@ -146,24 +146,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\DescriptorInfos.h" />
+    <ClInclude Include="Inc\DescriptorPool.h" />
     <ClInclude Include="Inc\BufferView.h" />
     <ClInclude Include="Inc\CombinedImageSampler.h" />
     <ClInclude Include="Inc\CommandBuffers.h" />
     <ClInclude Include="Inc\CommandPool.h" />
     <ClInclude Include="Inc\Common.h" />
+    <ClInclude Include="Inc\DescriptorSet.h" />
+    <ClInclude Include="Inc\DescriptorSetLayout.h" />
     <ClInclude Include="Inc\Device.h" />
     <ClInclude Include="Inc\Fence.h" />
+    <ClInclude Include="Inc\FrameBuffer.h" />
     <ClInclude Include="Inc\GraphicsQueue.h" />
     <ClInclude Include="Inc\Image.h" />
     <ClInclude Include="Inc\ImageView.h" />
+    <ClInclude Include="Inc\InputAttachment.h" />
     <ClInclude Include="Inc\Instance.h" />
     <ClInclude Include="Inc\MemBuffer.h" />
     <ClInclude Include="Inc\MemoryObject.h" />
     <ClInclude Include="Inc\PresentationSurface.h" />
+    <ClInclude Include="Inc\RenderPass.h" />
     <ClInclude Include="Inc\SampledImage.h" />
     <ClInclude Include="Inc\Sampler.h" />
     <ClInclude Include="Inc\Semaphore.h" />
+    <ClInclude Include="Inc\StorageBuffer.h" />
+    <ClInclude Include="Inc\StorageTexelBuffer.h" />
+    <ClInclude Include="Inc\SubpassParameters.h" />
     <ClInclude Include="Inc\SwapChain.h" />
+    <ClInclude Include="Inc\TextureUniformBufferDescriptor.h" />
     <ClInclude Include="Inc\VulkanFunctions.h" />
     <ClInclude Include="Inc\GraphicsSystem.h" />
     <ClInclude Include="Inc\LibraryLoader.h" />
@@ -174,8 +185,19 @@
     <ClInclude Include="Src\Precompiled.h" />
     <ClInclude Include="Inc\VulkanRenderer.h" />
     <ClInclude Include="Inc\StorageImage.h" />
+    <ClInclude Include="Inc\UniformTexelBuffer.h" />
+    <ClInclude Include="Inc\UniformBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\FrameBuffer.cpp" />
+    <ClCompile Include="Src\RenderPass.cpp" />
+    <ClCompile Include="Src\SubpassParameters.cpp" />
+    <ClCompile Include="Src\TextureUniformBufferDescriptor.cpp" />
+    <ClCompile Include="Src\DescriptorPool.cpp" />
+    <ClCompile Include="Src\DescriptorSet.cpp" />
+    <ClCompile Include="Src\DescriptorSetLayout.cpp" />
+    <ClCompile Include="Src\InputAttachment.cpp" />
+    <ClCompile Include="Src\StorageBuffer.cpp" />
     <ClCompile Include="Src\CombinedImageSampler.cpp" />
     <ClCompile Include="Src\SampledImage.cpp" />
     <ClCompile Include="Src\Sampler.cpp" />
@@ -200,7 +222,10 @@
     <ClCompile Include="Src\PresentationSurface.cpp" />
     <ClCompile Include="Src\Semaphore.cpp" />
     <ClCompile Include="Src\StorageImage.cpp" />
+    <ClCompile Include="Src\StorageTexelBuffer.cpp" />
     <ClCompile Include="Src\SwapChain.cpp" />
+    <ClCompile Include="Src\UniformBuffer.cpp" />
+    <ClCompile Include="Src\UniformTexelBuffer.cpp" />
     <ClCompile Include="Src\VulkanFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>

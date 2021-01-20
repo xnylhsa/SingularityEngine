@@ -1,7 +1,7 @@
 #pragma once
 #include "common.h"
 #include "Sampler.h"
-#include "ImageClasses/SampledImage.h"
+#include "SampledImage.h"
 namespace SingularityEngine::Vulkan
 {
 	
@@ -16,6 +16,8 @@ namespace SingularityEngine::Vulkan
 
 		CombinedImageSampler(VkPhysicalDevice physicalDevice, VkDevice device, CombinedImageSamplerParams params);
 		bool destroy(VkDevice device);
+		VkSampler getSampler() { return mSampler.get(); }
+		VkImageView getImageView() { return mSampledImage.getImageView(); }
 		~CombinedImageSampler();
 	private:
 		Sampler mSampler;

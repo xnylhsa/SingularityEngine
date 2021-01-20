@@ -5,25 +5,23 @@
 #include "MemoryObject.h"
 namespace SingularityEngine::Vulkan
 {
-	class StorageImage
+	class InputAttachment
 	{
 	public:
-		struct StorageImageParams
+		struct InputAttachmentParams
 		{
 			VkImageType type;
 			VkFormat format;
 			VkExtent3D size;
-			uint32_t numMipMaps;
-			uint32_t numLayers;
 			bool cubemap;
 			VkImageViewType viewType;
 			VkImageUsageFlags usage;
 			VkImageAspectFlags aspect;
-			bool atomicOperations;
+			bool linearFiltering;
 		};
-		StorageImage(VkPhysicalDevice physicalDevice, VkDevice device, StorageImageParams params);
+		InputAttachment(VkPhysicalDevice physicalDevice, VkDevice device, InputAttachmentParams params);
 		bool destroy(VkDevice device);
-		~StorageImage();
+		~InputAttachment();
 	private:
 		MemoryObject* mMemoryObject = nullptr;
 		Image* mImage = nullptr;

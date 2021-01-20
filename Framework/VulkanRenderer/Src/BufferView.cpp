@@ -24,7 +24,7 @@ bool BufferView::create(VkDevice device, VkBuffer buffer, VkFormat format, VkDev
 	return true;
 }
 
-bool BufferView::destroy()
+bool BufferView::destroy(VkDevice device)
 {
 	if (mBufferView != VK_NULL_HANDLE)
 	{

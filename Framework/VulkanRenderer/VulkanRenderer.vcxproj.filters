@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Inc\BufferView.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\CommandBuffers.h">
       <Filter>Inc</Filter>
     </ClInclude>
@@ -29,12 +26,6 @@
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\LibraryLoader.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\MemBuffer.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\MemoryObject.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\PresentationSurface.h">
@@ -70,9 +61,6 @@
     <ClInclude Include="Inc\ImageView.h">
       <Filter>Inc\ImageClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\Image.h">
-      <Filter>Inc\ImageClasses</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\SampledImage.h">
       <Filter>Inc\ImageClasses</Filter>
     </ClInclude>
@@ -82,19 +70,57 @@
     <ClInclude Include="Src\Precompiled.h">
       <Filter>Src</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\StorageImage.h" />
+    <ClInclude Include="Inc\BufferView.h">
+      <Filter>Inc\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\MemBuffer.h">
+      <Filter>Inc\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\UniformTexelBuffer.h">
+      <Filter>Inc\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\StorageImage.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\StorageTexelBuffer.h">
+      <Filter>Inc\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\UniformBuffer.h">
+      <Filter>Inc\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\StorageBuffer.h">
+      <Filter>Inc\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\InputAttachment.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\DescriptorSetLayout.h">
+      <Filter>Inc\DescriptorSets</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Image.h">
+      <Filter>Inc\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\DescriptorPool.h">
+      <Filter>Inc\DescriptorSets</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\MemoryObject.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\DescriptorInfos.h">
+      <Filter>Inc\DescriptorSets</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\DescriptorSet.h">
+      <Filter>Inc\DescriptorSets</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\TextureUniformBufferDescriptor.h">
+      <Filter>Inc\DescriptorSets</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\SubpassParameters.h" />
+    <ClInclude Include="Inc\RenderPass.h" />
+    <ClInclude Include="Inc\FrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\BufferView.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="Src\CommandBuffers.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\CommandPool.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Device.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Fence.cpp">
@@ -110,9 +136,6 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\LibraryLoader.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\MemBuffer.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\MemoryObject.cpp">
@@ -154,7 +177,51 @@
     <ClCompile Include="Src\SampledImage.cpp">
       <Filter>Src\ImageClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Src\StorageImage.cpp" />
+    <ClCompile Include="Src\BufferView.cpp">
+      <Filter>Src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MemBuffer.cpp">
+      <Filter>Src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StorageImage.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StorageTexelBuffer.cpp">
+      <Filter>Src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\UniformTexelBuffer.cpp">
+      <Filter>Src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\UniformBuffer.cpp">
+      <Filter>Src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\InputAttachment.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StorageBuffer.cpp">
+      <Filter>Src\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DescriptorSetLayout.cpp">
+      <Filter>Src\DescriptorSets</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DescriptorPool.cpp">
+      <Filter>Src\DescriptorSets</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CommandPool.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DescriptorSet.cpp">
+      <Filter>Src\DescriptorSets</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TextureUniformBufferDescriptor.cpp">
+      <Filter>Src\DescriptorSets</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Device.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SubpassParameters.cpp" />
+    <ClCompile Include="Src\RenderPass.cpp" />
+    <ClCompile Include="Src\FrameBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VulkanRenderer.rc" />
@@ -166,11 +233,29 @@
     <Filter Include="Src">
       <UniqueIdentifier>{c67db9a2-fbbf-4498-a75d-dd8f2f3e0027}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\ImageClasses">
+      <UniqueIdentifier>{071a8511-f6e3-42ac-bb6b-62d39ff0dd03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Buffers">
+      <UniqueIdentifier>{1a7ddbb2-4a71-4355-b4f4-6e3e98be5b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Buffers">
+      <UniqueIdentifier>{f27cf3f8-b2c5-4044-9263-beda875d7162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\DescriptorSets">
+      <UniqueIdentifier>{d00d4895-9382-4746-b338-810149f6dd6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\DescriptorSets">
+      <UniqueIdentifier>{4f2704d6-7feb-4495-bc4b-1a42f9ab6183}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Inc\ImageClasses">
       <UniqueIdentifier>{adcf78fe-5d55-44b6-b258-8bd636a8e6eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\ImageClasses">
-      <UniqueIdentifier>{071a8511-f6e3-42ac-bb6b-62d39ff0dd03}</UniqueIdentifier>
+    <Filter Include="Src\RenderPasses">
+      <UniqueIdentifier>{353fd4c4-2376-45d4-bc83-5cb5a7bc028d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\RenderPasses">
+      <UniqueIdentifier>{d85fc20a-7182-459b-bd4e-f36bdb2280ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

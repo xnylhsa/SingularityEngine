@@ -18,7 +18,7 @@ namespace  SingularityEngine::Vulkan
 		bool isValid() { return mImage != VK_NULL_HANDLE; } 
 		bool destroy(VkDevice device);
 	private:
-		VkImageCreateInfo createInfo(VkDevice device);
+		VkImageCreateInfo createInfo();
 		VkSampleCountFlagBits mSamples;
 		VkImageUsageFlags mUsageFlags;
 		uint32_t mNumberOfMipmaps;

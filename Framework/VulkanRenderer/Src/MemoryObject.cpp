@@ -14,13 +14,13 @@ bool MemoryObject::destroy(VkDevice& device)
 	return true;
 }
 
-bool MemoryObject::createBufferMemoryObject(VkPhysicalDevice& physicalDevice, VkDevice& device, VkMemoryPropertyFlags memoryProperties, VkBuffer& buffer)
+bool MemoryObject::createBufferMemoryObject(VkPhysicalDevice& physicalDevice, VkDevice& device, VkMemoryPropertyFlags memoryProperties, VkBuffer& vkbuffer)
 {
 	VkPhysicalDeviceMemoryProperties physicalDeviceMemProps;
 	vkGetPhysicalDeviceMemoryProperties(physicalDevice, &physicalDeviceMemProps);
 
 	VkMemoryRequirements memoryRequirements;
-	vkGetBufferMemoryRequirements(device, buffer, &memoryRequirements);
+	vkGetBufferMemoryRequirements(device, vkbuffer, &memoryRequirements);
 
 	mMemoryObject = VK_NULL_HANDLE;
 	for (uint32_t type = 0; type < physicalDeviceMemProps.memoryTypeCount; ++type)
@@ -48,7 +48,7 @@ bool MemoryObject::createBufferMemoryObject(VkPhysicalDevice& physicalDevice, Vk
 		return false;
 	}
 
-	if (vkBindBufferMemory(device, buffer, mMemoryObject, 0) != VK_SUCCESS)
+	if (vkBindBufferMemory(device, vkbuffer, mMemoryObject, 0) != VK_SUCCESS)
 	{
 		LOG("[Graphics::Buffer] Could not bind memory object to buffer!");
 		return false;

@@ -28,6 +28,7 @@ namespace SingularityEngine::Vulkan
 
 		Sampler(VkDevice device, SamplerParams params);
 		bool destroy(VkDevice device);
+		VkSampler get() { return mSampler; }
 		~Sampler();
 	private:
 		VkSampler mSampler;

@@ -34,7 +34,7 @@ bool Sampler::destroy(VkDevice device)
 {
 	if (mSampler != VK_NULL_HANDLE)
 	{
-		vkDestroySampler(device, mSampler);
+		vkDestroySampler(device, mSampler, nullptr);
 		mSampler = VK_NULL_HANDLE;
 	}
 	return true;

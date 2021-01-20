@@ -4,10 +4,10 @@
 
 using namespace SingularityEngine::Vulkan;
 
-Image::Image(VkDevice device, VkImageType type, VkFormat format, VkExtent3D size, uint32_t numMipmaps, uint32_t layers, VkSampleCountFlagBits samples, VkImageUsageFlags usageScenarios, bool isCubemap) : mImageType(type), mFormat(mFormat), mExtent(size), mNumberOfMipmaps(numMipmaps), mNumberOfLayers(layers), mSamples(samples), mUsageFlags(usageScenarios), mIsCubemap(isCubemap)
+Image::Image(VkDevice device, VkImageType type, VkFormat format, VkExtent3D size, uint32_t numMipmaps, uint32_t layers, VkSampleCountFlagBits samples, VkImageUsageFlags usageScenarios, bool isCubemap) : mImageType(type), mFormat(format), mExtent(size), mNumberOfMipmaps(numMipmaps), mNumberOfLayers(layers), mSamples(samples), mUsageFlags(usageScenarios), mIsCubemap(isCubemap)
 {
 
-	VkImageCreateInfo creationInfo = createInfo(device);
+	VkImageCreateInfo creationInfo = createInfo();
 
 	ASSERT(vkCreateImage(device, &creationInfo, nullptr, &mImage) == VK_SUCCESS, "[Grahpics::Image] Failed to create image!");
 
@@ -18,7 +18,7 @@ Image::~Image()
 	ASSERT(mImage == VK_NULL_HANDLE, "[Graphics::Image] Failed to destroy image before destructor was called!");
 }
 
-VkImageCreateInfo Image::createInfo(VkDevice device)
+VkImageCreateInfo Image::createInfo()
 {
 	VkImageCreateInfo imageCreationInfo = {
   VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,

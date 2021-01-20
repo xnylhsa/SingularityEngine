@@ -7,7 +7,7 @@ namespace SingularityEngine::Vulkan
 	{
 	public:
 		bool create(VkDevice device, VkBuffer buffer, VkFormat format, VkDeviceSize memoryOffset, VkDeviceSize memoryRange);
-		bool destroy();
+		bool destroy(VkDevice device);
 	private:
 		VkBufferView mBufferView;
 	};
