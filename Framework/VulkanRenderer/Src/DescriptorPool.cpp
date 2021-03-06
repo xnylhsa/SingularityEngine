@@ -2,7 +2,7 @@
 #include "DescriptorPool.h"
 #include "VulkanFunctions.h"
 
-using namespace SingularityEngine::Vulkan;
+using namespace SingularityEngine::Graphics;
 
 DescriptorPool::DescriptorPool(VkDevice device, std::vector<VkDescriptorPoolSize> descriptorTypes, uint32_t maxSetsCount,  bool freeIndividualSets)
 {

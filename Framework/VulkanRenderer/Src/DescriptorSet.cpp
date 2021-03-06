@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "DescriptorSet.h"
 #include "VulkanFunctions.h"
-using namespace SingularityEngine::Vulkan;
+using namespace SingularityEngine::Graphics;
 
 DescriptorSet::DescriptorSet(VkDevice device, DescriptorPool* descriptorPool, std::vector<VkDescriptorSetLayout> descriptorSetLayouts)
 {

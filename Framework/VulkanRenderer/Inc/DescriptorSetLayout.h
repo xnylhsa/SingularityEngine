@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.h"
 
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
 	class DescriptorSetLayout
 	{

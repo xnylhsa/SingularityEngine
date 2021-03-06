@@ -1,6 +1,6 @@
 #pragma once
 #include "Common.h"
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
 #define EXPORTED_VULKAN_FUNCTION(name) extern PFN_##name name;
 #define GLOBAL_LEVEL_VULKAN_FUNCTION( name ) extern PFN_##name name;

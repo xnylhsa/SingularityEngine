@@ -3,7 +3,7 @@
 #include "DescriptorPool.h"
 #include "DescriptorSetLayout.h"
 
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
 	class DescriptorSet
 	{

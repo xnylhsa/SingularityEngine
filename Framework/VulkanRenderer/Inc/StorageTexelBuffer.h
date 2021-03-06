@@ -1,9 +1,9 @@
 #pragma once
 #include "Common.h"
-#include "MemoryObject.h"
+#include "VulkanMemoryObject.h"
 #include "MemBuffer.h"
 #include "BufferView.h"
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
 	class StorageTexelBuffer
 	{
@@ -14,7 +14,7 @@ namespace SingularityEngine::Vulkan
 		bool isValid();
 
 	private:
-		MemoryObject* mMemObject;
+		VulkanMemoryObject* mMemObject;
 		BufferView* mBufferView;
 		MemBuffer* mBuffer;
 	};

@@ -1,40 +1,20 @@
 #pragma once
 #include "Common.h"
 
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
-
-	struct InstanceParameters
-	{
-		std::vector<const char*> mDesiredExtensions;
-	};
-
-	struct DeviceParameters
-	{
-		VkPhysicalDeviceFeatures mDesiredFeatures;
-		std::vector<const char*> mDesiredDeviceExtensions;
-	};
-	struct WindowParams
-	{
-		HINSTANCE mAppInstance;
-		HWND mWindowHandle;
-		uint32_t width;
-		uint32_t height;
-	};
+	using DesiredExtensions = std::vector<const char*>;
 
 	struct StartupParameters
 	{
-		std::string mAppName = "";
-		std::string mEngineName = "";
-		WindowParams windowParams;
+		Core::Window* mWindow = nullptr;
 		uint32_t mMajorVersion = 0;
 		uint32_t mMinorVersion = 0;
 		uint32_t mPatchVersion = 0;
-		uint32_t mEngineMajorVersion = 0;
-		uint32_t mEngineMinorVersion = 0;
-		uint32_t mEnginePatchVersion = 0;
-		InstanceParameters mInstanceParameters;
-		DeviceParameters mDeviceParameters;
+		std::string mAppName;
+		VkPhysicalDeviceFeatures mDesiredDeviceFeatures;
+		DesiredExtensions mInstanceExtensions;
+		DesiredExtensions mDeviceExtensions;
 	};
 
 	struct WaitSemaphoreInfo

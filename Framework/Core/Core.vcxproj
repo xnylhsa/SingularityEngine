@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\GLFWWindow.h" />
     <ClInclude Include="Inc\AppInfoManaager.h" />
     <ClInclude Include="Inc\Application.h" />
+    <ClInclude Include="Inc\ApplicationEvent.h" />
     <ClInclude Include="Inc\Bitpacker.h" />
     <ClInclude Include="Inc\BitSerialization.h" />
     <ClInclude Include="Inc\BlockAllocator.h" />
@@ -33,9 +35,11 @@
     <ClInclude Include="Inc\ECSComponentManager.h" />
     <ClInclude Include="Inc\ECSCoordinator.h" />
     <ClInclude Include="Inc\ECSEntityManager.h" />
+    <ClInclude Include="Inc\Event.h" />
     <ClInclude Include="Inc\Handle.h" />
     <ClInclude Include="Inc\HandlePool.h" />
     <ClInclude Include="Inc\Hashids.h" />
+    <ClInclude Include="Inc\KeyEvent.h" />
     <ClInclude Include="Inc\MemoryUtil.h" />
     <ClInclude Include="Inc\Meta.h" />
     <ClInclude Include="Inc\MetaClass.h" />
@@ -44,19 +48,26 @@
     <ClInclude Include="Inc\MetaRegistry.h" />
     <ClInclude Include="Inc\MetaType.h" />
     <ClInclude Include="Inc\MetaUtil.h" />
+    <ClInclude Include="Inc\MouseEvent.h" />
     <ClInclude Include="Inc\OperatingSystemAgnostic.h" />
     <ClInclude Include="Inc\PageAllocator.h" />
     <ClInclude Include="Inc\SerializationUtil.h" />
     <ClInclude Include="Inc\ECSSystem.h" />
     <ClInclude Include="Inc\Timer.h" />
-    <ClInclude Include="Inc\UsefulTemplates.h" />
     <ClInclude Include="Inc\Window.h" />
     <ClInclude Include="Inc\Random.h" />
+    <ClInclude Include="Inc\PlatformDetection.h" />
     <ClInclude Include="Src\ECSEntityManager.cpp" />
     <ClInclude Include="Src\Precompiled.h" />
     <ClInclude Include="Inc\StringCasting.h" />
+    <ClInclude Include="Inc\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\GLFWWindow.cpp" />
+    <ClCompile Include="Src\ApplicationEvent.cpp" />
+    <ClCompile Include="Src\Event.cpp" />
+    <ClCompile Include="Src\KeyEvent.cpp" />
+    <ClCompile Include="Src\MouseEvent.cpp" />
     <ClCompile Include="Src\BlockAllocator.cpp" />
     <ClCompile Include="Src\ECSComponentArray.cpp" />
     <ClCompile Include="Src\ECSComponenetManager.cpp" />
@@ -82,8 +93,12 @@
     <ClCompile Include="Src\ECSSystem.cpp" />
     <ClCompile Include="Src\Timer.cpp" />
     <ClCompile Include="Src\Window.cpp" />
+    <ClCompile Include="Src\WindowsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\External\GLFW\src\glfw.vcxproj">
+      <Project>{c376d310-6f00-3261-81e7-e4da29506c2d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\External\RapidXML\RapidXML.vcxproj">
       <Project>{31f09a4f-555e-42f7-a19b-647f2b714374}</Project>
     </ProjectReference>

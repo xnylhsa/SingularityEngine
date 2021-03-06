@@ -1,16 +1,18 @@
 #include "Precompiled.h"
 #include "MemBuffer.h"
 #include "VulkanFunctions.h"
-
-using namespace SingularityEngine::Vulkan;
+#include "VulkanContext.h"
+using namespace SingularityEngine::Graphics;
 
 MemBuffer::MemBuffer()
 {
 
 }
 
-bool MemBuffer::create(VkDevice& device, VkDeviceSize size, VkBufferUsageFlags usage)
+bool MemBuffer::create(VkDeviceSize size, VkBufferUsageFlags usage)
 {
+	std::shared_ptr<VulkanDevice> device = VulkanContext::GetVulkanDevice();
+
 	mSize = size;
 	VkBufferCreateInfo createInfo = {
 		VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
@@ -23,7 +25,7 @@ bool MemBuffer::create(VkDevice& device, VkDeviceSize size, VkBufferUsageFlags u
 		nullptr
 	};
 
-	if (vkCreateBuffer(device, &createInfo, nullptr, &mBuffer) != VK_SUCCESS)
+	if (vkCreateBuffer(*device, &createInfo, nullptr, &mBuffer) != VK_SUCCESS)
 	{
 		LOG("[Graphics::Buffer] Failed creation!");
 		return false;
@@ -31,11 +33,12 @@ bool MemBuffer::create(VkDevice& device, VkDeviceSize size, VkBufferUsageFlags u
 	return true;
 }
 
-bool MemBuffer::destroy(VkDevice& device)
+bool MemBuffer::destroy()
 {
 	if (mBuffer != VK_NULL_HANDLE)
 	{
-		vkDestroyBuffer(device, mBuffer, nullptr);
+		std::shared_ptr<VulkanDevice> device = VulkanContext::GetVulkanDevice();
+		vkDestroyBuffer(*device, mBuffer, nullptr);
 		mBuffer = VK_NULL_HANDLE;
 		mSize = 0;
 	}

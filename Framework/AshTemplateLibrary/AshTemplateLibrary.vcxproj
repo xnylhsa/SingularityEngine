@@ -156,6 +156,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\AshTemplateLibrary.h" />
+    <ClInclude Include="Inc\Common.h" />
+    <ClInclude Include="Inc\QuadTree.h" />
+    <ClInclude Include="Src\Precompiled.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\Precompiled.cpp" />
+    <ClCompile Include="Src\QuadTree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{0b165d2d-2bea-455a-bd3b-ad43ced8640c}</Project>
     </ProjectReference>
@@ -165,16 +175,6 @@
     <ProjectReference Include="..\PhysicsMath\PhysicsMath.vcxproj">
       <Project>{8c5ab4ee-e4eb-47d0-8d30-2734fbf7b450}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Inc\AshTemplateLibrary.h" />
-    <ClInclude Include="Inc\Common.h" />
-    <ClInclude Include="Inc\QuadTree.h" />
-    <ClInclude Include="Src\Precompiled.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Src\Precompiled.cpp" />
-    <ClCompile Include="Src\QuadTree.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

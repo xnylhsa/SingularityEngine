@@ -1,9 +1,9 @@
 #pragma once
 #include "Common.h"
-#include "Image.h"
-#include "ImageView.h"
-#include "MemoryObject.h"
-namespace SingularityEngine::Vulkan
+#include "VulkanImage.h"
+#include "VulkanImageView.h"
+#include "VulkanMemoryObject.h"
+namespace SingularityEngine::Graphics
 {
 	class Image2D
 	{
@@ -12,8 +12,8 @@ namespace SingularityEngine::Vulkan
 		bool destroy(VkDevice device);
 		~Image2D();
 	private:
-		MemoryObject* mMemoryObject = nullptr;
-		Image* mImage = nullptr;
-		ImageView* mImageView = nullptr;
+		VulkanMemoryObject* mMemoryObject = nullptr;
+		VulkanImage* mImage = nullptr;
+		VulkanImageView* mImageView = nullptr;
 	};
 }

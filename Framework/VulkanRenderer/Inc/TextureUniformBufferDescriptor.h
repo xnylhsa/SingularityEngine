@@ -6,7 +6,7 @@
 #include "DescriptorSet.h"
 #include "CombinedImageSampler.h"
 
-namespace SingularityEngine::Vulkan {
+namespace SingularityEngine::Graphics {
 	class TextureUniformBufferDescriptor
 	{
 	public:

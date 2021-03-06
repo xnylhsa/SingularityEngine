@@ -2,7 +2,7 @@
 #include "common.h"
 #include "Sampler.h"
 #include "SampledImage.h"
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
 	
 	class CombinedImageSampler

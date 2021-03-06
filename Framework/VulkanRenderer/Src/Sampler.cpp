@@ -3,7 +3,7 @@
 #include "VulkanFunctions.h"
 
 
-using namespace SingularityEngine::Vulkan;
+using namespace SingularityEngine::Graphics;
 
 Sampler::Sampler(VkDevice device, Sampler::SamplerParams params)
 {

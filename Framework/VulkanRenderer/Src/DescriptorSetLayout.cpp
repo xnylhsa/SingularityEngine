@@ -2,7 +2,7 @@
 #include "DescriptorSetLayout.h"
 #include "VulkanFunctions.h"
 
-using namespace SingularityEngine::Vulkan;
+using namespace SingularityEngine::Graphics;
 
 DescriptorSetLayout::DescriptorSetLayout(VkDevice device, std::vector<VkDescriptorSetLayoutBinding> bindings)
 {

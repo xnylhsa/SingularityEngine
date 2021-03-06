@@ -12,10 +12,8 @@ class GameApp : public Core::Application
 public:
 	GameApp();
 	~GameApp() override;
-
 protected:
-	void OnInitialize(uint32_t w, uint32_t h) override;
-
+	void OnInitialize() override;
 
 	void OnTerminate() override;
 
@@ -24,8 +22,5 @@ protected:
 
 private:
 	Core::Timer timer;
-	Core::Window mWindow;
-	uint32_t wWidth;
-	uint32_t wHeight;
 };
 

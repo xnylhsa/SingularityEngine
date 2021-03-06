@@ -1,38 +1,37 @@
 #include "Precompiled.h"
 #include "Application.h"
-
+#include "Debug.h"
 using namespace SingularityEngine;
 using namespace Core;
 
 
-Application::Application() : mInstance(nullptr), mRunning(true)
+Application::Application(): mRunning(true)
 {
-
 }
 
 Application::~Application()
 {
-
 }
 
-void Application::Initialize(HINSTANCE instance, LPCSTR appName, uint32_t windowWidth, uint32_t windowHeight)
+void Application::Initialize(WindowProperties windowProps)
 {
-	mInstance = instance;
-	mAppName = appName;
-	HRESULT result = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-	if (result != S_OK)
-	{
-		return;
-	}
-	OnInitialize(windowWidth, windowHeight);
+	mWindow = Window::create(windowProps);
+	OnInitialize();
 }
+
 void Application::Terminate()
 {
 	OnTerminate();
-	CoUninitialize();
+	mWindow.reset();
+	mWindow = nullptr;
 }
 
 void Application::Update()
 {
 	OnUpdate();
+}
+
+void Application::Run()
+{
+
 }

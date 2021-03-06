@@ -7,8 +7,6 @@
 #include <cstdio>
 #include <cstdint>
 #include <cstring>
-#include <Windows.h>
-
 //STL Headers
 #include <algorithm>
 #include <array>
@@ -40,21 +38,14 @@
 #include <atlconv.h>
 #include <queue>
 #include <bitset>
-#if _WIN32 || _WIN64
-#if _WIN64
-#define ENVIRONMENT64
-#else
-#define ENVIRONMENT32
-#endif
-#endif
 
-#if __GNUC__
-#if __x86_64__ || __ppc64__
-#define ENVIRONMENT64
-#else
-#define ENVIRONMENT32
+#include "PlatformDetection.h"
+#ifdef SINGULARITY_PLATFORM_WINDOWS
+#include <Windows.h>
 #endif
-#endif
+#define SINGULARITY_USE_GLFW
+
+
 
 #include <External/RapidXML/Inc/RapidXML.h>
 

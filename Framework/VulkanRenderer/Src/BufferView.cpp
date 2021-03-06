@@ -3,7 +3,7 @@
 #include "VulkanFunctions.h"
 
 
-using namespace SingularityEngine::Vulkan;
+using namespace SingularityEngine::Graphics;
 
 bool BufferView::create(VkDevice device, VkBuffer buffer, VkFormat format, VkDeviceSize memoryOffset, VkDeviceSize memoryRange)
 {

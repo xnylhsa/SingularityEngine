@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "SubpassParameters.h"
 
-using namespace SingularityEngine::Vulkan;
+using namespace SingularityEngine::Graphics;
 
 
 std::vector<VkSubpassDescription> ConvertSubpassDescriptions(std::vector<SubpassParameters> subpassParameters)

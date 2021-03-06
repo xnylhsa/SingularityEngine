@@ -1,7 +1,7 @@
 #pragma once
 #include "common.h"
 
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
 
 	class Sampler

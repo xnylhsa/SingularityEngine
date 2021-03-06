@@ -1,46 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Inc\CommandBuffers.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\CommandPool.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\Common.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Device.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Fence.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\GraphicsQueue.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\GraphicsSystem.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Instance.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\LibraryLoader.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\PresentationSurface.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\Sampler.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Semaphore.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\SwapChain.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\VulkanFunctions.h">
@@ -56,9 +23,6 @@
       <Filter>Inc\ImageClasses</Filter>
     </ClInclude>
     <ClInclude Include="Inc\ImageCubeMap.h">
-      <Filter>Inc\ImageClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\ImageView.h">
       <Filter>Inc\ImageClasses</Filter>
     </ClInclude>
     <ClInclude Include="Inc\SampledImage.h">
@@ -97,14 +61,8 @@
     <ClInclude Include="Inc\DescriptorSetLayout.h">
       <Filter>Inc\DescriptorSets</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\Image.h">
-      <Filter>Inc\Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\DescriptorPool.h">
       <Filter>Inc\DescriptorSets</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\MemoryObject.h">
-      <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\DescriptorInfos.h">
       <Filter>Inc\DescriptorSets</Filter>
@@ -116,44 +74,62 @@
       <Filter>Inc\DescriptorSets</Filter>
     </ClInclude>
     <ClInclude Include="Inc\SubpassParameters.h" />
-    <ClInclude Include="Inc\RenderPass.h" />
-    <ClInclude Include="Inc\FrameBuffer.h" />
+    <ClInclude Include="Inc\ShaderModule.h" />
+    <ClInclude Include="Inc\Pipeline.h" />
+    <ClInclude Include="Inc\VertexTypes.h" />
+    <ClInclude Include="Inc\VulkanDevice.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanContext.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanUtils.h" />
+    <ClInclude Include="Inc\VulkanInstance.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanLibraryLoader.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanSwapChain.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanMemoryAllocator.h" />
+    <ClInclude Include="Inc\VulkanCommandPool.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanQueue.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanCommandBuffers.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanDepthStencil.h" />
+    <ClInclude Include="Inc\VulkanImage.h">
+      <Filter>Inc\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanMemoryObject.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanImageView.h">
+      <Filter>Inc\ImageClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanSemaphore.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanFence.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\VulkanRenderPass.h" />
+    <ClInclude Include="Inc\VulkanFrameBuffer.h" />
+    <ClInclude Include="Inc\PlatformSurfaceCreation.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\CommandBuffers.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Fence.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\GraphicsQueue.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\GraphicsSystem.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Instance.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\LibraryLoader.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\MemoryObject.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="Src\precompiled.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Src\PresentationSurface.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Sampler.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Semaphore.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\SwapChain.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\VulkanFunctions.cpp">
@@ -162,16 +138,10 @@
     <ClCompile Include="Src\CombinedImageSampler.cpp">
       <Filter>Src\ImageClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Image.cpp">
-      <Filter>Src\ImageClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Image2D.cpp">
       <Filter>Src\ImageClasses</Filter>
     </ClCompile>
     <ClCompile Include="Src\ImageCubeMap.cpp">
-      <Filter>Src\ImageClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\ImageView.cpp">
       <Filter>Src\ImageClasses</Filter>
     </ClCompile>
     <ClCompile Include="Src\SampledImage.cpp">
@@ -207,21 +177,62 @@
     <ClCompile Include="Src\DescriptorPool.cpp">
       <Filter>Src\DescriptorSets</Filter>
     </ClCompile>
-    <ClCompile Include="Src\CommandPool.cpp">
-      <Filter>Src\ImageClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Src\DescriptorSet.cpp">
       <Filter>Src\DescriptorSets</Filter>
     </ClCompile>
     <ClCompile Include="Src\TextureUniformBufferDescriptor.cpp">
       <Filter>Src\DescriptorSets</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Device.cpp">
+    <ClCompile Include="Src\SubpassParameters.cpp" />
+    <ClCompile Include="Src\ShaderModule.cpp" />
+    <ClCompile Include="Src\Pipeline.cpp" />
+    <ClCompile Include="Src\VulkanDevice.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Src\SubpassParameters.cpp" />
-    <ClCompile Include="Src\RenderPass.cpp" />
-    <ClCompile Include="Src\FrameBuffer.cpp" />
+    <ClCompile Include="Src\VulkanContext.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanInstance.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanLibraryLoader.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanSwapChain.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanMemoryAllocator.cpp" />
+    <ClCompile Include="Src\VulkanCommandPool.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanQueue.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanCommandBuffers.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanImage.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanDepthStencil.cpp" />
+    <ClCompile Include="Src\VulkanMemoryObject.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanImageView.cpp">
+      <Filter>Src\ImageClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanSemaphore.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanFence.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\VulkanRenderPass.cpp" />
+    <ClCompile Include="Src\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="Src\VulkanUtils.cpp" />
+    <ClCompile Include="Src\PlatformSurfaceCreation.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VulkanRenderer.rc" />

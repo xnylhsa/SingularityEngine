@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.h"
 
-namespace SingularityEngine::Vulkan::Descriptors
+namespace SingularityEngine::Graphics::Descriptors
 {
 	struct ImageDescriptorInfo {
 		VkDescriptorSet                     TargetDescriptorSet;

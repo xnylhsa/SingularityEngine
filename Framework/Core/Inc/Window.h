@@ -1,29 +1,38 @@
 #ifndef INCLUDED_CORE_WINDOW_H
 #define INCLUDED_CORE_WINDOW_H
 #include "Common.h"
-namespace SingularityEngine {
-	namespace Core {
+#include "Event.h"
+namespace SingularityEngine::Core {
+
+		struct WindowProperties
+		{
+			std::string mTitle;
+			unsigned int mWidth;
+			unsigned int mHeight;
+			bool useVync;
+			WindowProperties(const std::string& title = "Singularity Engine", unsigned int width = 1280, unsigned int height = 720, bool vSyncEnabled = true) : mTitle(title), mWidth(width), mHeight(height), useVync(vSyncEnabled) {};
+		};
+
 
 		class Window
 		{
 		public:
-			Window();
-			~Window();
-			void Initialize(HINSTANCE instance, LPTSTR appName, uint32_t width, uint32_t height,WNDPROC wndProcFunction);
+			using EventCallBackFn = std::function<void(Event&)>;
+			virtual ~Window() = default;
+			virtual void onUpdate() = 0;
 
-			void Initialize(HINSTANCE instance, LPCSTR appName, uint32_t width, uint32_t height);
-			void Terminate();
-			bool ProcessMessage();
+			virtual unsigned int getWidth() const = 0;
+			virtual unsigned int getHeight() const = 0;
+			virtual std::string getTitle() const = 0;
+			virtual void setEventCallback(const EventCallBackFn& callback) = 0;
+			virtual void setVsync(bool enabled) = 0;
+			virtual bool isVSync() const = 0;
+			virtual void* getNativeWindow() = 0;
+			static std::unique_ptr<Window> create(const WindowProperties& props = WindowProperties());
 
-			HWND GetWindowHandle() const { return mWindow; }
-		private:
 
-			HINSTANCE mInstance;
-			HWND mWindow;
-			std::string mAppName;
 		};
 
-	}
 }
 #endif // !INCLUDED_CORE_WINDOW_H
 

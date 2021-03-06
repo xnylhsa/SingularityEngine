@@ -1,14 +1,14 @@
 #pragma once
 #include "Common.h"
 
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
 	class MemBuffer
 	{
 	public:
 		MemBuffer();
-		bool create(VkDevice& device, VkDeviceSize size, VkBufferUsageFlags usage);
-		bool destroy(VkDevice& device);
+		bool create(VkDeviceSize size, VkBufferUsageFlags usage);
+		bool destroy();
 		VkBuffer& get() { return mBuffer; }
 		bool isValid() { return mBuffer != VK_NULL_HANDLE; }
 	private:

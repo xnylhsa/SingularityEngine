@@ -1,8 +1,8 @@
 #include "Precompiled.h"
 #include "TextureUniformBufferDescriptor.h"
 #include "DescriptorInfos.h"
-#include "GraphicsSystem.h"
-using namespace SingularityEngine::Vulkan;
+#include "VulkanContext.h"
+using namespace SingularityEngine::Graphics;
 
 bool TextureUniformBufferDescriptor::create(VkPhysicalDevice physicalDevice, VkDevice device, VkExtent3D size, VkDeviceSize uniformBufferSize)
 {
@@ -95,7 +95,7 @@ bool TextureUniformBufferDescriptor::create(VkPhysicalDevice physicalDevice, VkD
 	  }
 	};
 
-	GraphicsSystem* gs = GraphicsSystem::Get();
+	VulkanContext* gs = VulkanContext::Get();
 	gs->updateDescriptorSets(image_descriptor_infos, buffer_descriptor_infos, {}, {});
 	return true;
 }

@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "VulkanFunctions.h"
 
-namespace SingularityEngine::Vulkan
+namespace SingularityEngine::Graphics
 {
 #define EXPORTED_VULKAN_FUNCTION(name) PFN_##name name;
 #define GLOBAL_LEVEL_VULKAN_FUNCTION( name ) PFN_##name name; 
