@@ -2,6 +2,7 @@
 #define INCLUDED_CORE_WINDOW_H
 #include "Common.h"
 #include "Event.h"
+#include "InputConverter.h"
 namespace SingularityEngine::Core {
 
 		struct WindowProperties
@@ -20,7 +21,6 @@ namespace SingularityEngine::Core {
 			using EventCallBackFn = std::function<void(Event&)>;
 			virtual ~Window() = default;
 			virtual void onUpdate() = 0;
-
 			virtual unsigned int getWidth() const = 0;
 			virtual unsigned int getHeight() const = 0;
 			virtual std::string getTitle() const = 0;
@@ -29,8 +29,13 @@ namespace SingularityEngine::Core {
 			virtual bool isVSync() const = 0;
 			virtual void* getNativeWindow() = 0;
 			static std::unique_ptr<Window> create(const WindowProperties& props = WindowProperties());
-
-
+			virtual bool isCursorLocked() = 0;
+			virtual void setCursorLocked(bool isLocked) = 0;
+			virtual bool clipCursorToWindow() = 0;
+			virtual void setClipCursor(bool isClipped) = 0;
+			virtual bool useRawInput() = 0;
+			virtual void setUseRawInput(bool useRawInput) = 0;
+		private:
 		};
 
 }

@@ -18,7 +18,7 @@ void GameApp::OnInitialize()
 {
 	//Input::InputSystem::StaticInitialize(getWindow().GetWindowHandle(), false);
 
-
+	RegisterEventFunc(Core::EventType::WindowResize, BIND_EVENT_FN(GameApp::OnResize));
 	SingularityEngine::Graphics::StartupParameters startupInfo;
 	Core::Window* window = getWindow();
 	startupInfo.mAppName = window->getTitle();
@@ -37,6 +37,16 @@ void GameApp::OnTerminate()
 	Graphics::VulkanContext::StaticTerminate();
 }
 
+bool GameApp::OnResize(Core::Event& e)
+{
+	if (IsFocused())
+	{
+		Core::WindowResizeEvent& event = *dynamic_cast<Core::WindowResizeEvent*>(&e);
+		Graphics::VulkanContext::Get()->onWindowSizeChanged((uint32_t)event.getWidth(), (uint32_t)event.getHeight());
+	}
+	return true;
+}
+
 void GameApp::OnUpdate()
 {
 	//if (getWindow().ProcessMessage())
@@ -51,7 +61,7 @@ void GameApp::OnUpdate()
 	//	PostQuitMessage(0);
 	//	return;
 	//}
-	if (prepared && (IsRunning()))
+	if (prepared && IsFocused() && IsRunning())
 	{
 		Graphics::VulkanContext::Get()->beginRender();
 		Graphics::VulkanContext::Get()->endRender();

@@ -37,6 +37,34 @@ namespace SingularityEngine::Core
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
+	class WindowLostFocusEvent : public Event {
+	public:
+		class WindowLostFocusEvent() {}
+		std::string toString() const override
+		{
+			std::stringstream ss;
+			ss << "WindowLostFocusEvent";
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(WindowLostFocus)
+		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+	};
+
+	class WindowFocusEvent : public Event {
+	public:
+		class WindowFocusEvent() {}
+		std::string toString() const override
+		{
+			std::stringstream ss;
+			ss << "WindowFocusEvent";
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(WindowFocus)
+		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+	};
+
 	class AppTickEvent : public Event {
 	public:
 		class AppTickEvent() {}

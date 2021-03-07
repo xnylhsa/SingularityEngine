@@ -1,9 +1,10 @@
 #include "precompiled.h"
 #include "Window.h"
 #include "Debug.h"
+
 #ifdef SINGULARITY_USE_GLFW
 #include "GLFWWindow.h"
-#elif SINGULARITY_PLATFORM_WINDOWS
+#elif defined SINGULARITY_PLATFORM_WINDOWS
 #include "WindowsWindow.h"
 #endif
 

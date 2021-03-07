@@ -38,12 +38,13 @@
 #include <atlconv.h>
 #include <queue>
 #include <bitset>
-
+#include "MagicEnum.hpp"
 #include "PlatformDetection.h"
 #ifdef SINGULARITY_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif
-#define SINGULARITY_USE_GLFW
+//#define SINGULARITY_USE_GLFW
+#define ToString(name) #name
 
 
 

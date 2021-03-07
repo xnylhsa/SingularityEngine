@@ -2,6 +2,7 @@
 #define SINGULARITY_EVENT
 
 #include "Common.h"
+#include "SEInputTypes.h"
 namespace SingularityEngine::Core
 {
 	enum class EventType
@@ -59,27 +60,40 @@ namespace SingularityEngine::Core
 
 	class EventDispatcher
 	{
-		template<typename T>
-		using EventFn = std::function<bool(T&)>;
 	public:
-		EventDispatcher(Event& event) : mEvent(event)
+		using EventFn = std::function<bool(Event&)>;
+		void pushDispatchFunction(EventFn& eventFN)
 		{
-
+			mEventFNs.push_back(eventFN);
 		}
 
-		template<typename T> 
-		bool Dispatch(EventFn<T> func)
+		bool Dispatch(Event& e)
 		{
-			if (mEvent.getEventType() == T::getStaticType())
+			size_t numEventFNs = mEventFNs.size();
+			for (size_t i =0; i < numEventFNs; ++i)
 			{
-				mEvent.mHandled = func(*(T*)&mEvent);
-				return true;
+				e.mHandled = mEventFNs[i](*(Event*)&e);
+				if (e.mHandled)
+					return true;
 			}
-			return false;
+			return e.mHandled;
 		}
 	private:
-		Event& mEvent;
+		std::vector<EventFn> mEventFNs;
 	};
+
+	class EventManager
+	{
+	public:
+		void registerDispatchFunction(EventType type, EventDispatcher::EventFn dispatchFunc);
+		bool processEvent(Event& e);
+
+	private:
+		std::map<EventType, EventDispatcher> mEventDispatchers;
+	};
+
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
 }
 
 #endif

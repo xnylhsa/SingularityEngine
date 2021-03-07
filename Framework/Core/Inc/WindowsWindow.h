@@ -2,6 +2,9 @@
 #define SINGULARITY_ENGINE_WINDOWS_WINDOW
 #include "Common.h"
 #include "Window.h"
+#include "ApplicationEvent.h"
+#include "MouseEvent.h"
+#include "KeyEvent.h"
 namespace SingularityEngine::Core
 {
 
@@ -47,6 +50,25 @@ namespace SingularityEngine::Core
 		inline HINSTANCE getInstance() { return mInstance; }
 
 		inline void* getNativeWindow() override { return mWindow; }
+		SingularityInputType convertInput(int key) { return mInputConverter.convert(key); }
+		void propigateEvent(Event& event);
+
+		bool isCursorLocked() override;
+
+
+		void setCursorLocked(bool isLocked) override;
+
+
+		bool clipCursorToWindow() override;
+
+
+		void setClipCursor(bool isClipped) override;
+
+
+		bool useRawInput() override;
+
+
+		void setUseRawInput(bool useRawInput) override;
 
 	private:
 		void Initialize(HINSTANCE instance, WNDPROC wndProcFunction);
@@ -59,9 +81,13 @@ namespace SingularityEngine::Core
 		int mWidth;
 		int mHeight;
 		std::string mAppName;
+		InputConverter mInputConverter;
 		EventCallBackFn mEventCallback;
 		HINSTANCE mInstance;
 		HWND mWindow;
+		bool mIsCursorLocked = false;
+		bool mShouldClipCursor = false;
+		bool mUseRawInput = false;
 	};
 }
 

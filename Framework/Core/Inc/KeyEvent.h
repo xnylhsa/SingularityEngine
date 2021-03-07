@@ -2,42 +2,40 @@
 #define SINGULARITY_KEY_EVENT
 #include "Event.h"
 
+
 namespace SingularityEngine::Core
 {
 	class KeyEvent : public Event
 	{
 	public:
-		inline int GetKeyCode() const { return mKeyCode; }
+		inline SingularityInputType GetKeyCode() const { return mKeyCode; }
 		EVENT_CLASS_CATEGORY(EventCategory::EventCategoryKeyboard | EventCategory::EventCategoryInput)
 	protected:
-		KeyEvent(int keyCode) : mKeyCode(keyCode) {}
-		int mKeyCode = INT_MAX;
+		KeyEvent(SingularityInputType keyCode) : mKeyCode(keyCode) {}
+		SingularityInputType mKeyCode = SingularityInputType::SEINPUTMAX;
 	};
 
 	class KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keyCode, int repeatCount) : KeyEvent(keyCode), mRepeatCount(repeatCount) {}
-		inline int GetRepeatCount() const { return mRepeatCount; }
+		KeyPressedEvent(SingularityInputType keyCode) : KeyEvent(keyCode) {}
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyPressedEvent: " << mKeyCode << " (" << mRepeatCount << " repeats)";
+			ss << "KeyPressedEvent: " << magic_enum::enum_name(mKeyCode);
 			return ss.str();
 		}
 		EVENT_CLASS_TYPE(KeyPressed)
-	private:
-		int mRepeatCount = INT_MAX;
 	};
 
 	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keyCode) : KeyEvent(keyCode) {}
+		KeyReleasedEvent(SingularityInputType keyCode) : KeyEvent(keyCode) {}
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyReleasedEvent: " << mKeyCode;
+			ss << "KeyReleasedEvent: " << magic_enum::enum_name(mKeyCode);
 			return ss.str();
 		}
 		EVENT_CLASS_TYPE(KeyReleased)

@@ -17,7 +17,7 @@ protected:
 
 	void OnTerminate() override;
 
-
+	bool OnResize(Core::Event& e);
 	void OnUpdate() override;
 
 private:
