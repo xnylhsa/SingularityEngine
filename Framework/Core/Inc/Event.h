@@ -21,7 +21,10 @@ namespace SingularityEngine::Core
 		MouseButtonPressed,
 		MouseButtonReleased,
 		MouseMoved,
-		MouseScrolled
+		MouseScrolled,
+		GamepadButtonPressed,
+		GamepadButtonReleased,
+		GamepadJoystickMoved
 	};
 
 	enum EventCategory
@@ -32,6 +35,8 @@ namespace SingularityEngine::Core
 		EventCategoryKeyboard = 4,
 		EventCategoryMouse = 8,
 		EventCategoryMouseButton = 16,
+		EventCategoryGamepadButton = 32,
+		EventCategoryGamepad = 64,
 		EventCategoryMaxEnum = UINT32_MAX
 	};
 

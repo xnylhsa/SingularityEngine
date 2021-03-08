@@ -48,21 +48,21 @@ namespace SingularityEngine::Core
 	class MouseButtonEvent : public Event
 	{
 	public:
-		inline SingularityInputType getMouseButton() { return mButton; }
+		inline int getMouseButton() { return mButton; }
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 	protected:
-		MouseButtonEvent(SingularityInputType button) : mButton(button) {}
-		SingularityInputType mButton;
+		MouseButtonEvent(int button) : mButton(button) {}
+		int mButton;
 	};
 
 	class MousePressedEvent : public MouseButtonEvent
 	{
 	public:
-		MousePressedEvent(SingularityInputType button) : MouseButtonEvent(button) {}
+		MousePressedEvent(int button) : MouseButtonEvent(button) {}
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "MousePressedEvent: " << (int)mButton;
+			ss << "MousePressedEvent: " << mButton;
 			return ss.str();
 		}
 
@@ -72,11 +72,11 @@ namespace SingularityEngine::Core
 	class MouseReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseReleasedEvent(SingularityInputType button) : MouseButtonEvent(button) {}
+		MouseReleasedEvent(int button) : MouseButtonEvent(button) {}
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseReleasedEvent: " << (int)mButton;
+			ss << "MouseReleasedEvent: " << mButton;
 			return ss.str();
 		}
 

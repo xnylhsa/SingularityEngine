@@ -2,7 +2,6 @@
 #define INCLUDED_CORE_WINDOW_H
 #include "Common.h"
 #include "Event.h"
-#include "InputConverter.h"
 namespace SingularityEngine::Core {
 
 		struct WindowProperties

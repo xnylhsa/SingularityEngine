@@ -8,12 +8,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Core::WindowProperties props;
 	props.useVync = true;
 	props.mTitle = "Hello Vulkan";
-	GameApp myApp;
-	myApp.Initialize(props);
-	while (myApp.IsRunning())
+	Core::Application::create(props, new GameApp());
 	{
-		myApp.Update();
+		auto* myApp = dynamic_cast<GameApp*>(Core::Application::get());
+		while (myApp->isRunning())
+		{
+			myApp->update();
+		}
 	}
-	myApp.Terminate();
+	Core::Application::destroy();
 	return 0;
 }

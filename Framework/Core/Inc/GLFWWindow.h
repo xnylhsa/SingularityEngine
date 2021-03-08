@@ -55,7 +55,6 @@ namespace SingularityEngine::Core
 			std::string Title;
 			unsigned int Width = 0, Height = 0;
 			bool VSync = true;
-			InputConverter inputConverter;
 			EventCallBackFn eventCallback = nullptr;
 		};
 		WindowData mWindowData;

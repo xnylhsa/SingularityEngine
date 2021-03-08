@@ -5,6 +5,7 @@
 #include "ApplicationEvent.h"
 #include "MouseEvent.h"
 #include "KeyEvent.h"
+
 namespace SingularityEngine::Core
 {
 
@@ -50,7 +51,6 @@ namespace SingularityEngine::Core
 		inline HINSTANCE getInstance() { return mInstance; }
 
 		inline void* getNativeWindow() override { return mWindow; }
-		SingularityInputType convertInput(int key) { return mInputConverter.convert(key); }
 		void propigateEvent(Event& event);
 
 		bool isCursorLocked() override;
@@ -81,7 +81,6 @@ namespace SingularityEngine::Core
 		int mWidth;
 		int mHeight;
 		std::string mAppName;
-		InputConverter mInputConverter;
 		EventCallBackFn mEventCallback;
 		HINSTANCE mInstance;
 		HWND mWindow;

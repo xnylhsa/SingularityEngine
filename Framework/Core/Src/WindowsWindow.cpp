@@ -35,6 +35,14 @@ namespace
 			window->propigateEvent(closeEvent);
 			return 0;
 		}
+		case WM_SIZE:
+		{
+			WORD width = HIWORD(lParam);
+			WORD height = LOWORD(lParam);
+			WindowResizeEvent resizeEvent((unsigned int)width, (unsigned int)height);
+			window->propigateEvent(resizeEvent);
+			break;
+		}
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
 			if (wParam < 256)
@@ -51,8 +59,7 @@ namespace
 					UINT first = 0xE0;
 					scanCode = (first << 8) | scanCode;
 				}
-				SingularityInputType inputType = window->convertInput((int)scanCode);
-				KeyPressedEvent pressedEvent(inputType);
+				KeyPressedEvent pressedEvent((int)scanCode);
 				window->propigateEvent(pressedEvent);
 				return true;
 			}
@@ -69,8 +76,7 @@ namespace
 					UINT first = 0xE0;
 					scanCode = (first << 8) | scanCode;
 				}
-				SingularityInputType inputType = window->convertInput((int)scanCode);
-				KeyReleasedEvent pressedEvent(inputType);
+				KeyReleasedEvent pressedEvent((int)scanCode);
 				window->propigateEvent(pressedEvent);
 				return true;
 			}
@@ -79,7 +85,7 @@ namespace
 		{
 			if (window->useRawInput()) { break; }
 
-			MousePressedEvent pressedEvent(SingularityInputType::SEMouseLeft);
+			MousePressedEvent pressedEvent((int)MouseInputType::SEMouseLeft);
 			window->propigateEvent(pressedEvent);
 			return true;
 		}
@@ -87,7 +93,7 @@ namespace
 		{
 			if (window->useRawInput()) break;
 
-			MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseLeft);
+			MouseReleasedEvent pressedEvent((int)MouseInputType::SEMouseLeft);
 			window->propigateEvent(pressedEvent);
 			return true;
 		}
@@ -95,7 +101,7 @@ namespace
 		{
 			if (window->useRawInput()) break;
 
-			MousePressedEvent pressedEvent(SingularityInputType::SEMouseRight);
+			MousePressedEvent pressedEvent((int)MouseInputType::SEMouseRight);
 			window->propigateEvent(pressedEvent);
 			return true;
 		}
@@ -103,7 +109,7 @@ namespace
 		{
 			if (window->useRawInput()) break;
 
-			MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseRight);
+			MouseReleasedEvent pressedEvent((int)MouseInputType::SEMouseRight);
 			window->propigateEvent(pressedEvent);
 			return true;
 		}
@@ -111,7 +117,7 @@ namespace
 		{
 			if (window->useRawInput()) break;
 
-			MousePressedEvent pressedEvent(SingularityInputType::SEMouseMiddle);
+			MousePressedEvent pressedEvent((int)MouseInputType::SEMouseMiddle);
 			window->propigateEvent(pressedEvent);
 			return true;
 		}
@@ -119,7 +125,7 @@ namespace
 		{
 			if (window->useRawInput()) break;
 
-			MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseMiddle);
+			MouseReleasedEvent pressedEvent((int)MouseInputType::SEMouseMiddle);
 			window->propigateEvent(pressedEvent);
 			return true;
 		}
@@ -131,12 +137,12 @@ namespace
 			int button = (signed short)(lParam >> 16);
 			if (button & XBUTTON1)
 			{
-				MousePressedEvent pressedEvent(SingularityInputType::SEMouseButton4);
+				MousePressedEvent pressedEvent((int)MouseInputType::SEMouseButton4);
 				window->propigateEvent(pressedEvent);
 			}
 			if (button & XBUTTON2)
 			{
-				MousePressedEvent pressedEvent(SingularityInputType::SEMouseButton5);
+				MousePressedEvent pressedEvent((int)MouseInputType::SEMouseButton5);
 				window->propigateEvent(pressedEvent);
 			}
 			return true;
@@ -149,12 +155,12 @@ namespace
 			int button = (signed short)(lParam >> 16);
 			if (button & XBUTTON1)
 			{
-				MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseButton4);
+				MouseReleasedEvent pressedEvent((int)MouseInputType::SEMouseButton4);
 				window->propigateEvent(pressedEvent);
 			}
 			if (button & XBUTTON2)
 			{
-				MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseButton5);
+				MouseReleasedEvent pressedEvent((int)MouseInputType::SEMouseButton5);
 				window->propigateEvent(pressedEvent);
 			}
 			return true;
@@ -256,52 +262,52 @@ namespace
 
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_1_DOWN)
 				{
-					MousePressedEvent pressedEvent(SingularityInputType::SEMouseLeft);
+					MousePressedEvent pressedEvent(VK_LBUTTON);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_1_UP)
 				{
-					MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseLeft);
+					MouseReleasedEvent pressedEvent(VK_LBUTTON);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_2_DOWN)
 				{
-					MousePressedEvent pressedEvent(SingularityInputType::SEMouseRight);
+					MousePressedEvent pressedEvent(VK_RBUTTON);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_2_UP)
 				{
-					MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseRight);
+					MouseReleasedEvent pressedEvent(VK_RBUTTON);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_3_DOWN)
 				{
-					MousePressedEvent pressedEvent(SingularityInputType::SEMouseMiddle);
+					MousePressedEvent pressedEvent(VK_MBUTTON);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_3_UP)
 				{
-					MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseMiddle);
+					MouseReleasedEvent pressedEvent(VK_MBUTTON);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_4_DOWN)
 				{
-					MousePressedEvent pressedEvent(SingularityInputType::SEMouseButton4);
+					MousePressedEvent pressedEvent(VK_XBUTTON1);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_4_UP)
 				{
-					MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseButton4);
+					MouseReleasedEvent pressedEvent(VK_XBUTTON1);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_5_DOWN)
 				{
-					MousePressedEvent pressedEvent(SingularityInputType::SEMouseButton5);
+					MousePressedEvent pressedEvent(VK_XBUTTON2);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_5_UP)
 				{
-					MouseReleasedEvent pressedEvent(SingularityInputType::SEMouseButton5);
+					MouseReleasedEvent pressedEvent(VK_XBUTTON2);
 					window->propigateEvent(pressedEvent);
 				}
 				if (mouseButtonStateFlag & RI_MOUSE_WHEEL)
@@ -325,14 +331,12 @@ namespace
 				{
 					if (keyMsg == WM_KEYDOWN)
 					{
-						SingularityInputType inputType = window->convertInput((int)scanCode);
-						KeyPressedEvent pressedEvent(inputType);
+						KeyPressedEvent pressedEvent((int)scanCode);
 						window->propigateEvent(pressedEvent);
 					}
 					else if (keyMsg == WM_KEYUP)
 					{
-						SingularityInputType inputType = window->convertInput((int)scanCode);
-						KeyReleasedEvent pressedEvent(inputType);
+						KeyReleasedEvent pressedEvent((int)scanCode);
 						window->propigateEvent(pressedEvent);
 					}
 
@@ -388,7 +392,6 @@ void WindowsWindow::Initialize(HINSTANCE instance, WNDPROC wndProcFunction)
 		return;
 	}
 	mInstance = instance;
-	mInputConverter.initialize();
 
 	//Every windows window requires at least one window object. three things are involved;
 	//1) Register a window class/
@@ -511,4 +514,6 @@ bool WindowsWindow::useRawInput()
 void WindowsWindow::setUseRawInput(bool useRawInput)
 {
 	mUseRawInput = useRawInput;
+
 }
+

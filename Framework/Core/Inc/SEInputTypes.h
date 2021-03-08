@@ -3,7 +3,39 @@
 
 namespace SingularityEngine::Core
 {
-	enum class SingularityInputType
+	enum class MouseInputType
+	{
+		SEMouseLeft,
+		SEMouseRight,
+		SEMouseMiddle,
+		SEMouseButton4,
+		SEMouseButton5,
+		MOUSE_INPUT_MAX
+	};
+
+	enum class GamepadInputType
+	{
+		//Gamepad
+		SEGamepad_FaceButtonDown,
+		SEGamepad_FaceButtonLeft,
+		SEGamepad_FaceButtonRight,
+		SEGamepad_FaceButtonUp,
+		SEGamepad_DPadUp,
+		SEGamepad_DPadDown,
+		SEGamepad_DPadLeft,
+		SEGamepad_DPadRight,
+		SEGamepad_Start,
+		SEGamepad_Select,
+		SEGamepad_LeftBumper,
+		SEGamepad_RightBumper,
+		SEGamepad_LeftTrigger,
+		SEGamepad_RightTrigger,
+		SEGamepad_LeftStickDown,
+		SEGamepad_RightStickDown,
+		GAMEPAD_INPUT_MAX
+	};
+
+	enum class KeyboardInputType
 	{
 		SEKey_Escape = 0,
 		SEKey_Grave,
@@ -104,29 +136,7 @@ namespace SingularityEngine::Core
 		SEKey_B,
 		SEKey_N,
 		SEKey_M,
-		SEMouseLeft,
-		SEMouseRight,
-		SEMouseMiddle,
-		SEMouseButton4,
-		SEMouseButton5,
-		//Gamepad
-		SEGamepad_FaceButtonDown,
-		SEGamepad_FaceButtonLeft,
-		SEGamepad_FaceButtonRight,
-		SEGamepad_FaceButtonUp,
-		SEGamepad_DPadUp,
-		SEGamepad_DPadDown,
-		SEGamepad_DPadLeft,
-		SEGamepad_DPadRight,
-		SEGamepad_Start,
-		SEGamepad_Select,
-		SEGamepad_LeftBumper,
-		SEGamepad_RightBumper,
-		SEGamepad_LeftTrigger,
-		SEGamepad_RightTrigger,
-		SEGamepad_LeftStickDown,
-		SEGamepad_RightStickDown,
-		SEINPUTMAX
+		KEYBOARD_INPUT_MAX
 	};
 }
 

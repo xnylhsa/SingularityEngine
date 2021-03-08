@@ -38,7 +38,6 @@ void SingularityEngine::Core::WindowGLFW::Init(const WindowProperties& props)
 	mWindowData.Width = props.mWidth;
 	mWindowData.VSync = props.useVync;
 	mWindowData.eventCallback = nullptr;
-	mWindowData.inputConverter.initialize();
 	if (!sGLFWInitialized)
 	{
 		int success = glfwInit();
@@ -69,7 +68,7 @@ void SingularityEngine::Core::WindowGLFW::Init(const WindowProperties& props)
 
 	glfwSetKeyCallback(mWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		UNREFERENCED_PARAMETER(scancode);
+		UNREFERENCED_PARAMETER(key);
 		UNREFERENCED_PARAMETER(action);
 		UNREFERENCED_PARAMETER(mods);
 
@@ -78,22 +77,19 @@ void SingularityEngine::Core::WindowGLFW::Init(const WindowProperties& props)
 		{
 			case GLFW_PRESS:
 			{
-				SingularityInputType inputType = data.inputConverter.convert(key);
-				KeyPressedEvent keyEvent(inputType);
+				KeyPressedEvent keyEvent(scancode);
 				data.eventCallback(keyEvent);
 				break;
 			}
 			case GLFW_RELEASE:
 			{
-				SingularityInputType inputType = data.inputConverter.convert(key);
-				KeyReleasedEvent keyEvent(inputType);
+				KeyReleasedEvent keyEvent(scancode);
 				data.eventCallback(keyEvent);
 				break;
 			}
 			case GLFW_REPEAT:
 			{
-				SingularityInputType inputType = data.inputConverter.convert(key);
-				KeyPressedEvent keyEvent(inputType);
+				KeyPressedEvent keyEvent(scancode);
 				data.eventCallback(keyEvent);
 				break;
 			}
@@ -109,15 +105,13 @@ void SingularityEngine::Core::WindowGLFW::Init(const WindowProperties& props)
 		{
 			case GLFW_PRESS:
 			{
-				SingularityInputType inputType = data.inputConverter.convert(button);
-				MousePressedEvent mouseEvent(inputType);
+				MousePressedEvent mouseEvent(button);
 				data.eventCallback(mouseEvent);
 				break;
 			}
 			case GLFW_RELEASE:
 			{
-				SingularityInputType inputType = data.inputConverter.convert(button);
-				MouseReleasedEvent mouseEvent(inputType);
+				MouseReleasedEvent mouseEvent(button);
 				data.eventCallback(mouseEvent);
 				break;
 			}

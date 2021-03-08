@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Inc\InputConverter.h" />
     <ClInclude Include="Inc\GLFWWindow.h" />
     <ClInclude Include="Inc\AppInfoManaager.h" />
     <ClInclude Include="Inc\Application.h" />
@@ -59,19 +58,22 @@
     <ClInclude Include="Inc\Random.h" />
     <ClInclude Include="Inc\PlatformDetection.h" />
     <ClInclude Include="Inc\MagicEnum.hpp" />
+    <ClInclude Include="Inc\InputManager.h" />
+    <ClInclude Include="Inc\InputManagerWindows.h" />
     <ClInclude Include="Src\ECSEntityManager.cpp" />
     <ClInclude Include="Inc\SEInputTypes.h" />
+    <ClInclude Include="Inc\GamepadEvent.h" />
     <ClInclude Include="Src\Precompiled.h" />
     <ClInclude Include="Inc\StringCasting.h" />
     <ClInclude Include="Inc\WindowsWindow.h" />
     <ClInclude Include="Src\WindowsInputMapping.cpp" />
-    <ClInclude Include="Inc\WindowsInputMapping.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\GLFWWindow.cpp" />
     <ClCompile Include="Src\ApplicationEvent.cpp" />
     <ClCompile Include="Src\Event.cpp" />
-    <ClCompile Include="Src\InputConverter.cpp" />
+    <ClCompile Include="Src\InputManager.cpp" />
+    <ClCompile Include="Src\InputManagerWindows.cpp" />
     <ClCompile Include="Src\KeyEvent.cpp" />
     <ClCompile Include="Src\MouseEvent.cpp" />
     <ClCompile Include="Src\BlockAllocator.cpp" />

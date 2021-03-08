@@ -8,21 +8,21 @@ namespace SingularityEngine::Core
 	class KeyEvent : public Event
 	{
 	public:
-		inline SingularityInputType GetKeyCode() const { return mKeyCode; }
+		inline int GetKeyCode() const { return mKeyCode; }
 		EVENT_CLASS_CATEGORY(EventCategory::EventCategoryKeyboard | EventCategory::EventCategoryInput)
 	protected:
-		KeyEvent(SingularityInputType keyCode) : mKeyCode(keyCode) {}
-		SingularityInputType mKeyCode = SingularityInputType::SEINPUTMAX;
+		KeyEvent(int keyCode) : mKeyCode(keyCode) {}
+		int mKeyCode = -1;
 	};
 
 	class KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(SingularityInputType keyCode) : KeyEvent(keyCode) {}
+		KeyPressedEvent(int keyCode) : KeyEvent(keyCode) {}
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyPressedEvent: " << magic_enum::enum_name(mKeyCode);
+			ss << "KeyPressedEvent: " << mKeyCode;
 			return ss.str();
 		}
 		EVENT_CLASS_TYPE(KeyPressed)
@@ -31,11 +31,11 @@ namespace SingularityEngine::Core
 	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(SingularityInputType keyCode) : KeyEvent(keyCode) {}
+		KeyReleasedEvent(int keyCode) : KeyEvent(keyCode) {}
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyReleasedEvent: " << magic_enum::enum_name(mKeyCode);
+			ss << "KeyReleasedEvent: " << mKeyCode;
 			return ss.str();
 		}
 		EVENT_CLASS_TYPE(KeyReleased)

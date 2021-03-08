@@ -1,5 +1,4 @@
 #include "GameApp.h"
-
 using namespace SingularityEngine;
 bool resizing = false;
 bool prepared = false;
@@ -14,11 +13,9 @@ GameApp::~GameApp()
 
 }
 
-void GameApp::OnInitialize()
+void GameApp::onInitialize()
 {
-	//Input::InputSystem::StaticInitialize(getWindow().GetWindowHandle(), false);
-
-	RegisterEventFunc(Core::EventType::WindowResize, BIND_EVENT_FN(GameApp::OnResize));
+	registerEventFunc(Core::EventType::WindowResize, BIND_EVENT_FN(GameApp::onResize));
 	SingularityEngine::Graphics::StartupParameters startupInfo;
 	Core::Window* window = getWindow();
 	startupInfo.mAppName = window->getTitle();
@@ -32,36 +29,32 @@ void GameApp::OnInitialize()
 	prepared = true;
 }
 
-void GameApp::OnTerminate()
+void GameApp::onTerminate()
 {
 	Graphics::VulkanContext::StaticTerminate();
 }
 
-bool GameApp::OnResize(Core::Event& e)
+bool GameApp::onResize(Core::Event& e)
 {
-	if (IsFocused())
+	prepared = false;
+	if (isFocused())
 	{
 		Core::WindowResizeEvent& event = *dynamic_cast<Core::WindowResizeEvent*>(&e);
 		Graphics::VulkanContext::Get()->onWindowSizeChanged((uint32_t)event.getWidth(), (uint32_t)event.getHeight());
+		prepared = true;
 	}
 	return true;
 }
 
-void GameApp::OnUpdate()
+void GameApp::onUpdate()
 {
-	//if (getWindow().ProcessMessage())
-	//{
-	//	Kill();
-	//	return;
-	//}
-	//auto input = Input::InputSystem::Get();
-	//input->Update();
-	//if (input->IsKeyDown((uint32_t)Input::Keys::ESCAPE))
-	//{
-	//	PostQuitMessage(0);
-	//	return;
-	//}
-	if (prepared && IsFocused() && IsRunning())
+	if (Core::InputManager::isKeyPressed(Core::KeyboardInputType::SEKey_Escape))
+	{
+		kill();
+		return;
+	}
+
+	if (prepared && isFocused() && isRunning())
 	{
 		Graphics::VulkanContext::Get()->beginRender();
 		Graphics::VulkanContext::Get()->endRender();

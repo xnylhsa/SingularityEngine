@@ -1,8 +1,16 @@
 #include "Precompiled.h"
 #include "Application.h"
 #include "Debug.h"
+#include "DeleteUtil.h"
+#include "InputManager.h"
+
+
+
+SingularityEngine::Core::Application* SingularityEngine::Core::Application::sInstance = nullptr;
+
 using namespace SingularityEngine;
 using namespace Core;
+
 
 Application::Application(): mRunning(true)
 {
@@ -12,35 +20,38 @@ Application::~Application()
 {
 }
 
-void Application::Initialize(WindowProperties windowProps)
+void Application::initialize(WindowProperties windowProps)
 {
 	mWindow = Window::create(windowProps);
-	mWindow->setEventCallback(BIND_EVENT_FN(Application::OnEvent));
-	mEventManager.registerDispatchFunction(Core::EventType::WindowClose, BIND_EVENT_FN(Application::OnWindowClose));
-	mEventManager.registerDispatchFunction(Core::EventType::WindowLostFocus, BIND_EVENT_FN(Application::OnWindowLostFocus));
-	mEventManager.registerDispatchFunction(Core::EventType::WindowFocus, BIND_EVENT_FN(Application::OnWindowFocus));
-	OnInitialize();
+	mWindow->setEventCallback(BIND_EVENT_FN(Application::onEvent));
+	mEventManager.registerDispatchFunction(Core::EventType::WindowClose, BIND_EVENT_FN(Application::onWindowClose));
+	mEventManager.registerDispatchFunction(Core::EventType::WindowLostFocus, BIND_EVENT_FN(Application::onWindowLostFocus));
+	mEventManager.registerDispatchFunction(Core::EventType::WindowFocus, BIND_EVENT_FN(Application::onWindowFocus));
+	InputManager::Initalize();
+	onInitialize();
 }
 
-void Application::Terminate()
+void Application::terminate()
 {
-	OnTerminate();
+	onTerminate();
+	InputManager::Teardown();
 	mWindow.reset();
 	mWindow = nullptr;
 }
 
-void Application::Update()
+void Application::update()
 {
+	InputManager::pollInput();
 	mWindow->onUpdate();
-	OnUpdate();
+	onUpdate();
 }
 
-void Application::Run()
+void Application::run()
 {
 
 }
 
-void Application::OnEvent(Event& e)
+void Application::onEvent(Event& e)
 {
 	mEventManager.processEvent(e);
 	//EventDispatcher dispatcher(e);
@@ -49,15 +60,15 @@ void Application::OnEvent(Event& e)
 	LOG("%s",e.toString().c_str());
 }
 
-bool Application::OnWindowClose(Core::Event& e)
+bool Application::onWindowClose(Core::Event& e)
 {
 	WindowCloseEvent& closeEvent = *dynamic_cast<WindowCloseEvent*>(&e);
 	UNREFERENCED_PARAMETER(closeEvent);
-	Kill();
+	kill();
 	return true;
 }
 
-bool Application::OnWindowLostFocus(Core::Event& e)
+bool Application::onWindowLostFocus(Core::Event& e)
 {
 	WindowLostFocusEvent& event = *dynamic_cast<WindowLostFocusEvent*>(&e);
 	UNREFERENCED_PARAMETER(event);
@@ -65,7 +76,7 @@ bool Application::OnWindowLostFocus(Core::Event& e)
 	return true;
 }
 
-bool Application::OnWindowFocus(Core::Event& e)
+bool Application::onWindowFocus(Core::Event& e)
 {
 	WindowFocusEvent& event = *dynamic_cast<WindowFocusEvent*>(&e);
 	UNREFERENCED_PARAMETER(event);
@@ -73,10 +84,25 @@ bool Application::OnWindowFocus(Core::Event& e)
 	return true;
 }
 
-bool Application::OnWindowResize(Core::Event& e)
+bool Application::create(WindowProperties windowProps, Application* appPtr)
 {
-	UNREFERENCED_PARAMETER(e);
-
-	//mWindow->onResize
+	ASSERT(sInstance == nullptr, "[Core::App] app instance already created!");
+	if (sInstance != nullptr) return false;
+	sInstance = std::move(appPtr);
+	appPtr = nullptr;
+	sInstance->initialize(windowProps);
 	return true;
+}
+
+void Application::destroy()
+{
+	sInstance->terminate();
+	delete sInstance;
+	sInstance = nullptr;
+}
+
+SingularityEngine::Core::Application* Application::get()
+{
+	ASSERT(sInstance != nullptr, "[Core::App] App instance was never created!");
+	return sInstance;
 }

@@ -127,20 +127,23 @@
     <ClInclude Include="Inc\PlatformDetection.h">
       <Filter>Inc\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\InputConverter.h">
-      <Filter>Inc\Platform</Filter>
-    </ClInclude>
     <ClInclude Include="Src\WindowsInputMapping.cpp">
       <Filter>Src\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\WindowsInputMapping.h">
-      <Filter>Inc\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Inc\SEInputTypes.h">
       <Filter>Inc\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Inc\MagicEnum.hpp">
       <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\InputManager.h">
+      <Filter>Inc\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\InputManagerWindows.h">
+      <Filter>Inc\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GamepadEvent.h">
+      <Filter>Inc\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -284,8 +287,7 @@
     <ClCompile Include="Src\GLFWWindow.cpp">
       <Filter>Src\Platform\GLFW</Filter>
     </ClCompile>
-    <ClCompile Include="Src\InputConverter.cpp">
-      <Filter>Src\Platform</Filter>
-    </ClCompile>
+    <ClCompile Include="Src\InputManager.cpp" />
+    <ClCompile Include="Src\InputManagerWindows.cpp" />
   </ItemGroup>
 </Project>
