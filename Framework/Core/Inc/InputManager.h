@@ -41,7 +41,6 @@ namespace SingularityEngine::Core
 		inline static bool isMouseLockedToWindow() { return sInstance->mIsMouseLockedToWindow; }
 		inline static bool isClippingMouseToWindow() { return sInstance->mShouldClipMouseToWindow; }
 		inline static bool isShowingMouseCursor() { return sInstance->mShowMouseCursor; }
-
 	protected:
 		virtual void registerKeyMappings() = 0;
 		virtual void registerEventBindings() = 0;

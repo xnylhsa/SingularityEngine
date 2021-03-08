@@ -2,8 +2,10 @@
 #define SINGULARITY_INPUT_MANAGER_GLFW
 #include "Common.h"
 #include "InputManager.h"
+struct GLFWcursor;
 namespace SingularityEngine::Core
 {
+
 	class InputManagerGLFW : public InputManager
 	{
 	public:
@@ -63,6 +65,7 @@ namespace SingularityEngine::Core
 		void onPollInput() override;
 
 	private:
+		GLFWcursor* mCursor = nullptr;
 	};
 }
 

@@ -385,6 +385,15 @@ namespace SingularityEngine::Core
 		}
 		mMouseScreenPositionX = mouseEvent.getX();
 		mMouseScreenPositionY = mouseEvent.getY();
+		Window* window = Application::get()->getWindow();
+		mMouseLeftEdge = mMouseScreenPositionX <= 0;
+		mMouseRightEdge = mMouseScreenPositionX + 1 >= window->getWidth();
+		mMouseTopEdge = mMouseScreenPositionX <= 0;
+		mMouseBottomEdge = mMouseScreenPositionX + 1 >= window->getHeight();
+		if (mIsMouseLockedToWindow)
+		{
+			SetCursorPos(window->getWidth() >> 1, window->getHeight() >> 1);
+		}
 		return true;
 	}
 

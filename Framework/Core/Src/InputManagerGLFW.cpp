@@ -81,6 +81,31 @@ namespace SingularityEngine::Core
 		}
 		mMouseScreenPositionX = mouseEvent.getX();
 		mMouseScreenPositionY = mouseEvent.getY();
+		Window* window = Application::get()->getWindow();
+
+		mMouseLeftEdge = mMouseScreenPositionX <= 0;
+		mMouseRightEdge = mMouseScreenPositionX + 1 >= window->getWidth();
+		mMouseTopEdge = mMouseScreenPositionY <= 0;
+		mMouseBottomEdge = mMouseScreenPositionY + 1 >= window->getHeight();
+		if (mShouldClipMouseToWindow)
+		{
+			if (mMouseLeftEdge)
+			{
+				glfwSetCursorPos((GLFWwindow*)window->getNativeWindow(), 0, mMouseScreenPositionY);
+			}
+			else if (mMouseRightEdge)
+			{
+				glfwSetCursorPos((GLFWwindow*)window->getNativeWindow(), window->getWidth(), mMouseScreenPositionY);
+			}
+			if (mMouseTopEdge)
+			{
+				glfwSetCursorPos((GLFWwindow*)window->getNativeWindow(), mMouseScreenPositionX, 0);
+			}
+			else if (mMouseBottomEdge)
+			{
+				glfwSetCursorPos((GLFWwindow*)window->getNativeWindow(), mMouseScreenPositionX, window->getHeight());
+			}
+		}
 		return true;
 	}
 
@@ -174,16 +199,60 @@ namespace SingularityEngine::Core
 	void InputManagerGLFW::setMouseClipToWindowPlatformImpl(bool clip)
 	{
 		mShouldClipMouseToWindow = clip;
+		Application* app = Application::get();
+		Window* myWindow = app->getWindow();
+		auto* window = (GLFWwindow*)(myWindow->getNativeWindow());
+
+		if (mShouldClipMouseToWindow)
+		{
+			mCursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+			glfwSetCursor(window, mCursor);
+		}
+		else
+		{
+			glfwSetCursor(window, nullptr);
+			glfwDestroyCursor(mCursor);
+		}
 	}
 
 	void InputManagerGLFW::setShowSystemCursorPlatformImpl(bool showCursor)
 	{
 		mShowMouseCursor = showCursor;
+		if (mShowMouseCursor && !mIsMouseLockedToWindow)
+		{
+			Application* app = Application::get();
+			Window* myWindow = app->getWindow();
+			auto* window = (GLFWwindow*)(myWindow->getNativeWindow());
+
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+		else if(!mIsMouseLockedToWindow)
+		{
+			Application* app = Application::get();
+			Window* myWindow = app->getWindow();
+			auto* window = (GLFWwindow*)(myWindow->getNativeWindow());
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		}
 	}
 
 	void InputManagerGLFW::setLockedMousePlatformImpl(bool locked)
 	{
 		mIsMouseLockedToWindow = locked;
+		if (mIsMouseLockedToWindow)
+		{
+			Application* app = Application::get();
+			Window* myWindow = app->getWindow();
+			auto* window = (GLFWwindow*)(myWindow->getNativeWindow());
+
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+		else
+		{
+			Application* app = Application::get();
+			Window* myWindow = app->getWindow();
+			auto* window = (GLFWwindow*)(myWindow->getNativeWindow());		
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
 	}
 
 	void InputManagerGLFW::registerEventBindings()

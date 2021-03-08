@@ -127,9 +127,6 @@
     <ClInclude Include="Inc\PlatformDetection.h">
       <Filter>Inc\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Src\WindowsInputMapping.cpp">
-      <Filter>Src\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\SEInputTypes.h">
       <Filter>Inc\Platform</Filter>
     </ClInclude>
@@ -147,6 +144,12 @@
     </ClInclude>
     <ClInclude Include="Inc\InputManagerGLFW.h">
       <Filter>Inc\Platform\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Layer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\LayerStack.h">
+      <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,8 +293,20 @@
     <ClCompile Include="Src\GLFWWindow.cpp">
       <Filter>Src\Platform\GLFW</Filter>
     </ClCompile>
-    <ClCompile Include="Src\InputManager.cpp" />
-    <ClCompile Include="Src\InputManagerWindows.cpp" />
-    <ClCompile Include="Src\InputManagerGLFW.cpp" />
+    <ClCompile Include="Src\InputManagerWindows.cpp">
+      <Filter>Src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\InputManagerGLFW.cpp">
+      <Filter>Src\Platform\GLFW</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\InputManager.cpp">
+      <Filter>Src\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Layer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\LayerStack.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

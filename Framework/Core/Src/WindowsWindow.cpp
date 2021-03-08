@@ -220,6 +220,8 @@ namespace
 			{
 				ClipCursor(nullptr);
 			}
+			RECT rect;
+			GetClientRect(handle, &rect);
 		}
 		return true;
 		case WM_INPUT:
@@ -258,7 +260,6 @@ namespace
 			{
 				MouseMovedEvent movedEvent((float)raw->data.mouse.lLastX, (float)raw->data.mouse.lLastY);
 				window->propigateEvent(movedEvent);
-
 				USHORT mouseButtonStateFlag = raw->data.mouse.usButtonFlags;
 
 				if (mouseButtonStateFlag & RI_MOUSE_BUTTON_1_DOWN)

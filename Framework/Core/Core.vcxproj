@@ -40,6 +40,7 @@
     <ClInclude Include="Inc\HandlePool.h" />
     <ClInclude Include="Inc\Hashids.h" />
     <ClInclude Include="Inc\KeyEvent.h" />
+    <ClInclude Include="Inc\LayerStack.h" />
     <ClInclude Include="Inc\MemoryUtil.h" />
     <ClInclude Include="Inc\Meta.h" />
     <ClInclude Include="Inc\MetaClass.h" />
@@ -61,15 +62,16 @@
     <ClInclude Include="Inc\InputManager.h" />
     <ClInclude Include="Inc\InputManagerWindows.h" />
     <ClInclude Include="Inc\InputManagerGLFW.h" />
+    <ClInclude Include="Inc\Layer.h" />
     <ClInclude Include="Src\ECSEntityManager.cpp" />
     <ClInclude Include="Inc\SEInputTypes.h" />
     <ClInclude Include="Inc\GamepadEvent.h" />
     <ClInclude Include="Src\Precompiled.h" />
     <ClInclude Include="Inc\StringCasting.h" />
     <ClInclude Include="Inc\WindowsWindow.h" />
-    <ClInclude Include="Src\WindowsInputMapping.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Layer.cpp" />
     <ClCompile Include="Src\InputManagerGLFW.cpp" />
     <ClCompile Include="Src\GLFWWindow.cpp" />
     <ClCompile Include="Src\ApplicationEvent.cpp" />
@@ -77,6 +79,7 @@
     <ClCompile Include="Src\InputManager.cpp" />
     <ClCompile Include="Src\InputManagerWindows.cpp" />
     <ClCompile Include="Src\KeyEvent.cpp" />
+    <ClCompile Include="Src\LayerStack.cpp" />
     <ClCompile Include="Src\MouseEvent.cpp" />
     <ClCompile Include="Src\BlockAllocator.cpp" />
     <ClCompile Include="Src\ECSComponentArray.cpp" />

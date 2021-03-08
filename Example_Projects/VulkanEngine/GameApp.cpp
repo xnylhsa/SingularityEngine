@@ -24,7 +24,6 @@ void GameApp::onInitialize()
 	startupInfo.mPatchVersion = 4;
 
 	startupInfo.mWindow = window;
-
 	Graphics::VulkanContext::StaticInitialize(startupInfo);
 	prepared = true;
 }
