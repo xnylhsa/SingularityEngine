@@ -68,7 +68,7 @@ void SingularityEngine::Core::WindowGLFW::Init(const WindowProperties& props)
 
 	glfwSetKeyCallback(mWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		UNREFERENCED_PARAMETER(key);
+		UNREFERENCED_PARAMETER(scancode);
 		UNREFERENCED_PARAMETER(action);
 		UNREFERENCED_PARAMETER(mods);
 
@@ -77,19 +77,19 @@ void SingularityEngine::Core::WindowGLFW::Init(const WindowProperties& props)
 		{
 			case GLFW_PRESS:
 			{
-				KeyPressedEvent keyEvent(scancode);
+				KeyPressedEvent keyEvent(key);
 				data.eventCallback(keyEvent);
 				break;
 			}
 			case GLFW_RELEASE:
 			{
-				KeyReleasedEvent keyEvent(scancode);
+				KeyReleasedEvent keyEvent(key);
 				data.eventCallback(keyEvent);
 				break;
 			}
 			case GLFW_REPEAT:
 			{
-				KeyPressedEvent keyEvent(scancode);
+				KeyPressedEvent keyEvent(key);
 				data.eventCallback(keyEvent);
 				break;
 			}

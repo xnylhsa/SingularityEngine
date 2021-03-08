@@ -3,6 +3,7 @@
 #include "Debug.h"
 #include "Common.h"
 #include "StringCasting.h"
+#include "InputManager.h"
 using namespace SingularityEngine;
 using namespace SingularityEngine::Core;
 
@@ -47,7 +48,7 @@ namespace
 		case WM_SYSKEYDOWN:
 			if (wParam < 256)
 			{
-				if (window->useRawInput()) { break; }
+				if (InputManager::isUsingRawInput()) { break; }
 				LPARAM params = lParam;
 				params >>= 15;
 	
@@ -68,7 +69,7 @@ namespace
 		case WM_SYSKEYUP:
 			if (wParam < 256)
 			{
-				if (window->useRawInput()) { break; }
+				if (InputManager::isUsingRawInput()) { break; }
 				bool isExtended = (bool)((lParam >> 24) & 1);
 				UINT scanCode = MapVirtualKeyA((UINT)wParam, MAPVK_VK_TO_VSC);
 				if (isExtended)
@@ -83,7 +84,7 @@ namespace
 			break;
 		case WM_LBUTTONDOWN:
 		{
-			if (window->useRawInput()) { break; }
+			if (InputManager::isUsingRawInput()) { break; }
 
 			MousePressedEvent pressedEvent((int)MouseInputType::SEMouseLeft);
 			window->propigateEvent(pressedEvent);
@@ -91,7 +92,7 @@ namespace
 		}
 		case WM_LBUTTONUP:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			MouseReleasedEvent pressedEvent((int)MouseInputType::SEMouseLeft);
 			window->propigateEvent(pressedEvent);
@@ -99,7 +100,7 @@ namespace
 		}
 		case WM_RBUTTONDOWN:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			MousePressedEvent pressedEvent((int)MouseInputType::SEMouseRight);
 			window->propigateEvent(pressedEvent);
@@ -107,7 +108,7 @@ namespace
 		}
 		case WM_RBUTTONUP:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			MouseReleasedEvent pressedEvent((int)MouseInputType::SEMouseRight);
 			window->propigateEvent(pressedEvent);
@@ -115,7 +116,7 @@ namespace
 		}
 		case WM_MBUTTONDOWN:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			MousePressedEvent pressedEvent((int)MouseInputType::SEMouseMiddle);
 			window->propigateEvent(pressedEvent);
@@ -123,7 +124,7 @@ namespace
 		}
 		case WM_MBUTTONUP:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			MouseReleasedEvent pressedEvent((int)MouseInputType::SEMouseMiddle);
 			window->propigateEvent(pressedEvent);
@@ -131,7 +132,7 @@ namespace
 		}
 		case WM_XBUTTONDOWN:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			//int vkFlags = (signed short)(lParam);
 			int button = (signed short)(lParam >> 16);
@@ -149,7 +150,7 @@ namespace
 		}
 		case WM_XBUTTONUP:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			//int vkFlags = (signed short)(lParam);
 			int button = (signed short)(lParam >> 16);
@@ -167,7 +168,7 @@ namespace
 		}
 		case WM_MOUSEWHEEL:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			WORD fwKeys = GET_KEYSTATE_WPARAM(wParam);
 			if ((fwKeys & MK_SHIFT) == 0)
@@ -184,14 +185,14 @@ namespace
 		}
 		case WM_MOUSEMOVE:
 		{
-			if (window->useRawInput()) break;
+			if (InputManager::isUsingRawInput()) break;
 
 			int mouseX = (signed short)(lParam);
 			int mouseY = (signed short)(lParam >> 16);
 			MouseMovedEvent movedEvent((float)mouseX, (float)mouseY);
 			window->propigateEvent(movedEvent);
 
-			if (window->clipCursorToWindow())
+			if (InputManager::isClippingMouseToWindow())
 			{
 				RECT rect;
 				GetClientRect(handle, &rect);
@@ -223,7 +224,7 @@ namespace
 		return true;
 		case WM_INPUT:
 		{
-			if (!window->useRawInput()) break;
+			if (!InputManager::isUsingRawInput()) break;
 			UINT dwSize = 40;
 			static BYTE lpb[40];
 
@@ -343,7 +344,7 @@ namespace
 				}
 
 			}
-			if (window->isCursorLocked())
+			if (InputManager::isMouseLockedToWindow())
 			{
 				int wWidth = GetSystemMetrics(SM_CXSCREEN);
 				int wHeight = GetSystemMetrics(SM_CYSCREEN);
@@ -485,35 +486,3 @@ void WindowsWindow::propigateEvent(Event& event)
 	}
 	ASSERT(false, "[Core::Window] no event callback registered!");
 }
-
-bool WindowsWindow::isCursorLocked()
-{
-	return mIsCursorLocked;
-}
-
-void WindowsWindow::setCursorLocked(bool isLocked)
-{
-	mIsCursorLocked = isLocked;
-}
-
-bool WindowsWindow::clipCursorToWindow()
-{
-	return mShouldClipCursor;
-}
-
-void WindowsWindow::setClipCursor(bool isClipped)
-{
-	mShouldClipCursor = isClipped;
-}
-
-bool WindowsWindow::useRawInput()
-{
-	return mUseRawInput;
-}
-
-void WindowsWindow::setUseRawInput(bool useRawInput)
-{
-	mUseRawInput = useRawInput;
-
-}
-

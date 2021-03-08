@@ -43,7 +43,7 @@
 #ifdef SINGULARITY_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif
-//#define SINGULARITY_USE_GLFW
+#define SINGULARITY_USE_GLFW
 #define ToString(name) #name
 
 

@@ -145,6 +145,9 @@
     <ClInclude Include="Inc\GamepadEvent.h">
       <Filter>Inc\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\InputManagerGLFW.h">
+      <Filter>Inc\Platform\GLFW</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Inc">
@@ -289,5 +292,6 @@
     </ClCompile>
     <ClCompile Include="Src\InputManager.cpp" />
     <ClCompile Include="Src\InputManagerWindows.cpp" />
+    <ClCompile Include="Src\InputManagerGLFW.cpp" />
   </ItemGroup>
 </Project>

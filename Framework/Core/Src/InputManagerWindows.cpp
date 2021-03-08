@@ -10,7 +10,11 @@
 #include "GamepadEvent.h"
 namespace SingularityEngine::Core
 {
+#ifndef SINGULARITY_USE_GLFW
+#ifdef SINGULARITY_PLATFORM_WINDOWS
 	InputManager* InputManager::sInstance = new InputManagerWindows();
+#endif
+#endif
 	BOOL CALLBACK InputManagerWindows::EnumGamePadCallback(const DIDEVICEINSTANCE* pDIDeviceInstance, VOID* pContext)
 	{
 		UNREFERENCED_PARAMETER(pContext);
@@ -471,7 +475,11 @@ namespace SingularityEngine::Core
 	void InputManagerWindows::onPollInput()
 	{
 		ASSERT(mInitialized, "[Core::Input] System not initialized.");
-
+		// Update game pad
+		if (mGamePadDevice != nullptr)
+		{
+			pollGamepadInput();
+		}
 		// Store the previous keyboard state
 		size_t sizeOfKeyBuffer = (size_t)KeyboardInputType::KEYBOARD_INPUT_MAX;
 		for (size_t i = 0; i < sizeOfKeyBuffer; ++i)
@@ -494,11 +502,6 @@ namespace SingularityEngine::Core
 		for (int i = 0; i < 3; ++i)
 		{
 			mPressedMouseButtons[i] = !mLastMouseButtons[i] && mCurrentMouseButtons[i];
-		}
-		// Update game pad
-		if (mGamePadDevice != nullptr)
-		{
-			pollGamepadInput();
 		}
 	}
 
@@ -563,6 +566,8 @@ namespace SingularityEngine::Core
 			// Reset flag
 			sWriteToLog = true;
 		}
+
+		//TODO: Handle shipping out events for state changes on gamepad
 	}
 
 }

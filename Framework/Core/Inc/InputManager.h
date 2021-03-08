@@ -37,6 +37,11 @@ namespace SingularityEngine::Core
 		inline static void showSystemCursor(bool show) { sInstance->setShowSystemCursorPlatformImpl(show); }
 		inline static void setMouseClipToWindow(bool clip) { sInstance->setMouseClipToWindowPlatformImpl(clip); }
 		inline static void setUseRawInput(bool useRawInput) { sInstance->setRawInputPlatformImpl(useRawInput); }
+		inline static bool isUsingRawInput() { return sInstance->mUsingRawInput; }
+		inline static bool isMouseLockedToWindow() { return sInstance->mIsMouseLockedToWindow; }
+		inline static bool isClippingMouseToWindow() { return sInstance->mShouldClipMouseToWindow; }
+		inline static bool isShowingMouseCursor() { return sInstance->mShowMouseCursor; }
+
 	protected:
 		virtual void registerKeyMappings() = 0;
 		virtual void registerEventBindings() = 0;

@@ -53,23 +53,6 @@ namespace SingularityEngine::Core
 		inline void* getNativeWindow() override { return mWindow; }
 		void propigateEvent(Event& event);
 
-		bool isCursorLocked() override;
-
-
-		void setCursorLocked(bool isLocked) override;
-
-
-		bool clipCursorToWindow() override;
-
-
-		void setClipCursor(bool isClipped) override;
-
-
-		bool useRawInput() override;
-
-
-		void setUseRawInput(bool useRawInput) override;
-
 	private:
 		void Initialize(HINSTANCE instance, WNDPROC wndProcFunction);
 

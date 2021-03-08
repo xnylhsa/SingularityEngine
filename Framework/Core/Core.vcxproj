@@ -60,6 +60,7 @@
     <ClInclude Include="Inc\MagicEnum.hpp" />
     <ClInclude Include="Inc\InputManager.h" />
     <ClInclude Include="Inc\InputManagerWindows.h" />
+    <ClInclude Include="Inc\InputManagerGLFW.h" />
     <ClInclude Include="Src\ECSEntityManager.cpp" />
     <ClInclude Include="Inc\SEInputTypes.h" />
     <ClInclude Include="Inc\GamepadEvent.h" />
@@ -69,6 +70,7 @@
     <ClInclude Include="Src\WindowsInputMapping.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\InputManagerGLFW.cpp" />
     <ClCompile Include="Src\GLFWWindow.cpp" />
     <ClCompile Include="Src\ApplicationEvent.cpp" />
     <ClCompile Include="Src\Event.cpp" />

@@ -40,7 +40,7 @@
 #endif
 #else
 #include "GLFWWindow.h"
-//#include "InputManagerGLFW.h"
+#include "InputManagerGLFW.h"
 #endif
 
 
