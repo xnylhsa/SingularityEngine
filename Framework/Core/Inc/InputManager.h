@@ -42,6 +42,7 @@ namespace SingularityEngine::Core
 		inline static bool isClippingMouseToWindow() { return sInstance->mShouldClipMouseToWindow; }
 		inline static bool isShowingMouseCursor() { return sInstance->mShowMouseCursor; }
 	protected:
+		void swapInputBuffers();
 		virtual void registerKeyMappings() = 0;
 		virtual void registerEventBindings() = 0;
 		virtual bool isKeyPressedPlatformImpl(KeyboardInputType input) const;

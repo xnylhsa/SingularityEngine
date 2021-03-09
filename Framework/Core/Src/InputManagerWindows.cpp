@@ -489,29 +489,8 @@ namespace SingularityEngine::Core
 		{
 			pollGamepadInput();
 		}
-		// Store the previous keyboard state
-		size_t sizeOfKeyBuffer = (size_t)KeyboardInputType::KEYBOARD_INPUT_MAX;
-		for (size_t i = 0; i < sizeOfKeyBuffer; ++i)
-		{
-			mPressedKeys[i] = !mLastKeyStateBuffer[i] && mCurrentKeyStateBuffer[i];
-		}
-		if (!mIsMouseLockedToWindow)
-		{
-			// Update mouse movement
-			mMouseDeltaX = mMouseScreenPositionX - mLastMouseScreenPositionX;
-			mMouseDeltaY = mMouseScreenPositionY - mLastMouseScreenPositionY;
-			mLastMouseScreenPositionX = mMouseScreenPositionX;
-			mLastMouseScreenPositionY = mMouseScreenPositionY;
-		}
-		mDeltaMouseWheelY = mMouseWheelY - mLastMouseWheelY;
-		mLastMouseWheelY = mMouseWheelY;
-		mDeltaMouseWheelX = mMouseWheelX - mLastMouseWheelX;
-		mLastMouseWheelX = mMouseWheelX;
-		// Store the previous mouse state
-		for (int i = 0; i < 3; ++i)
-		{
-			mPressedMouseButtons[i] = !mLastMouseButtons[i] && mCurrentMouseButtons[i];
-		}
+
+		swapInputBuffers();
 	}
 
 	void InputManagerWindows::pollGamepadInput()

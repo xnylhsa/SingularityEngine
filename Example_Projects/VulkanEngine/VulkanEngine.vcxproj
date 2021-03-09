@@ -156,7 +156,7 @@
     <ProjectReference Include="..\..\Framework\PhysicsMath\PhysicsMath.vcxproj">
       <Project>{8c5ab4ee-e4eb-47d0-8d30-2734fbf7b450}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\Framework\VulkanRenderer\VulkanRenderer.vcxproj">
+    <ProjectReference Include="..\..\Framework\SingularityRenderer\SingularityRenderer.vcxproj">
       <Project>{0c89deea-08a7-4c8c-b27f-84ca02294515}</Project>
     </ProjectReference>
   </ItemGroup>

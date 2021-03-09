@@ -1,5 +1,6 @@
 #ifndef INCLUDED_CORE_APPLICATION_H
 #define INCLUDED_CORE_APPLICATION_H
+
 #include "Window.h"
 #include "Event.h"
 #include "ApplicationEvent.h"
@@ -7,11 +8,16 @@
 namespace SingularityEngine::Core 
 {
 
+	struct AppVer
+	{
+		uint32_t majorVersion = 0, minorVersion = 0, patchVersion = 0;
+	};
+
 	class Application
 	{
 	public:
 
-		static bool create(WindowProperties windowProps, Application* appPtr);
+		static bool create(WindowProperties windowProps, AppVer appVer, Application* appPtr);
 		static void destroy();
 		static Application* get();
 		Application(const Application&) = delete;
@@ -23,6 +29,7 @@ namespace SingularityEngine::Core
 		void onEvent(Event& e);
 
 		Core::Window* getWindow() { return mWindow.get(); }
+		AppVer getVersion() { return mAppVersion; }
 		inline bool isRunning() const { return mRunning; }
 		inline bool isFocused() const { return mFocused; }
 		void registerEventFunc(Core::EventType type, Core::EventDispatcher::EventFn func) { mEventManager.registerDispatchFunction(type, func); }
@@ -38,13 +45,14 @@ namespace SingularityEngine::Core
 		virtual void onTerminate() = 0;
 		virtual void onUpdate() = 0;
 	private:
-		void initialize(WindowProperties windowProps);
+		void initialize(WindowProperties windowProps, AppVer appVersion);
 		void terminate();
 		static Application* sInstance;
 		std::unique_ptr<Core::Window> mWindow;
 		EventManager mEventManager;
 		bool mRunning;
 		bool mFocused = true;
+		AppVer mAppVersion;
 	};
 
 }// namespace SingularityEngine::Core

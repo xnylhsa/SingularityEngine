@@ -16,21 +16,14 @@ GameApp::~GameApp()
 void GameApp::onInitialize()
 {
 	registerEventFunc(Core::EventType::WindowResize, BIND_EVENT_FN(GameApp::onResize));
-	SingularityEngine::Graphics::StartupParameters startupInfo;
-	Core::Window* window = getWindow();
-	startupInfo.mAppName = window->getTitle();
-	startupInfo.mMajorVersion = 0;
-	startupInfo.mMinorVersion = 1;
-	startupInfo.mPatchVersion = 4;
-
-	startupInfo.mWindow = window;
-	Graphics::VulkanContext::StaticInitialize(startupInfo);
+	SERenderer::Renderer::Initalize();
+	SERenderer::Renderer::Get()->setClearColor(Math::Color(1.0f, 0.0f, 1.0f, 1.0f));
 	prepared = true;
 }
 
 void GameApp::onTerminate()
 {
-	Graphics::VulkanContext::StaticTerminate();
+	SERenderer::Renderer::Terminate();
 }
 
 bool GameApp::onResize(Core::Event& e)
@@ -39,7 +32,7 @@ bool GameApp::onResize(Core::Event& e)
 	if (isFocused())
 	{
 		Core::WindowResizeEvent& event = *dynamic_cast<Core::WindowResizeEvent*>(&e);
-		Graphics::VulkanContext::Get()->onWindowSizeChanged((uint32_t)event.getWidth(), (uint32_t)event.getHeight());
+		SERenderer::Renderer::Get()->resize((uint32_t)event.getWidth(), (uint32_t)event.getHeight());
 		prepared = true;
 	}
 	return true;
@@ -47,15 +40,11 @@ bool GameApp::onResize(Core::Event& e)
 
 void GameApp::onUpdate()
 {
-	if (Core::InputManager::isKeyPressed(Core::KeyboardInputType::SEKey_Escape))
-	{
-		kill();
-		return;
-	}
 
 	if (prepared && isFocused() && isRunning())
 	{
-		Graphics::VulkanContext::Get()->beginRender();
-		Graphics::VulkanContext::Get()->endRender();
+
+		SERenderer::Renderer::Get()->beginScene();
+		SERenderer::Renderer::Get()->endScene();
 	}
 }

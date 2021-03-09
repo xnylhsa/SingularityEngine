@@ -13,7 +13,7 @@ namespace SingularityEngine::Core
 
 	void Layer::OnEvent(Event& event)
 	{
-
+		UNREFERENCED_PARAMETER(event);
 	}
 
 	void Layer::OnUpdate()

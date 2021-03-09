@@ -74,6 +74,7 @@ namespace SingularityEngine::Core
 		if (sInstance->mInitialized) return false;
 		sInstance->registerKeyMappings();
 		sInstance->registerEventBindings();
+		sInstance->mInitialized = true;
 		return sInstance->onInitalize();
 	}
 
@@ -84,6 +85,7 @@ namespace SingularityEngine::Core
 		sInstance->mGamepadInputConverter.clear();
 		sInstance->mMouseInputConverter.clear();
 		sInstance->mKeyboardInputConverter.clear();
+		sInstance->mInitialized = false;
 		return sInstance->onTeardown();
 	}
 
@@ -101,6 +103,33 @@ namespace SingularityEngine::Core
 	bool InputManager::isKeyHeldPlatformImpl(KeyboardInputType input) const
 	{
 		return mCurrentKeyStateBuffer[(size_t)input];
+	}
+
+	void InputManager::swapInputBuffers()
+	{
+		// Store the previous keyboard state
+		auto sizeOfKeyBuffer = (size_t)KeyboardInputType::KEYBOARD_INPUT_MAX;
+		for (size_t i = 0; i < sizeOfKeyBuffer; ++i)
+		{
+			mPressedKeys[i] = !mLastKeyStateBuffer[i] && mCurrentKeyStateBuffer[i];
+		}
+		if (!mIsMouseLockedToWindow)
+		{
+			// Update mouse movement
+			mMouseDeltaX = mMouseScreenPositionX - mLastMouseScreenPositionX;
+			mMouseDeltaY = mMouseScreenPositionY - mLastMouseScreenPositionY;
+			mLastMouseScreenPositionX = mMouseScreenPositionX;
+			mLastMouseScreenPositionY = mMouseScreenPositionY;
+		}
+		mDeltaMouseWheelY = mMouseWheelY - mLastMouseWheelY;
+		mLastMouseWheelY = mMouseWheelY;
+		mDeltaMouseWheelX = mMouseWheelX - mLastMouseWheelX;
+		mLastMouseWheelX = mMouseWheelX;
+		// Store the previous mouse state
+		for (int i = 0; i < 3; ++i)
+		{
+			mPressedMouseButtons[i] = !mLastMouseButtons[i] && mCurrentMouseButtons[i];
+		}
 	}
 
 }

@@ -20,8 +20,9 @@ Application::~Application()
 {
 }
 
-void Application::initialize(WindowProperties windowProps)
+void Application::initialize(WindowProperties windowProps, AppVer appVersion)
 {
+	mAppVersion = appVersion;
 	mWindow = Window::create(windowProps);
 	mWindow->setEventCallback(BIND_EVENT_FN(Application::onEvent));
 	mEventManager.registerDispatchFunction(Core::EventType::WindowClose, BIND_EVENT_FN(Application::onWindowClose));
@@ -43,6 +44,11 @@ void Application::update()
 {
 	InputManager::pollInput();
 	mWindow->onUpdate();
+	if (Core::InputManager::isKeyPressed(Core::KeyboardInputType::SEKey_Escape))
+	{
+		kill();
+		return;
+	}
 	onUpdate();
 }
 
@@ -84,13 +90,13 @@ bool Application::onWindowFocus(Core::Event& e)
 	return true;
 }
 
-bool Application::create(WindowProperties windowProps, Application* appPtr)
+bool Application::create(WindowProperties windowProps, AppVer appVer, Application* appPtr)
 {
 	ASSERT(sInstance == nullptr, "[Core::App] app instance already created!");
 	if (sInstance != nullptr) return false;
-	sInstance = std::move(appPtr);
+	sInstance = appPtr;
 	appPtr = nullptr;
-	sInstance->initialize(windowProps);
+	sInstance->initialize(windowProps, appVer);
 	return true;
 }
 

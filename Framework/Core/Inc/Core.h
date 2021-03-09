@@ -32,7 +32,8 @@
 #include "SerializationUtil.h"
 #include "Window.h"
 #include "InputManager.h"
-
+#include "Layer.h"
+#include "LayerStack.h"
 #ifndef SINGULARITY_USE_GLFW
 #ifdef SINGULARITY_PLATFORM_WINDOWS
 #include "WindowsWindow.h"

@@ -35,7 +35,7 @@ namespace SingularityEngine::Core
 		if (iter != mGamepadInputConverter.end())
 		{
 			GamepadInputType input = iter->second;
-			mPressedGamepadButtons[(size_t)input] = false;
+			mCurrentGamepadButtons[(size_t)input] = false;
 			return true;
 		}
 
@@ -49,7 +49,7 @@ namespace SingularityEngine::Core
 		if (iter != mGamepadInputConverter.end())
 		{
 			GamepadInputType input = iter->second;
-			mPressedGamepadButtons[(size_t)input] = true;
+			mCurrentGamepadButtons[(size_t)input] = true;
 			return true;
 		}
 
@@ -405,7 +405,7 @@ namespace SingularityEngine::Core
 
 	void InputManagerGLFW::onPollInput()
 	{
-
+		swapInputBuffers();
 	}
 }
 
