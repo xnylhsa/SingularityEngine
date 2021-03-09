@@ -18,6 +18,7 @@ void GameApp::onInitialize()
 	registerEventFunc(Core::EventType::WindowResize, BIND_EVENT_FN(GameApp::onResize));
 	SERenderer::Renderer::Initalize();
 	SERenderer::Renderer::Get()->setClearColor(Math::Color(1.0f, 0.0f, 1.0f, 1.0f));
+	SERenderer::Shader::Create("");
 	prepared = true;
 }
 

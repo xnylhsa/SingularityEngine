@@ -8,7 +8,7 @@ namespace SingulairtyEngine::SERenderer
 
 SingularityEngine::SERenderer::VulkanPipeline::VulkanPipeline(const PipelineSpecification& spec)
 {
-
+	UNREFERENCED_PARAMETER(spec);
 }
 
 SingularityEngine::SERenderer::VulkanPipeline::~VulkanPipeline()

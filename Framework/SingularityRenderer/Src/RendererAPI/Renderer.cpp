@@ -3,6 +3,7 @@
 #include "RendererAPI/ISwapChain.h"
 #include "RendererAPI/RendererContext.h"
 #include "RendererAPI/IGraphicsDevice.h"
+#include "rendererAPI/Shader.h"
 namespace SingularityEngine::SERenderer
 {
 	void Renderer::beginScene()

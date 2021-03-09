@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "RendererAPI/Shader.h"
 #include "RendererAPI/Renderer.h"
-
+#include "shaderc/include/shaderc/shaderc.hpp"
 
 namespace SingularityEngine::SERenderer
 {
@@ -45,6 +45,33 @@ namespace SingularityEngine::SERenderer
 
 	std::shared_ptr<Shader> Shader::Create(const std::string& filepath)
 	{
+		shaderc::Compiler compiler;
+		shaderc::CompileOptions compileOptions;
+		compileOptions.AddMacroDefinition("MY_DEFINE","1");
+		compileOptions.SetOptimizationLevel(shaderc_optimization_level_size);
+		std::string shaderCode = "// Author:\
+\
+		// Title:\
+\
+#ifdef GL_ES\
+		precision mediump float;\
+#endif\
+\
+	uniform vec2 u_resolution;\
+	uniform vec2 u_mouse;\
+	uniform float u_time;\
+\
+	void main() {\
+		vec2 st = gl_FragCoord.xy / u_resolution.xy;\
+		st.x *= u_resolution.x / u_resolution.y;\
+\
+		vec3 color = vec3(0.);\
+		color = vec3(st.x, st.y, abs(sin(u_time)));\
+\
+		gl_FragColor = vec4(color, 1.0);\
+	}";
+		shaderc::AssemblyCompilationResult result = compiler.CompileGlslToSpvAssembly(shaderCode, shaderc_glsl_default_vertex_shader, "myvert", compileOptions);
+
 
 		switch (Renderer::GetAPI())
 		{

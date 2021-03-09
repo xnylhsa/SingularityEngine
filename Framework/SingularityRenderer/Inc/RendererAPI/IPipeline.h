@@ -9,7 +9,7 @@ namespace SingularityEngine::SERenderer
 
 	struct PipelineSpecification
 	{
-
+		int i = 0;
 	};
 
 	class IPipeline
