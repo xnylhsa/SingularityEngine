@@ -160,7 +160,7 @@
     <ClInclude Include="Inc\RendererAPI\Buffer.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\RendererAPI\Pipeline.h" />
+    <ClInclude Include="Inc\RendererAPI\IPipeline.h" />
     <ClInclude Include="Inc\RendererAPI\RenderPass.h" />
     <ClInclude Include="Inc\RendererAPI\Renderer.h" />
     <ClInclude Include="Inc\RendererAPI\VertexTypes.h" />

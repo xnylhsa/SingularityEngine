@@ -9,8 +9,20 @@ namespace SingularityEngine::SERenderer
 	public:
 		virtual ~Shader() = default;
 
-		virtual void Bind() const = 0;
+		virtual void Reload() = 0;
+		virtual void Bind() = 0;
 		virtual void Unbind() const = 0;
+		virtual void setUniformBuffer(const std::string& name, const void* data, uint32_t size) = 0;
+		virtual void SetUniform(const std::string& fullname, float value) = 0;
+		virtual void SetUniform(const std::string& fullname, int value) = 0;
+		virtual void SetUniform(const std::string& fullname, Math::Vector2 value) = 0;
+		virtual void SetUniform(const std::string& fullname, Math::Vector3 value) = 0;
+		virtual void SetUniform(const std::string& fullname, Math::Vector4 value) = 0;
+		virtual void SetUniform(const std::string& fullname, Math::Matrix3x3 value) = 0;
+		virtual void SetUniform(const std::string& fullname, Math::Matrix4x4 value) = 0;
+
+
+
 
 		virtual void SetInt(const std::string& name, int value) = 0;
 		virtual void SetIntArray(const std::string& name, int* values, uint32_t count) = 0;

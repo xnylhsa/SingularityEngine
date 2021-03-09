@@ -60,10 +60,7 @@ void Application::run()
 void Application::onEvent(Event& e)
 {
 	mEventManager.processEvent(e);
-	//EventDispatcher dispatcher(e);
-
-
-	LOG("%s",e.toString().c_str());
+	//LOG("%s", e.toString().c_str());
 }
 
 bool Application::onWindowClose(Core::Event& e)

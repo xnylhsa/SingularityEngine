@@ -148,7 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Inc\RendererAPI\IGraphicsDevice.h" />
-    <ClInclude Include="Inc\RendererAPI\Pipeline.h" />
+    <ClInclude Include="Inc\RendererAPI\IPipeline.h" />
     <ClInclude Include="Inc\RendererAPI\Renderer.h" />
     <ClInclude Include="Inc\RendererAPI\RenderPass.h" />
     <ClInclude Include="Inc\RendererAPI\VertexTypes.h" />

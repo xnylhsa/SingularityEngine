@@ -51,7 +51,7 @@ namespace SingularityEngine::SERenderer
 		case RenderingAPI::None:    ASSERT(false, "[Renderer::Shader] None is currently not supported!"); return nullptr;
 		case RenderingAPI::Vulkan:  ASSERT(false, "[Renderer::Shader] Vulkan is currently not supported!"); return nullptr;
 		}
-
+		//load into shader library
 		UNREFERENCED_PARAMETER(filepath);
 		ASSERT(false, "[Renderer::Shader] Unknown RendererAPI!");
 		return nullptr;
@@ -59,7 +59,7 @@ namespace SingularityEngine::SERenderer
 
 	std::shared_ptr<Shader> Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
-
+		//get from shader library
 		switch (Renderer::GetAPI())
 		{
 		case RenderingAPI::None:    ASSERT(false, "[Renderer::Shader] None is currently not supported!"); return nullptr;
