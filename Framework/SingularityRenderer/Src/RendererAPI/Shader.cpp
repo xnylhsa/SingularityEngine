@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "RendererAPI/Shader.h"
 #include "RendererAPI/Renderer.h"
-#include "shaderc/include/shaderc/shaderc.hpp"
+#include "External/SPIRV-Cross/Inc/spirv_cross_c.h"
 
 namespace SingularityEngine::SERenderer
 {

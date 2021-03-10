@@ -272,6 +272,9 @@
     <ResourceCompile Include="SingularityRenderer.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\External\SPIRV-Cross\SPIRV-Cross.vcxproj">
+      <Project>{f85f425b-2533-4f2f-868b-bf642880ce0e}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{0b165d2d-2bea-455a-bd3b-ad43ced8640c}</Project>
     </ProjectReference>
