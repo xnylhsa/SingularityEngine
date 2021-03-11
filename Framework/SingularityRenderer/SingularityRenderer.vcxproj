@@ -121,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;VK_NO_PROTOTYPES;VK_USE_PLATFORM_WIN32_KHR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\shaderc\libshaderc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -158,12 +158,13 @@
     <ClInclude Include="Inc\Vulkan\CombinedImageSampler.h" />
     <ClInclude Include="Inc\RendererAPI\FrameBuffer.h" />
     <ClInclude Include="Inc\RendererAPI\RendererContext.h" />
-    <ClInclude Include="Inc\RendererAPI\Shader.h" />
+    <ClInclude Include="Inc\RendererAPI\IShader.h" />
     <ClInclude Include="Inc\RendererAPI\State.h" />
     <ClInclude Include="Inc\RendererAPI\ISwapChain.h" />
     <ClInclude Include="Inc\RendererAPI\Texture.h" />
     <ClInclude Include="Inc\RendererAPI\Buffer.h" />
     <ClInclude Include="Inc\Vulkan\Buffers\VulkanCommandBuffers.h" />
+    <ClInclude Include="Inc\Vulkan\Shader\VulkanShader.h" />
     <ClInclude Include="Inc\Vulkan\Synchronization\VulkanCommandPool.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\Vulkan\DescriptorSet.h" />
@@ -210,13 +211,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Inc\RendererAPI\IGraphicsDevice.cpp" />
+    <ClCompile Include="Src\Vulkan\Shader\VulkanShader.cpp" />
     <ClCompile Include="Src\RendererAPI\Renderer.cpp" />
     <ClCompile Include="Src\RendererAPI\RendererCommand.cpp" />
     <ClCompile Include="Src\Vulkan\Util\PlatformSurfaceCreation.cpp" />
     <ClCompile Include="Src\RendererAPI\FrameBuffer.cpp" />
     <ClCompile Include="Src\RendererAPI\RendererContext.cpp" />
     <ClCompile Include="Src\RendererAPI\RenderPass.cpp" />
-    <ClCompile Include="Src\RendererAPI\Shader.cpp" />
+    <ClCompile Include="Src\RendererAPI\IShader.cpp" />
     <ClCompile Include="Src\RendererAPI\State.cpp" />
     <ClCompile Include="Src\RendererAPI\ISwapChain.cpp" />
     <ClCompile Include="Src\RendererAPI\Texture.cpp" />
@@ -272,8 +274,8 @@
     <ResourceCompile Include="SingularityRenderer.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\External\SPIRV-Cross\SPIRV-Cross.vcxproj">
-      <Project>{f85f425b-2533-4f2f-868b-bf642880ce0e}</Project>
+    <ProjectReference Include="..\..\External\shaderc\libshaderc\shaderc.vcxproj">
+      <Project>{643352c4-bcce-3efd-84b4-28d12e920878}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{0b165d2d-2bea-455a-bd3b-ad43ced8640c}</Project>

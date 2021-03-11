@@ -4,3 +4,6 @@
 [submodule "External/imgui"]
 	path = External/imgui
 	url = F:\\git repos\\SingularityEngine\\External\\imgui
+[submodule "External/shaderc"]
+	path = External/shaderc
+	url = https://github.com/xnylhsa/shaderc.git

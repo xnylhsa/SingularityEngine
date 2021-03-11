@@ -38,6 +38,7 @@
 #include <atlconv.h>
 #include <queue>
 #include <bitset>
+#include <filesystem>
 #include "MagicEnum.hpp"
 #include "PlatformDetection.h"
 #ifdef SINGULARITY_PLATFORM_WINDOWS

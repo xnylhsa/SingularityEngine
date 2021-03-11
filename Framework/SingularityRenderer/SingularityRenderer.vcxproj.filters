@@ -145,7 +145,7 @@
     <ClInclude Include="Inc\RendererAPI\RendererContext.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\RendererAPI\Shader.h">
+    <ClInclude Include="Inc\RendererAPI\IShader.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
     <ClInclude Include="Inc\RendererAPI\State.h">
@@ -167,6 +167,7 @@
     <ClInclude Include="Inc\RendererAPI\RenderCommand.h" />
     <ClInclude Include="Inc\Vulkan\Util\VulkanRenderer.h" />
     <ClInclude Include="Inc\RendererAPI\IGraphicsDevice.h" />
+    <ClInclude Include="Inc\Vulkan\Shader\VulkanShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\precompiled.cpp">
@@ -295,7 +296,7 @@
     <ClCompile Include="Src\RendererAPI\FrameBuffer.cpp" />
     <ClCompile Include="Src\RendererAPI\RendererContext.cpp" />
     <ClCompile Include="Src\RendererAPI\RenderPass.cpp" />
-    <ClCompile Include="Src\RendererAPI\Shader.cpp" />
+    <ClCompile Include="Src\RendererAPI\IShader.cpp" />
     <ClCompile Include="Src\RendererAPI\State.cpp" />
     <ClCompile Include="Src\RendererAPI\ISwapChain.cpp" />
     <ClCompile Include="Src\RendererAPI\Texture.cpp" />
@@ -304,6 +305,7 @@
     <ClCompile Include="Src\RendererAPI\RendererCommand.cpp" />
     <ClCompile Include="Src\Vulkan\Util\VulkanRenderer.cpp" />
     <ClCompile Include="Inc\RendererAPI\IGraphicsDevice.cpp" />
+    <ClCompile Include="Src\Vulkan\Shader\VulkanShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SingularityRenderer.rc" />

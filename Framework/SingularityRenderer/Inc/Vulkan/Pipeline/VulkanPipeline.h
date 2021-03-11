@@ -20,6 +20,7 @@ namespace SingularityEngine::SERenderer
 	private:
 		PipelineSpecification mSpecification;
 		VkPipeline mPipeline;
+		VkPipelineLayout mPipelineLayout;
 	};
 }
 

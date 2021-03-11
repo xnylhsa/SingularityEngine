@@ -110,7 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\External\GLFW\src\glfw.vcxproj">
-      <Project>{c376d310-6f00-3261-81e7-e4da29506c2d}</Project>
+      <Project>{39fe6edf-cab0-3167-bb63-171f2ca01409}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\External\RapidXML\RapidXML.vcxproj">
       <Project>{31f09a4f-555e-42f7-a19b-647f2b714374}</Project>

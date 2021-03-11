@@ -1,15 +1,14 @@
 #ifndef SINGULARITY_ENGINE_RENDER_RENDERER_CONTEXT
 #define SINGULARITY_ENGINE_RENDER_RENDERER_CONTEXT
 #include "Common.h"
-
+#include "RendererAPI/IShader.h"
+#include "RendererAPI/Buffer.h"
 namespace SingularityEngine::SERenderer
 {
-
-
-
 	struct PipelineSpecification
 	{
-		int i = 0;
+		std::shared_ptr<IShader> shader;
+		//VertexBufferLayout layout;
 	};
 
 	class IPipeline

@@ -20,6 +20,7 @@ protected:
 	void onUpdate() override;
 
 private:
+	SERenderer::ShaderLibrary mShaderLibrary;
 	Core::Timer timer;
 };
 
