@@ -578,18 +578,18 @@ namespace SingularityEngine::SERenderer
 
 		dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
 		dependencies[0].dstSubpass = 0;
-		dependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+		dependencies[0].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 		dependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-		dependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-		dependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+		dependencies[0].srcAccessMask = 0;
+		dependencies[0].dstAccessMask =  VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 		dependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
 		dependencies[1].srcSubpass = 0;
 		dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
 		dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-		dependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
-		dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-		dependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+		dependencies[1].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+		dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+		dependencies[1].dstAccessMask = 0;
 		dependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
 		mRenderPass = std::make_unique<VulkanRenderPass>(vulkanDevice, attachments, subpassDescriptions, dependencies);
@@ -647,6 +647,7 @@ namespace SingularityEngine::SERenderer
 		renderArea.offset.y = 0;
 		mRenderPass->beginRendering(mDrawCommandBuffers[mCurrentFrameIndex], mFrameBuffers[mCurrentFrameIndex], renderArea, clearValues, VK_SUBPASS_CONTENTS_INLINE);
 		VkViewport viewport = {};
+		//viewport.y = static_cast<float>(mSurfaceExtent->height);
 		viewport.height = static_cast<float>(mSurfaceExtent->height);
 		viewport.width = static_cast<float>(mSurfaceExtent->width);
 		viewport.minDepth = 0.0f;

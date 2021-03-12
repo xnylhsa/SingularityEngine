@@ -50,6 +50,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "External\GLFW\src\g
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shaderc", "External\shaderc\libshaderc\shaderc.vcxproj", "{643352C4-BCCE-3EFD-84B4-28D12E920878}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GLSL", "GLSL", "{3E8414CC-4226-48A5-AE4A-08CB1ECF4BBB}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Shaders\GLSL\triangle.glsl = Assets\Shaders\GLSL\triangle.glsl
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -283,6 +288,7 @@ Global
 		{6D6CB617-CA28-4E2E-AEC5-59E86395ABC8} = {84A382DC-45AB-4A41-AEC2-BC86FA45AE1D}
 		{39FE6EDF-CAB0-3167-BB63-171F2CA01409} = {1BFE8982-FB39-4FE3-BEC9-2776D8FA45D7}
 		{643352C4-BCCE-3EFD-84B4-28D12E920878} = {1BFE8982-FB39-4FE3-BEC9-2776D8FA45D7}
+		{3E8414CC-4226-48A5-AE4A-08CB1ECF4BBB} = {84A382DC-45AB-4A41-AEC2-BC86FA45AE1D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19C637A8-5AC3-4550-BA0D-05FFD9FA23F1}

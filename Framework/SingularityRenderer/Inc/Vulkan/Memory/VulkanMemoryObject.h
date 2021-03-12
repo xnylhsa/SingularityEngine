@@ -12,6 +12,7 @@ namespace SingularityEngine::SERenderer
 		bool MapUpdateAndUnmapHostVisibleMemory(VkDeviceSize offset, VkDeviceSize dataSize, void* data, bool unmap = true, void** pointer = nullptr);
 		bool isValid() { return mMemoryObject != VK_NULL_HANDLE; }
 		operator VkDeviceMemory() { return mMemoryObject; }
+		VkDeviceMemory getDeviceMemory() { return mMemoryObject; }
 	private:
 		bool destroy();
 		VkDeviceMemory mMemoryObject;

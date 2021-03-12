@@ -36,7 +36,7 @@ VulkanDepthStencil::VulkanDepthStencil(std::weak_ptr<VulkanDevice> device, Vulka
 		1,
 		VK_SAMPLE_COUNT_1_BIT,
 		VK_IMAGE_TILING_OPTIMAL,
-		VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT,
+		VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
 		false);
 	ASSERT(mImage->isValid(), "[Graphics::Image2D] Failed to create image!");
 	mMemoryObject = allocator->allocateImageMemory(VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, *mImage);

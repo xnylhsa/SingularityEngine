@@ -3,9 +3,16 @@
 #include "Vulkan/Device/VulkanDevice.h"
 #include "Vulkan/Util/VulkanFunctions.h"
 #include "Vulkan/Memory/VulkanMemoryObject.h"
+#include "RendererAPI/Renderer.h"
 using namespace SingularityEngine::SERenderer;
 
-VulkanMemoryAllocator::VulkanMemoryAllocator(std::shared_ptr<VulkanDevice> device, std::string tag) : mTag(tag), rVulkanDevice(device)
+VulkanMemoryAllocator::VulkanMemoryAllocator(std::shared_ptr<VulkanDevice> device, std::string tag) 
+	: mTag(tag), rVulkanDevice(device)
+{
+}
+
+VulkanMemoryAllocator::VulkanMemoryAllocator(std::string tag) 
+	: mTag(tag), rVulkanDevice(std::dynamic_pointer_cast<VulkanDevice>(Renderer::Get()->getGraphicsDevice()))
 {
 }
 
@@ -58,23 +65,26 @@ std::unique_ptr<VulkanMemoryObject> VulkanMemoryAllocator::allocateImageMemory(V
 	return std::move(std::make_unique<VulkanMemoryObject>(rVulkanDevice, dest));
 }
 
-std::unique_ptr<VulkanMemoryObject> VulkanMemoryAllocator::allocateBufferMemory(VkMemoryPropertyFlags memoryProperties, VkBuffer vkbuffer)
+std::unique_ptr<VulkanMemoryObject> VulkanMemoryAllocator::allocateBufferMemory(VkMemoryPropertyFlags memoryProperties, VkBuffer vkbuffer, bool bind)
 {
 	VkDeviceMemory dest = nullptr;
 	VkPhysicalDeviceMemoryProperties physicalDeviceMemProps;
 	vkGetPhysicalDeviceMemoryProperties(*rVulkanDevice, &physicalDeviceMemProps);
 
 	VkMemoryRequirements memoryRequirements;
+
 	vkGetBufferMemoryRequirements(*rVulkanDevice, vkbuffer, &memoryRequirements);
 
 	for (uint32_t type = 0; type < physicalDeviceMemProps.memoryTypeCount; ++type)
 	{
 		if ((memoryRequirements.memoryTypeBits & (1 << type)) && (physicalDeviceMemProps.memoryTypes[type].propertyFlags & memoryProperties) == memoryProperties)
 		{
-			allocate(memoryRequirements, &dest);
+			allocate(memoryRequirements, &dest, memoryProperties);
+			break;
 		}
 	}
 
+	if(!bind) return std::move(std::make_unique<VulkanMemoryObject>(rVulkanDevice, dest));
 	if (vkBindBufferMemory(*rVulkanDevice, vkbuffer, dest, 0) != VK_SUCCESS)
 	{
 		LOG("[Graphics::Buffer] Could not bind memory object to buffer!");

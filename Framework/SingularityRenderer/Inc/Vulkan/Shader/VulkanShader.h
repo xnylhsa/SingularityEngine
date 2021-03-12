@@ -38,17 +38,25 @@ namespace SingularityEngine::SERenderer
 		const std::vector<VkPipelineShaderStageCreateInfo>& getShaderStages();
 		const std::string& getName() const override;
 	private:
-		void loadAndCreateVertexShader(VkPipelineShaderStageCreateInfo& shaderPipelineInfo);
-		void loadAndCreateFragShader(VkPipelineShaderStageCreateInfo& shaderPipelineInfo);
-		void convertHLSLtoSPIRV(std::string filePath, std::string outputPath, std::string targetProfile, std::string entryPoint);
+		void cleanup();
+		void createVertexShader(VkPipelineShaderStageCreateInfo& shaderPipelineInfo, const std::vector<uint32_t>& shaderData);
+		void createFragShader(VkPipelineShaderStageCreateInfo& shaderPipelineInfo, const std::vector<uint32_t>& shaderData);
+		void preProcess(const std::string& source);
+		VkShaderStageFlagBits shaderTypeFromString(std::string type);
+		int shadercTypeFromString(std::string type);
+
+		void compileOrGetVulkanBinary(std::array<std::vector<uint32_t>, 2>& outputBinary, bool forceCompile = false);
+		std::vector<uint32_t> compileVulkanBinaryFromGLSL(std::string shaderType);
 		//void loadAndCreateComputeShader();
 		//void loadAndCreateTesselationShader();
 		//void loadAndCreateRaytracingShaders();
 		std::vector<uint32_t> loadBinaryShader(std::string path);
 		std::string getCacheShaderFilePath(std::string shaderType);
-		std::string mFilePath;
+		std::string mAssetPath;
 		std::string mName;
 		std::vector<VkPipelineShaderStageCreateInfo> mShaderStages;
+		std::unordered_map<VkShaderStageFlagBits, std::string> mShaderSources;
+
 	};
 
 }

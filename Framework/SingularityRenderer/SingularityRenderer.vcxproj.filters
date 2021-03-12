@@ -4,59 +4,11 @@
     <ClInclude Include="Inc\Common.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\Vulkan\Image2D.h">
-      <Filter>Inc\Vulkan\ImageClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\ImageCubeMap.h">
-      <Filter>Inc\Vulkan\ImageClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\SampledImage.h">
-      <Filter>Inc\Vulkan\ImageClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\CombinedImageSampler.h">
-      <Filter>Inc\Vulkan\ImageClasses</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\Precompiled.h">
       <Filter>Src</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\Vulkan\BufferView.h">
+    <ClInclude Include="Inc\Vulkan\Buffers\VulkanUniformBuffer.h">
       <Filter>Inc\Vulkan\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\MemBuffer.h">
-      <Filter>Inc\Vulkan\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\UniformTexelBuffer.h">
-      <Filter>Inc\Vulkan\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\StorageImage.h">
-      <Filter>Inc\Vulkan\ImageClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\StorageTexelBuffer.h">
-      <Filter>Inc\Vulkan\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\UniformBuffer.h">
-      <Filter>Inc\Vulkan\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\StorageBuffer.h">
-      <Filter>Inc\Vulkan\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\InputAttachment.h">
-      <Filter>Inc\Vulkan\ImageClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\DescriptorSetLayout.h">
-      <Filter>Inc\Vulkan\DescriptorSets</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\DescriptorPool.h">
-      <Filter>Inc\Vulkan\DescriptorSets</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\DescriptorInfos.h">
-      <Filter>Inc\Vulkan\DescriptorSets</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\DescriptorSet.h">
-      <Filter>Inc\Vulkan\DescriptorSets</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\TextureUniformBufferDescriptor.h">
-      <Filter>Inc\Vulkan\DescriptorSets</Filter>
     </ClInclude>
     <ClInclude Include="Inc\Vulkan\Texture\VulkanImage.h">
       <Filter>Inc\Vulkan\Buffers</Filter>
@@ -64,16 +16,10 @@
     <ClInclude Include="Inc\Vulkan\Texture\VulkanImageView.h">
       <Filter>Inc\Vulkan\ImageClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\SingularityRenderer.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\Vulkan\Util\PlatformSurfaceCreation.h">
       <Filter>Inc\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Inc\Vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\Vulkan\Sampler.h">
       <Filter>Inc\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="Inc\Vulkan\Buffers\VulkanCommandBuffers.h">
@@ -157,7 +103,7 @@
     <ClInclude Include="Inc\RendererAPI\Texture.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\RendererAPI\Buffer.h">
+    <ClInclude Include="Inc\RendererAPI\IBuffer.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
     <ClInclude Include="Inc\RendererAPI\IPipeline.h" />
@@ -168,58 +114,14 @@
     <ClInclude Include="Inc\Vulkan\Util\VulkanRenderer.h" />
     <ClInclude Include="Inc\RendererAPI\IGraphicsDevice.h" />
     <ClInclude Include="Inc\Vulkan\Shader\VulkanShader.h" />
+    <ClInclude Include="Inc\Vulkan\Buffers\VulkanBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\precompiled.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Vulkan\CombinedImageSampler.cpp">
-      <Filter>Src\Vulkan\ImageClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\Image2D.cpp">
-      <Filter>Src\Vulkan\ImageClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\ImageCubeMap.cpp">
-      <Filter>Src\Vulkan\ImageClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\SampledImage.cpp">
-      <Filter>Src\Vulkan\ImageClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\BufferView.cpp">
+    <ClCompile Include="Src\Vulkan\Buffers\VulkanUniformBuffer.cpp">
       <Filter>Src\Vulkan\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\MemBuffer.cpp">
-      <Filter>Src\Vulkan\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\StorageImage.cpp">
-      <Filter>Src\Vulkan\ImageClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\StorageTexelBuffer.cpp">
-      <Filter>Src\Vulkan\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\UniformTexelBuffer.cpp">
-      <Filter>Src\Vulkan\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\UniformBuffer.cpp">
-      <Filter>Src\Vulkan\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\InputAttachment.cpp">
-      <Filter>Src\Vulkan\ImageClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\StorageBuffer.cpp">
-      <Filter>Src\Vulkan\Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\DescriptorSetLayout.cpp">
-      <Filter>Src\Vulkan\DescriptorSets</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\DescriptorPool.cpp">
-      <Filter>Src\Vulkan\DescriptorSets</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\DescriptorSet.cpp">
-      <Filter>Src\Vulkan\DescriptorSets</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\TextureUniformBufferDescriptor.cpp">
-      <Filter>Src\Vulkan\DescriptorSets</Filter>
     </ClCompile>
     <ClCompile Include="Src\Vulkan\Synchronization\VulkanCommandPool.cpp">
       <Filter>Src\Vulkan\ImageClasses</Filter>
@@ -231,9 +133,6 @@
       <Filter>Src\Vulkan\ImageClasses</Filter>
     </ClCompile>
     <ClCompile Include="Src\Vulkan\Util\PlatformSurfaceCreation.cpp">
-      <Filter>Src\Vulkan</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Vulkan\Sampler.cpp">
       <Filter>Src\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="Src\Vulkan\Buffers\VulkanCommandBuffers.cpp">
@@ -300,12 +199,14 @@
     <ClCompile Include="Src\RendererAPI\State.cpp" />
     <ClCompile Include="Src\RendererAPI\ISwapChain.cpp" />
     <ClCompile Include="Src\RendererAPI\Texture.cpp" />
-    <ClCompile Include="Src\RendererAPI\Buffer.cpp" />
+    <ClCompile Include="Src\RendererAPI\IBuffer.cpp" />
     <ClCompile Include="Src\RendererAPI\Renderer.cpp" />
     <ClCompile Include="Src\RendererAPI\RendererCommand.cpp" />
     <ClCompile Include="Src\Vulkan\Util\VulkanRenderer.cpp" />
-    <ClCompile Include="Inc\RendererAPI\IGraphicsDevice.cpp" />
+    <ClCompile Include="Src\RendererAPI\IGraphicsDevice.cpp" />
     <ClCompile Include="Src\Vulkan\Shader\VulkanShader.cpp" />
+    <ClCompile Include="Src\RendererAPI\IPipeline.cpp" />
+    <ClCompile Include="Src\Vulkan\Buffers\VulkanBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SingularityRenderer.rc" />

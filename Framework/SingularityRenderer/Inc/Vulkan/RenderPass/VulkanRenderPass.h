@@ -15,6 +15,7 @@ namespace SingularityEngine::SERenderer
 		void transitionToNextSubpass(VkCommandBuffer commandBuffer, VkSubpassContents subpassContents);
 		void endRendering(VkCommandBuffer commandBuffer);
 		operator VkRenderPass() { return mRenderPass; }
+		VkRenderPass getRenderPass() { return mRenderPass; }
 	private:
 		VkRenderPass mRenderPass = VK_NULL_HANDLE;
 		std::weak_ptr<VulkanDevice> mDevice;

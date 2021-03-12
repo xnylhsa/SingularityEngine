@@ -17,10 +17,12 @@ namespace SingularityEngine::SERenderer
 		void invalidate() override;
 		void bind() override;
 
+		VkPipeline getVulkanPipeline() { return mPipeline; }
 	private:
 		PipelineSpecification mSpecification;
-		VkPipeline mPipeline;
-		VkPipelineLayout mPipelineLayout;
+		VkPipeline mPipeline = nullptr;
+		VkPipelineLayout mPipelineLayout = nullptr;
+		VkPipelineCache mPipelineCache = nullptr;
 	};
 }
 

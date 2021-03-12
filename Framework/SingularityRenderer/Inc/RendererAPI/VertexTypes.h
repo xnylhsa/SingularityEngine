@@ -11,6 +11,17 @@
 #define VF_BWEIGHT	0x01 << 6
 namespace SingularityEngine::SERenderer
 {
+	enum class VertexType
+	{
+		VertexPosition = 1,
+		VertexPosColor,
+		VertexPosColorTexture,
+		VertexPosTangent,
+		Vertex,
+		bonevertex,
+		VertexMaxEnum
+	};
+
 	struct VertexP
 	{
 		static const uint32_t Format = VF_POSITION;
