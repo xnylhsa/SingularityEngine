@@ -12,25 +12,39 @@ namespace SingularityEngine::SERenderer
 {
 	VulkanPipeline::VulkanPipeline(const PipelineSpecification& spec) : mSpecification(spec)
 	{
-
+		invalidate();
 	}
 
 	VulkanPipeline::~VulkanPipeline()
 	{
-
+		std::shared_ptr<VulkanDevice> device = std::dynamic_pointer_cast<VulkanDevice>(Renderer::Get()->getGraphicsDevice());
+		mSpecification.shader.reset();
+		vkDestroyPipeline(device->getLogicalDevice(), mPipeline, nullptr);
+		vkDestroyPipelineCache(device->getLogicalDevice(), mPipelineCache, nullptr);
+		vkDestroyPipelineLayout(device->getLogicalDevice(), mPipelineLayout, nullptr);
 	}
 
 	void VulkanPipeline::invalidate()
 	{
 		std::shared_ptr<VulkanDevice> device = std::dynamic_pointer_cast<VulkanDevice>(Renderer::Get()->getGraphicsDevice());
 		std::shared_ptr<VulkanShader> shader = std::dynamic_pointer_cast<VulkanShader>(mSpecification.shader);
+		//get renderpass from frame buffer;
 		auto* swapchain = dynamic_cast<VulkanSwapChain*>(Renderer::Get()->getSwapchain());
+
+
+		auto descriptorSetLayouts = shader->getAllDescriptorSetLayouts();
+		auto pushConstantRanges = shader->GetVKPushConstantRanges();
+
+
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.pNext = nullptr;
-		pipelineLayoutCreateInfo.setLayoutCount = 0;
-		pipelineLayoutCreateInfo.pSetLayouts = nullptr;
-		//pipelineCreateInfo.pSetLayouts = shader->getDescriptorSets();
+		pipelineLayoutCreateInfo.setLayoutCount = (uint32_t)descriptorSetLayouts.size();
+		pipelineLayoutCreateInfo.pSetLayouts = descriptorSetLayouts.data();
+		pipelineLayoutCreateInfo.pushConstantRangeCount = (uint32_t)pushConstantRanges.size();
+		pipelineLayoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
+
+
 		VkResult result = vkCreatePipelineLayout(device->getLogicalDevice(), &pipelineLayoutCreateInfo, nullptr, &mPipelineLayout);
 		ASSERT(result == VK_SUCCESS, "[SERenderer::VulkanPipeline] Failed to create PipelineLayout");
 
@@ -212,6 +226,7 @@ namespace SingularityEngine::SERenderer
 		pipelineCreateInfo.pMultisampleState = &multisampleState;
 		pipelineCreateInfo.pViewportState = &viewportState;
 		pipelineCreateInfo.pDepthStencilState = &depthStencilState;
+		//get renderpass from frame buffer;
 		pipelineCreateInfo.renderPass = (swapchain->getRenderpass()->getRenderPass());// ?
 		pipelineCreateInfo.pDynamicState = &dynamicState;
 

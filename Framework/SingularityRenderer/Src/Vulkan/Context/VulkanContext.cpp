@@ -1,8 +1,6 @@
 #include "Precompiled.h"
 #include "Vulkan/Context/VulkanContext.h"
 #include "Vulkan/Util/vulkanFunctions.h"
-
-#include "Vulkan/MemBuffer.h"
 #include "Vulkan/Memory/VulkanMemoryObject.h"
 
 
@@ -24,8 +22,6 @@ namespace SingularityEngine::SERenderer
 	bool VulkanContext::teardown()
 	{
 
-		mVulkanDevice->destroyDeviceQueues();
-		mVulkanDevice.reset();
 		if (enableValidationLayers) {
 			vkDestroyDebugUtilsMessengerEXT(*sVulkanInstance, debugMessenger, nullptr);
 		}

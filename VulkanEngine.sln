@@ -55,6 +55,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GLSL", "GLSL", "{3E8414CC-4
 		Assets\Shaders\GLSL\triangle.glsl = Assets\Shaders\GLSL\triangle.glsl
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spdlog", "External\spdlog\spdlog.vcxproj", "{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -267,6 +269,18 @@ Global
 		{643352C4-BCCE-3EFD-84B4-28D12E920878}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
 		{643352C4-BCCE-3EFD-84B4-28D12E920878}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 		{643352C4-BCCE-3EFD-84B4-28D12E920878}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.Debug|x64.ActiveCfg = Debug|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.Debug|x64.Build.0 = Debug|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.Debug|x86.ActiveCfg = Debug|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.MinSizeRel|x86.ActiveCfg = MinSizeRel|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.Release|x64.ActiveCfg = Release|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.Release|x64.Build.0 = Release|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.Release|x86.ActiveCfg = Release|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -289,6 +303,7 @@ Global
 		{39FE6EDF-CAB0-3167-BB63-171F2CA01409} = {1BFE8982-FB39-4FE3-BEC9-2776D8FA45D7}
 		{643352C4-BCCE-3EFD-84B4-28D12E920878} = {1BFE8982-FB39-4FE3-BEC9-2776D8FA45D7}
 		{3E8414CC-4226-48A5-AE4A-08CB1ECF4BBB} = {84A382DC-45AB-4A41-AEC2-BC86FA45AE1D}
+		{F73B9422-55E5-3EA7-BCD7-6B0DD7344898} = {1BFE8982-FB39-4FE3-BEC9-2776D8FA45D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19C637A8-5AC3-4550-BA0D-05FFD9FA23F1}

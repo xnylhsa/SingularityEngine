@@ -8,11 +8,15 @@
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec4 inColor;
 
-struct (binding = 0) mvp {
-    mat4 model;
-    mat4 view;
-    mat4 projection;
-}
+layout (binding = 0) uniform Camera
+{
+	mat4 viewProj;
+};
+
+layout (push_constant) uniform Transformation
+{
+	mat4 transform;
+};
 
 layout (location = 0) out vec4 outFragColor;
 

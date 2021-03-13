@@ -23,8 +23,9 @@ private:
 	SERenderer::ShaderLibrary mShaderLibrary;
 	std::shared_ptr<SERenderer::IPipeline> mPipeline;
 	Core::Timer timer;
-	std::shared_ptr<SERenderer::IBuffer> mVertexBuffer;
-	std::shared_ptr<SERenderer::IBuffer> mIndexBuffer;
+	std::shared_ptr<SERenderer::IVertexBuffer> mVertexBuffer;
+	std::shared_ptr<SERenderer::IIndexBuffer> mIndexBuffer;
+
 
 };
 

@@ -26,10 +26,8 @@ void GameApp::onInitialize()
 	path.make_preferred();
 	mShaderLibrary.load("triangle", path.string());
 	pipelineSpec.shader = mShaderLibrary.get("triangle");
-	pipelineSpec.shader->reload();
 	pipelineSpec.vertexFormat = SERenderer::VertexPC::Format;
-	mPipeline =  SERenderer::IPipeline::Create(pipelineSpec);
-	mPipeline->invalidate();
+	mPipeline = SERenderer::IPipeline::Create(pipelineSpec);
 	SERenderer::VertexPC vertices[3] = {
 		{{ -0.5f,  -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
 		{{ 0.5f,  -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
@@ -38,8 +36,8 @@ void GameApp::onInitialize()
 
 	uint32_t indicies[3] = { 0,1,2 };
 
-	mVertexBuffer = SERenderer::IBuffer::Create(&vertices, sizeof(SERenderer::VertexPC) * 3, 44, SERenderer::BufferUsageType::VertexBuffer);
-	mIndexBuffer = SERenderer::IBuffer::Create(&indicies, sizeof(uint32_t) * 3, sizeof(uint32_t), SERenderer::BufferUsageType::IndexBuffer);
+	mVertexBuffer = SERenderer::IVertexBuffer::Create(&vertices, sizeof(SERenderer::VertexPC) * 3, SERenderer::VertexBufferUsage::Static);
+	mIndexBuffer = SERenderer::IIndexBuffer::Create(&indicies, sizeof(uint32_t) * 3);
 
 	prepared = true;
 }
@@ -48,6 +46,8 @@ void GameApp::onTerminate()
 {
 	mVertexBuffer.reset();
 	mIndexBuffer.reset();
+	mPipeline.reset();
+	mShaderLibrary.cleanup();
 	SERenderer::Renderer::Terminate();
 }
 

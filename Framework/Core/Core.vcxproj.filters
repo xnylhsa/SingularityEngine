@@ -151,6 +151,7 @@
     <ClInclude Include="Inc\LayerStack.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\Buffer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Inc">
@@ -306,6 +307,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\LayerStack.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Debug.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

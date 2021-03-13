@@ -2,7 +2,6 @@
 #include "Common.h"
 
 #include "RendererAPI/RendererContext.h"
-#include "Vulkan/DescriptorInfos.h"
 #include "Vulkan/Synchronization/VulkanFence.h"
 #include "Vulkan/Texture/VulkanImage.h"
 #include "Vulkan/Memory/VulkanMemoryAllocator.h"

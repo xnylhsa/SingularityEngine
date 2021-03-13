@@ -7,3 +7,6 @@
 [submodule "External/shaderc"]
 	path = External/shaderc
 	url = https://github.com/xnylhsa/shaderc.git
+[submodule "External/spdlog"]
+	path = External/spdlog
+	url = https://github.com/xnylhsa/spdlog.git

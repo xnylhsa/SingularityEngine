@@ -17,17 +17,19 @@ namespace SingularityEngine::SERenderer
 		add(name, shader);
 	}
 
-	std::shared_ptr<IShader> ShaderLibrary::load(const std::string& filepath)
+	std::shared_ptr<IShader> ShaderLibrary::load(const std::string& filepath, bool forceCompilation)
 	{
 		auto shader = IShader::Create(filepath);
 		add(shader);
+		shader->reload(forceCompilation);
 		return shader;
 	}
 
-	std::shared_ptr<IShader> ShaderLibrary::load(const std::string& name, const std::string& filepath)
+	std::shared_ptr<IShader> ShaderLibrary::load(const std::string& name, const std::string& filepath, bool forceCompilation)
 	{
 		auto shader = IShader::Create(filepath);
 		add(name, shader);
+		shader->reload(forceCompilation);
 		return shader;
 	}
 
@@ -55,20 +57,14 @@ namespace SingularityEngine::SERenderer
 		return nullptr;
 	}
 
-	std::shared_ptr<IShader> IShader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+	ShaderUniform::ShaderUniform(const std::string& name, ShaderUniformType type, uint32_t size, uint32_t offset, uint32_t bindingPoint, uint32_t set)
+		: mName(name), mType(type), mSize(size), mOffset(offset), mBindingPoint(bindingPoint), mSet(set)
 	{
-		//get from shader library
-		switch (Renderer::GetAPI())
-		{
-		case RenderingAPI::None:    ASSERT(false, "[Renderer::Shader] None is currently not supported!"); return nullptr;
-		case RenderingAPI::Vulkan:  ASSERT(false, "[Renderer::Shader] Vulkan is currently not supported!"); return nullptr;
-		}
+	}
 
-		UNREFERENCED_PARAMETER(name);
-		UNREFERENCED_PARAMETER(vertexSrc);
-		UNREFERENCED_PARAMETER(fragmentSrc);
-		ASSERT(false, "[Renderer::Shader] Unknown RendererAPI!");
-		return nullptr;
+	const std::string ShaderUniform::UniformTypeToString(ShaderUniformType type)
+	{
+		return std::string(magic_enum::enum_name(type));
 	}
 
 }

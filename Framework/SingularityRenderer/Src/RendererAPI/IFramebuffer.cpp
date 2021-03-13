@@ -1,11 +1,11 @@
 #include "Precompiled.h"
-#include "RendererAPI/FrameBuffer.h"
+#include "RendererAPI/IFramebuffer.h"
 #include "RendererAPI/Renderer.h"
 
 namespace SingularityEngine::SERenderer
 {
 
-	std::shared_ptr <Framebuffer> Framebuffer::Create(const FramebufferSpecification& spec)
+	std::shared_ptr <IFramebuffer> IFramebuffer::Create(const FramebufferSpecification& spec)
 	{
 		UNREFERENCED_PARAMETER(spec);
 

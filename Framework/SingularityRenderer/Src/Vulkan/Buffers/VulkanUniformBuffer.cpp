@@ -7,7 +7,7 @@
 #include "vulkan/Memory/VulkanMemoryObject.h"
 using namespace SingularityEngine::SERenderer;
 
-VulkanUniformBuffer::VulkanUniformBuffer(VkDeviceSize size, VkBufferUsageFlags usage) : mSize(size)
+void VulkanUniformBuffer::allocateBuffer()
 {
 	std::shared_ptr<VulkanDevice> device = std::dynamic_pointer_cast<VulkanDevice>(Renderer::Get()->getGraphicsDevice());
 	VkBufferCreateInfo createInfo = {
@@ -15,7 +15,7 @@ VulkanUniformBuffer::VulkanUniformBuffer(VkDeviceSize size, VkBufferUsageFlags u
 		nullptr,
 		0,
 		mSize,
-		usage | VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+		VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
 		VK_SHARING_MODE_EXCLUSIVE,
 		0,
 		nullptr
@@ -34,6 +34,25 @@ VulkanUniformBuffer::VulkanUniformBuffer(VkDeviceSize size, VkBufferUsageFlags u
 }
 
 VulkanUniformBuffer::~VulkanUniformBuffer()
+{
+	releaseBuffer();
+}
+
+void* VulkanUniformBuffer::map()
+{
+	std::shared_ptr<VulkanDevice> device = std::dynamic_pointer_cast<VulkanDevice>(Renderer::Get()->getGraphicsDevice());
+	uint8_t* pData;
+	ASSERT(vkMapMemory(device->getLogicalDevice(), mMemObject->getDeviceMemory(), 0, mSize, 0, (void**)&pData), "[SERenderer::UniformBuffer] failed to map memory");
+	return pData;
+}
+
+void VulkanUniformBuffer::unmap()
+{
+	std::shared_ptr<VulkanDevice> device = std::dynamic_pointer_cast<VulkanDevice>(Renderer::Get()->getGraphicsDevice());
+	vkUnmapMemory(device->getLogicalDevice(), mMemObject->getDeviceMemory());
+}
+
+void VulkanUniformBuffer::releaseBuffer()
 {
 	std::shared_ptr<VulkanDevice> device = std::dynamic_pointer_cast<VulkanDevice>(Renderer::Get()->getGraphicsDevice());
 	ASSERT(device, "[SERenderer::VulkanImage] device lost.");

@@ -1,28 +1,28 @@
 #include "Precompiled.h"
-#include "RendererAPI/IBuffer.h"
+#include "RendererAPI/IVertexBuffer.h"
 #include "RendererAPI/Renderer.h"
-#include "vulkan/Buffers/VulkanBuffer.h"
+#include "vulkan/Buffers/VulkanVertexBuffer.h"
 
 namespace SingularityEngine::SERenderer
 {
-	std::shared_ptr<SingularityEngine::SERenderer::IBuffer> IBuffer::Create(size_t size, size_t offset, BufferUsageType usageType)
+	std::shared_ptr<SingularityEngine::SERenderer::IVertexBuffer> IVertexBuffer::Create(size_t size, VertexBufferUsage usageType)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RenderingAPI::None:    ASSERT(false, "[Renderer::Shader] None is currently not supported!"); return nullptr;
-		case RenderingAPI::Vulkan:  return std::make_shared<VulkanBuffer>(size, offset, usageType);
+		case RenderingAPI::Vulkan:  return std::make_shared<VulkanVertexBuffer>(size, usageType);
 		}
 		//load into shader library
 		ASSERT(false, "[Renderer::Shader] Unknown RendererAPI!");
 		return nullptr;
 	}
 
-	std::shared_ptr<SingularityEngine::SERenderer::IBuffer> IBuffer::Create(void* data, size_t size, size_t offset, BufferUsageType usageType)
+	std::shared_ptr<SingularityEngine::SERenderer::IVertexBuffer> IVertexBuffer::Create(void* data, size_t size, VertexBufferUsage usageType)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RenderingAPI::None:    ASSERT(false, "[Renderer::Shader] None is currently not supported!"); return nullptr;
-		case RenderingAPI::Vulkan:  return std::make_shared<VulkanBuffer>(data, size, offset, usageType);
+		case RenderingAPI::Vulkan:  return std::make_shared<VulkanVertexBuffer>(data, size, usageType);
 		}
 		//load into shader library
 		ASSERT(false, "[Renderer::Shader] Unknown RendererAPI!");

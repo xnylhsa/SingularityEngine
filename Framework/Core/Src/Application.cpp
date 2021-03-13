@@ -91,6 +91,7 @@ bool Application::create(WindowProperties windowProps, AppVer appVer, Applicatio
 {
 	ASSERT(sInstance == nullptr, "[Core::App] app instance already created!");
 	if (sInstance != nullptr) return false;
+	Log::Init();
 	sInstance = appPtr;
 	appPtr = nullptr;
 	sInstance->initialize(windowProps, appVer);

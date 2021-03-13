@@ -85,7 +85,7 @@
     <ClInclude Include="Inc\Vulkan\Util\VulkanUtils.h">
       <Filter>Inc\Vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\RendererAPI\FrameBuffer.h">
+    <ClInclude Include="Inc\RendererAPI\IFramebuffer.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
     <ClInclude Include="Inc\RendererAPI\RendererContext.h">
@@ -94,27 +94,25 @@
     <ClInclude Include="Inc\RendererAPI\IShader.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\RendererAPI\State.h">
-      <Filter>Inc\RendererAPI</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\RendererAPI\ISwapChain.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
     <ClInclude Include="Inc\RendererAPI\Texture.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\RendererAPI\IBuffer.h">
-      <Filter>Inc\RendererAPI</Filter>
-    </ClInclude>
     <ClInclude Include="Inc\RendererAPI\IPipeline.h" />
-    <ClInclude Include="Inc\RendererAPI\RenderPass.h" />
+    <ClInclude Include="Inc\RendererAPI\IRenderPass.h" />
     <ClInclude Include="Inc\RendererAPI\Renderer.h" />
     <ClInclude Include="Inc\RendererAPI\VertexTypes.h" />
     <ClInclude Include="Inc\RendererAPI\RenderCommand.h" />
     <ClInclude Include="Inc\Vulkan\Util\VulkanRenderer.h" />
     <ClInclude Include="Inc\RendererAPI\IGraphicsDevice.h" />
     <ClInclude Include="Inc\Vulkan\Shader\VulkanShader.h" />
-    <ClInclude Include="Inc\Vulkan\Buffers\VulkanBuffer.h" />
+    <ClInclude Include="Inc\Vulkan\Buffers\VulkanVertexBuffer.h" />
+    <ClInclude Include="Inc\RendererAPI\IVertexBuffer.h" />
+    <ClInclude Include="Inc\RendererAPI\IIndexBuffer.h" />
+    <ClInclude Include="Inc\RendererAPI\ShaderUniform.h" />
+    <ClInclude Include="Inc\Vulkan\Buffers\VulkanIndexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\precompiled.cpp">
@@ -192,21 +190,22 @@
     <ClCompile Include="Src\Vulkan\Util\VulkanUtils.cpp">
       <Filter>Src\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="Src\RendererAPI\FrameBuffer.cpp" />
+    <ClCompile Include="Src\RendererAPI\IFramebuffer.cpp" />
     <ClCompile Include="Src\RendererAPI\RendererContext.cpp" />
-    <ClCompile Include="Src\RendererAPI\RenderPass.cpp" />
+    <ClCompile Include="Src\RendererAPI\IRenderPass.cpp" />
     <ClCompile Include="Src\RendererAPI\IShader.cpp" />
-    <ClCompile Include="Src\RendererAPI\State.cpp" />
     <ClCompile Include="Src\RendererAPI\ISwapChain.cpp" />
     <ClCompile Include="Src\RendererAPI\Texture.cpp" />
-    <ClCompile Include="Src\RendererAPI\IBuffer.cpp" />
     <ClCompile Include="Src\RendererAPI\Renderer.cpp" />
     <ClCompile Include="Src\RendererAPI\RendererCommand.cpp" />
     <ClCompile Include="Src\Vulkan\Util\VulkanRenderer.cpp" />
     <ClCompile Include="Src\RendererAPI\IGraphicsDevice.cpp" />
     <ClCompile Include="Src\Vulkan\Shader\VulkanShader.cpp" />
     <ClCompile Include="Src\RendererAPI\IPipeline.cpp" />
-    <ClCompile Include="Src\Vulkan\Buffers\VulkanBuffer.cpp" />
+    <ClCompile Include="Src\Vulkan\Buffers\VulkanVertexBuffer.cpp" />
+    <ClCompile Include="Src\RendererAPI\IVertexBuffer.cpp" />
+    <ClCompile Include="Src\RendererAPI\IIndexBuffer.cpp" />
+    <ClCompile Include="Src\Vulkan\Buffers\VulkanIndexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SingularityRenderer.rc" />

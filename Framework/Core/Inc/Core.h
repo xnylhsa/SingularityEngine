@@ -7,6 +7,7 @@
 #include "Bitpacker.h"
 #include "BitSerialization.h"
 #include "BlockAllocator.h"
+#include "Buffer.h"
 #include "Debug.h"
 #include "DeleteUtil.h"
 #include "ECS.h"
