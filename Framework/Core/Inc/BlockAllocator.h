@@ -1,6 +1,9 @@
 #ifndef INCLUDED_CORE_BLOCKALLOCATOR_H
 #define INCLUDED_CORE_BLOCKALLOCATOR_H
 #include "Common.h"
+#include <mutex>
+
+
 namespace SingularityEngine::Core
 {
 
@@ -30,15 +33,15 @@ namespace SingularityEngine::Core
 
 
 	template<class DataType>
-	class TypedAllocator : private BlockAllocator
+	class ObjectPool : private BlockAllocator
 	{
 	public:
-		TypedAllocator(uint32_t capacity)
+		ObjectPool(uint32_t capacity)
 			: BlockAllocator(sizeof(DataType), capacity)
 		{
 		}
 
-		~TypedAllocator()
+		~ObjectPool()
 		{
 		}
 		uint32_t GetCapacity() const { return BlockAllocator::GetCapacity(); }
@@ -51,7 +54,7 @@ namespace SingularityEngine::Core
 
 	template<class DataType>
 	template<class... Args>
-	DataType* TypedAllocator<DataType>::New(Args&&... args)
+	DataType* ObjectPool<DataType>::New(Args&&... args)
 	{
 		DataType* instance = static_cast<DataType*>(Allocate());
 		if (instance)
@@ -63,7 +66,7 @@ namespace SingularityEngine::Core
 	}
 
 	template<class DataType>
-	void TypedAllocator<DataType>::Delete(DataType* ptr)
+	void ObjectPool<DataType>::Delete(DataType* ptr)
 	{
 		if (ptr == nullptr)
 		{
@@ -72,6 +75,28 @@ namespace SingularityEngine::Core
 		ptr->~T();
 		Free(ptr);
 	}
+
+	template<typename T>
+	class ThreadSafeObjectPool : public ObjectPool<T>
+	{
+	public:
+		template<typename... P>
+		T* New(P &&... p)
+		{
+			std::lock_guard<std::mutex> holder{ lock };
+			return ObjectPool<T>::New(std::forward<P>(p)...);
+		}
+
+		void Delete(T* ptr)
+		{
+			std::lock_guard<std::mutex> holder{ lock };
+			ObjectPool<T>::Delete(ptr);
+		}
+
+	private:
+		std::mutex lock;
+	};
+
 } //SingularityEngine::Core
 
 #endif // INCLUDED_CORE_BLOCKALLOCATOR_H

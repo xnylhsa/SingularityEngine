@@ -230,6 +230,8 @@ namespace SingularityEngine::SERenderer
 		pipelineCreateInfo.renderPass = (swapchain->getRenderpass()->getRenderPass());// ?
 		pipelineCreateInfo.pDynamicState = &dynamicState;
 
+		//should store this cache onto disk, if it isnt found, do all the above, otherwise quick load from cache.
+		//preferably, all these should be merged using vkMergePipelineCache written into one file, then on load, split out to multiple threads to load.
 		VkPipelineCacheCreateInfo pipelineCacheCreateInfo = {};
 		pipelineCacheCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 		ASSERT(vkCreatePipelineCache(device->getLogicalDevice(), &pipelineCacheCreateInfo, nullptr, &mPipelineCache) == VK_SUCCESS, "[SERenderer::VulkanPipeline] Failed creation of pipeline cache.");

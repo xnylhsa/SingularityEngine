@@ -514,7 +514,7 @@ namespace SingularityEngine::SERenderer
 		auto vulkanDevice = mDevice.lock();
 		ASSERT(vulkanDevice != nullptr, "[SERenderer::VulkanSwapChain] device expired!");
 		if (!vulkanDevice) return false;
-		return mPresentCommandPool.create(vulkanDevice, mPresentQueueFamilyIndex.value(), VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT | VK_COMMAND_POOL_CREATE_TRANSIENT_BIT);
+		return mPresentCommandPool.create(vulkanDevice, mPresentQueueFamilyIndex.value());
 	}
 
 	bool VulkanSwapChain::createCommandBuffers()
@@ -525,9 +525,9 @@ namespace SingularityEngine::SERenderer
 		return mDrawCommandBuffers.Create(vulkanDevice, mPresentCommandPool, VK_COMMAND_BUFFER_LEVEL_PRIMARY, mNumImages.value());
 	}
 
-	bool VulkanSwapChain::destroyCommandBuffers()
+	void VulkanSwapChain::destroyCommandBuffers()
 	{
-		return mDrawCommandBuffers.Destroy(mPresentCommandPool);
+		mPresentCommandPool.trim();
 	}
 
 	bool VulkanSwapChain::createRenderPass()

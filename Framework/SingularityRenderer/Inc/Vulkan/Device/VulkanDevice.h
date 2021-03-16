@@ -3,9 +3,13 @@
 #include "RendererAPI/IGraphicsDevice.h"
 #include "Vulkan/Util/VulkanParameters.h"
 #include "Vulkan/Device/VulkanQueue.h"
-#include "Vulkan/Synchronization/VulkanCommandPool.h"
+#include "Vulkan/Command/VulkanCommandPool.h"
+#include "vulkan/Memory/vk_mem_alloc.h"
+#include "vulkan/Texture/VulkanSampler.h"
+#include "vulkan/DescriptorSets/VulkanDescriptorSet.h"
 namespace SingularityEngine::SERenderer
 {
+	class VulkanDescriptorSetAllocator;
 	class VulkanMemoryAllocator;
 	class VulkanDevice : public IGraphicsDevice
 	{
@@ -30,8 +34,14 @@ namespace SingularityEngine::SERenderer
 
 
 		void teardown() override;
+		std::shared_ptr<VulkanSampler> getStockSampler(SamplerTypes sampler);
 
 
+		VkCommandBuffer getCommandBuffer(bool begin, bool compute = false);
+		//TODO setup command buffer class, then have second version of this function that gets a profiled version.
+		void submit(VkCommandBuffer commandBuffer);
+		void submit(VkCommandBuffer commandBuffer, VkQueue queue);
+		VkImage createImage();
 
 
 	private:
@@ -57,6 +67,11 @@ namespace SingularityEngine::SERenderer
 		bool isExtensionSupported(const char* extensionName, const std::vector<VkExtensionProperties>& availableExtensions);
 		bool selectQueueMatchingDesiredCapabilities(VkPhysicalDevice device);
 
+		void createStockSamplers();
+		void destroyStockSamplers();
+
+		void initBindless();
+
 		bool setPhysicalDeviceInfo();
 		VkPhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
 		VkPhysicalDeviceMemoryProperties mMemoryProperties;
@@ -67,7 +82,13 @@ namespace SingularityEngine::SERenderer
 		VkDevice mLogicalDevice = VK_NULL_HANDLE;
 		VulkanCommandPool mCommandPool;
 		VulkanQueue mGraphicsQueue;
+		VmaAllocator mVMAAllocator;
+		bool mSupportsUnboundedArrays;
+		std::array<std::shared_ptr<VulkanSampler>, static_cast<size_t>(SamplerTypes::Count)> mStockSamplers;
+
 		std::unique_ptr<VulkanMemoryAllocator> mAllocator;
+		std::unique_ptr<VulkanDescriptorSetAllocator> mBindlesDescripterSetAllocatorInt;
+		std::unique_ptr<VulkanDescriptorSetAllocator> mBindlesDescripterSetAllocatorFloat;
 
 	};
 }

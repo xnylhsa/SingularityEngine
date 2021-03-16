@@ -55,6 +55,7 @@
     <ClInclude Include="Inc\PageAllocator.h" />
     <ClInclude Include="Inc\SerializationUtil.h" />
     <ClInclude Include="Inc\ECSSystem.h" />
+    <ClInclude Include="Inc\stb_image.h" />
     <ClInclude Include="Inc\Timer.h" />
     <ClInclude Include="Inc\Window.h" />
     <ClInclude Include="Inc\Random.h" />
@@ -106,6 +107,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Src\ECSSystem.cpp" />
+    <ClCompile Include="Src\stb_image.cpp" />
     <ClCompile Include="Src\Timer.cpp" />
     <ClCompile Include="Src\Window.cpp" />
     <ClCompile Include="Src\WindowsWindow.cpp" />

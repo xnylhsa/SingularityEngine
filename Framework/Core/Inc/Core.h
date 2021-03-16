@@ -35,6 +35,8 @@
 #include "InputManager.h"
 #include "Layer.h"
 #include "LayerStack.h"
+#include "stb_image.h"
+
 #ifndef SINGULARITY_USE_GLFW
 #ifdef SINGULARITY_PLATFORM_WINDOWS
 #include "WindowsWindow.h"

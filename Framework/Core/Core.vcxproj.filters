@@ -152,6 +152,9 @@
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\Buffer.h" />
+    <ClInclude Include="Inc\stb_image.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Inc">
@@ -312,5 +315,6 @@
     <ClCompile Include="Src\Debug.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Src\stb_image.cpp" />
   </ItemGroup>
 </Project>

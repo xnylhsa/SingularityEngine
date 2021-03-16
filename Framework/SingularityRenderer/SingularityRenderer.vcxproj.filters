@@ -25,7 +25,7 @@
     <ClInclude Include="Inc\Vulkan\Buffers\VulkanCommandBuffers.h">
       <Filter>Inc\Vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\Vulkan\Synchronization\VulkanCommandPool.h">
+    <ClInclude Include="Inc\Vulkan\Command\VulkanCommandPool.h">
       <Filter>Inc\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="Inc\Vulkan\Context\VulkanContext.h">
@@ -97,7 +97,7 @@
     <ClInclude Include="Inc\RendererAPI\ISwapChain.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\RendererAPI\Texture.h">
+    <ClInclude Include="Inc\RendererAPI\ITexture.h">
       <Filter>Inc\RendererAPI</Filter>
     </ClInclude>
     <ClInclude Include="Inc\RendererAPI\IPipeline.h" />
@@ -113,6 +113,10 @@
     <ClInclude Include="Inc\RendererAPI\IIndexBuffer.h" />
     <ClInclude Include="Inc\RendererAPI\ShaderUniform.h" />
     <ClInclude Include="Inc\Vulkan\Buffers\VulkanIndexBuffer.h" />
+    <ClInclude Include="Inc\Vulkan\Texture\VulkanTexture2D.h" />
+    <ClInclude Include="Inc\Vulkan\Memory\vk_mem_alloc.h" />
+    <ClInclude Include="Inc\Vulkan\DescriptorSets\VulkanDescriptorSet.h" />
+    <ClInclude Include="Inc\Vulkan\Texture\VulkanSampler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\precompiled.cpp">
@@ -121,7 +125,7 @@
     <ClCompile Include="Src\Vulkan\Buffers\VulkanUniformBuffer.cpp">
       <Filter>Src\Vulkan\Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Vulkan\Synchronization\VulkanCommandPool.cpp">
+    <ClCompile Include="Src\Vulkan\Command\VulkanCommandPool.cpp">
       <Filter>Src\Vulkan\ImageClasses</Filter>
     </ClCompile>
     <ClCompile Include="Src\Vulkan\Texture\VulkanImage.cpp">
@@ -195,7 +199,7 @@
     <ClCompile Include="Src\RendererAPI\IRenderPass.cpp" />
     <ClCompile Include="Src\RendererAPI\IShader.cpp" />
     <ClCompile Include="Src\RendererAPI\ISwapChain.cpp" />
-    <ClCompile Include="Src\RendererAPI\Texture.cpp" />
+    <ClCompile Include="Src\RendererAPI\ITexture.cpp" />
     <ClCompile Include="Src\RendererAPI\Renderer.cpp" />
     <ClCompile Include="Src\RendererAPI\RendererCommand.cpp" />
     <ClCompile Include="Src\Vulkan\Util\VulkanRenderer.cpp" />
@@ -206,6 +210,10 @@
     <ClCompile Include="Src\RendererAPI\IVertexBuffer.cpp" />
     <ClCompile Include="Src\RendererAPI\IIndexBuffer.cpp" />
     <ClCompile Include="Src\Vulkan\Buffers\VulkanIndexBuffer.cpp" />
+    <ClCompile Include="Src\Vulkan\Texture\VulkanTexture2D.cpp" />
+    <ClCompile Include="Src\Vulkan\Memory\vk_mem_alloc.cpp" />
+    <ClCompile Include="Src\Vulkan\DescriptorSets\VulkanDescriptorSet.cpp" />
+    <ClCompile Include="Src\Vulkan\Texture\VulkanSampler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SingularityRenderer.rc" />

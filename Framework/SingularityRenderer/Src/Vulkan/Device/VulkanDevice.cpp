@@ -5,7 +5,7 @@
 #include "Vulkan/Util/VulkanFunctions.h"
 #include "Vulkan/Context/VulkanInstance.h"
 #include "vulkan/Memory/VulkanMemoryAllocator.h"
-
+#include "vulkan/DescriptorSets/VulkanDescriptorSet.h"
 #include "RendererAPI/Renderer.h"
 using namespace SingularityEngine::SERenderer;
 
@@ -283,10 +283,21 @@ bool VulkanDevice::initialize()
 			!info.priorities.empty() ? &info.priorities[0] : nullptr  //pQueuePriorities
 			});
 	}
+	// Get the extension feature
+	VkPhysicalDeviceFeatures2KHR physical_device_features{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2_KHR };
+	VkPhysicalDeviceDescriptorIndexingFeatures features{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES };
+	physical_device_features.pNext = &features;
+	vkGetPhysicalDeviceFeatures2(mPhysicalDevice, &physical_device_features);
+
+	features.descriptorBindingSampledImageUpdateAfterBind = VK_TRUE;
+	features.descriptorBindingPartiallyBound = VK_TRUE;
+	features.descriptorBindingUpdateUnusedWhilePending = VK_TRUE;
+	features.descriptorBindingVariableDescriptorCount = VK_TRUE;
+	features.runtimeDescriptorArray = VK_TRUE;
 
 	VkDeviceCreateInfo deviceCreateInfo = {
 		VkStructureType::VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,                            //stype
-		nullptr,                                                                          //pNext
+		&features,                                                                          //pNext
 		0,                                                                                //Flags
 		static_cast<uint32_t>(queueCreateInfo.size()),                                    //queueCreateInfoCount
 		queueCreateInfo.data(),                                                           //pQueueCreateInfos
@@ -315,15 +326,56 @@ bool VulkanDevice::initialize()
 	}
 
 	createDeviceQueues();
+
+	//VmaVulkanFunctions functions;
+	//functions.vkAllocateMemory = vkAllocateMemory;
+	//functions.vkBindBufferMemory = vkBindBufferMemory;
+	//functions.vkBindBufferMemory2KHR = vkBindBufferMemory2KHR;
+	//functions.vkBindImageMemory = vkBindImageMemory;
+	//functions.vkBindImageMemory2KHR = vkBindImageMemory2KHR;
+	//functions.vkCmdCopyBuffer = vkCmdCopyBuffer;
+	//functions.vkCreateBuffer = vkCreateBuffer;
+	//functions.vkCreateImage = vkCreateImage;
+	//functions.vkDestroyBuffer = vkDestroyBuffer;
+	//functions.vkDestroyImage= vkDestroyImage;
+	//functions.vkFlushMappedMemoryRanges = vkFlushMappedMemoryRanges;
+	//functions.vkFreeMemory = vkFreeMemory;
+	//functions.vkGetBufferMemoryRequirements = vkGetBufferMemoryRequirements;
+	//functions.vkGetBufferMemoryRequirements2KHR = vkGetBufferMemoryRequirements2KHR;
+	//functions.vkGetImageMemoryRequirements = vkGetImageMemoryRequirements;
+	//functions.vkGetImageMemoryRequirements2KHR = vkGetImageMemoryRequirements2KHR;
+	//functions.vkGetPhysicalDeviceMemoryProperties = vkGetPhysicalDeviceMemoryProperties;
+	//functions.vkGetPhysicalDeviceMemoryProperties2KHR = vkGetPhysicalDeviceMemoryProperties2KHR;
+	//functions.vkGetPhysicalDeviceProperties = vkGetPhysicalDeviceProperties;
+	//functions.vkInvalidateMappedMemoryRanges = vkInvalidateMappedMemoryRanges;
+	//functions.vkMapMemory = vkMapMemory;
+	//functions.vkUnmapMemory = vkUnmapMemory;
+
+
+
+	VmaAllocatorCreateInfo allocatorInfo = {};
+	allocatorInfo.vulkanApiVersion = VK_API_VERSION_1_2;
+	allocatorInfo.physicalDevice = mPhysicalDevice;
+	allocatorInfo.device = mLogicalDevice;
+	allocatorInfo.instance = *context->GetVulkanInstance();
+	//allocatorInfo.pVulkanFunctions = &functions;
+
+	vmaCreateAllocator(&allocatorInfo, &mVMAAllocator);
+
 	mAllocator = std::make_unique<VulkanMemoryAllocator>(std::dynamic_pointer_cast<VulkanDevice>(shared_from_this()), "Default");
+	createStockSamplers();
+	initBindless();
 
 	return true;
 }
 
 void VulkanDevice::teardown()
 {
-
+	mBindlesDescripterSetAllocatorInt.reset();
+	mBindlesDescripterSetAllocatorFloat.reset();
+	destroyStockSamplers();
 	mAllocator.reset();
+	vmaDestroyAllocator(mVMAAllocator);
 	destroyDeviceQueues();
 	if (mLogicalDevice)
 	{
@@ -331,4 +383,169 @@ void VulkanDevice::teardown()
 		vkDestroyDevice(mLogicalDevice, nullptr);
 		mLogicalDevice = VK_NULL_HANDLE;
 	}
+}
+
+VkCommandBuffer VulkanDevice::getCommandBuffer(bool begin, bool compute /*= false*/)
+{
+	UNREFERENCED_PARAMETER(compute);
+	VkCommandBuffer cmd =  mCommandPool.requestCommandBuffer();
+	//VkCommandBuffer cmd = compute ? mComputeCommandPool.requestCommandBuffer() : mCommandPool.requestCommandBuffer();
+
+	if (begin)
+	{
+		VkCommandBufferBeginInfo cmdBufferBeginInfo{};
+		cmdBufferBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		vkBeginCommandBuffer(cmd, &cmdBufferBeginInfo);
+	}
+	return cmd;
+}
+
+void VulkanDevice::submit(VkCommandBuffer commandBuffer)
+{
+	submit(commandBuffer, mGraphicsQueue);
+}
+
+void VulkanDevice::submit(VkCommandBuffer commandBuffer, VkQueue queue)
+{
+	const uint64_t DEFAULT_FENCE_TIMEOUT = 100000000000;
+
+	ASSERT(commandBuffer != VK_NULL_HANDLE, "[SERenderer::Device] invalid command Buffer");
+
+	ASSERT(vkEndCommandBuffer(commandBuffer) == VK_SUCCESS, "[SERenderer::Device] failed to end command buffer");
+
+	VkSubmitInfo submitInfo = {};
+	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+	submitInfo.commandBufferCount = 1;
+	submitInfo.pCommandBuffers = &commandBuffer;
+
+	// Create fence to ensure that the command buffer has finished executing
+	VkFenceCreateInfo fenceCreateInfo = {};
+	fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+	fenceCreateInfo.flags = 0;
+	VkFence fence;
+	ASSERT(vkCreateFence(mLogicalDevice, &fenceCreateInfo, nullptr, &fence) == VK_SUCCESS, "[SERenderer::Device] failed to create fence.");
+
+	// Submit to the queue
+	ASSERT(vkQueueSubmit(queue, 1, &submitInfo, fence) == VK_SUCCESS, "[SERenderer::Device] Failed to submit queue");
+	// Wait for the fence to signal that command buffer has finished executing
+	ASSERT(vkWaitForFences(mLogicalDevice, 1, &fence, VK_TRUE, DEFAULT_FENCE_TIMEOUT) == VK_SUCCESS,  "[SERenderer::Device] failed to wait for fence.");
+
+	vkDestroyFence(mLogicalDevice, fence, nullptr);
+	vkFreeCommandBuffers(mLogicalDevice, mCommandPool, 1, &commandBuffer);
+}
+
+VkImage VulkanDevice::createImage()
+{
+	return VK_NULL_HANDLE;
+}
+
+std::shared_ptr<VulkanSampler> VulkanDevice::getStockSampler(SamplerTypes sampler)
+{
+	return mStockSamplers[static_cast<size_t>(sampler)];
+}
+
+void VulkanDevice::createStockSamplers()
+{
+	SamplerCreateInfo info = {};
+	info.maxLOD = VK_LOD_CLAMP_NONE;
+	info.maxAnisotropy = 1.0f;
+	for (unsigned i = 0; i < static_cast<unsigned>(SamplerTypes::Count); i++)
+	{
+		auto mode = static_cast<SamplerTypes>(i);
+
+		switch (mode)
+		{
+		case SamplerTypes::NearestShadow:
+		case SamplerTypes::LinearShadow:
+			info.compareEnable = true;
+			info.compareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
+			break;
+
+		default:
+			info.compareEnable = false;
+			break;
+		}
+
+		switch (mode)
+		{
+		case SamplerTypes::TrilinearClamp:
+		case SamplerTypes::TrilinearWrap:
+			info.mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+			break;
+
+		default:
+			info.mipMapMode = VK_SAMPLER_MIPMAP_MODE_NEAREST;
+			break;
+		}
+
+		switch (mode)
+		{
+		case SamplerTypes::LinearClamp:
+		case SamplerTypes::LinearWrap:
+		case SamplerTypes::TrilinearClamp:
+		case SamplerTypes::TrilinearWrap:
+		case SamplerTypes::LinearShadow:
+			info.magFilter = VK_FILTER_LINEAR;
+			info.minFilter = VK_FILTER_LINEAR;
+			break;
+
+		default:
+			info.magFilter = VK_FILTER_NEAREST;
+			info.minFilter = VK_FILTER_NEAREST;
+			break;
+		}
+
+		switch (mode)
+		{
+		default:
+		case SamplerTypes::LinearWrap:
+		case SamplerTypes::NearestWrap:
+		case SamplerTypes::TrilinearWrap:
+			info.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			info.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			info.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			break;
+
+		case SamplerTypes::LinearClamp:
+		case SamplerTypes::NearestClamp:
+		case SamplerTypes::TrilinearClamp:
+		case SamplerTypes::NearestShadow:
+		case SamplerTypes::LinearShadow:
+			info.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			info.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			info.addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			break;
+		}
+
+		mStockSamplers[i] = std::make_shared<VulkanSampler>(info);
+	}
+}
+
+void VulkanDevice::destroyStockSamplers()
+{
+	for (auto&& sampler : mStockSamplers)
+	{
+		sampler.reset();
+		sampler = nullptr;
+	}
+}
+
+void VulkanDevice::initBindless()
+{
+	DescriptorSetLayout layout;
+
+	layout.bindingInfos[0].size = VULKAN_UNBOUND_ARRAY;
+	layout.bindingInfos[0].type = BindingType::SeperateImage;
+	for (unsigned i = 1; i < VULKAN_NUM_BINDINGS; i++)
+	{
+		layout.bindingInfos[i].size = 1;
+		layout.bindingInfos[i].type = BindingType::SeperateImage;
+	}
+	uint32_t stagesForSets[VULKAN_NUM_BINDINGS] = { VK_SHADER_STAGE_ALL };
+	mBindlesDescripterSetAllocatorInt = std::make_unique<VulkanDescriptorSetAllocator>(layout, stagesForSets);
+	for (unsigned i = 0; i < VULKAN_NUM_BINDINGS; i++)
+	{
+		layout.bindingInfos[i].isFloatingPoint = true;
+	}
+	mBindlesDescripterSetAllocatorFloat = std::make_unique<VulkanDescriptorSetAllocator>(layout, stagesForSets);
 }

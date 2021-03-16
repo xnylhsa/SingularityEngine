@@ -55,6 +55,7 @@ namespace SingularityEngine::SERenderer
 	class IShader
 	{
 	public:
+		IShader() = default;
 		virtual ~IShader() = default;
 
 		virtual void reload(bool forceCompile) = 0;
@@ -70,6 +71,8 @@ namespace SingularityEngine::SERenderer
 		virtual void setUniform(const std::string& fullname, Math::Matrix4x4 value) = 0;
 
 		virtual const std::string& getName() const = 0;
+		IShader(const IShader & other) = delete;
+		void operator=(const IShader& other) = delete;
 
 		static std::shared_ptr<IShader> Create(const std::string& filepath);
 	};

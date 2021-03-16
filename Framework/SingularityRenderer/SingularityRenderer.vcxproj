@@ -161,10 +161,12 @@
     <ClInclude Include="Inc\RendererAPI\RendererContext.h" />
     <ClInclude Include="Inc\RendererAPI\IShader.h" />
     <ClInclude Include="Inc\RendererAPI\ISwapChain.h" />
-    <ClInclude Include="Inc\RendererAPI\Texture.h" />
+    <ClInclude Include="Inc\RendererAPI\ITexture.h" />
     <ClInclude Include="Inc\Vulkan\Buffers\VulkanCommandBuffers.h" />
+    <ClInclude Include="Inc\Vulkan\DescriptorSets\VulkanDescriptorSet.h" />
+    <ClInclude Include="Inc\Vulkan\Memory\vk_mem_alloc.h" />
     <ClInclude Include="Inc\Vulkan\Shader\VulkanShader.h" />
-    <ClInclude Include="Inc\Vulkan\Synchronization\VulkanCommandPool.h" />
+    <ClInclude Include="Inc\Vulkan\Command\VulkanCommandPool.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\Vulkan\SwapChain\VulkanDepthStencil.h" />
     <ClInclude Include="Inc\Vulkan\Memory\VulkanMemoryAllocator.h" />
@@ -179,6 +181,8 @@
     <ClInclude Include="Inc\Vulkan\RenderPass\VulkanRenderPass.h" />
     <ClInclude Include="Inc\Vulkan\Synchronization\VulkanSemaphore.h" />
     <ClInclude Include="Inc\Vulkan\Shader\VulkanShaderModule.h" />
+    <ClInclude Include="Inc\Vulkan\Texture\VulkanSampler.h" />
+    <ClInclude Include="Inc\Vulkan\Texture\VulkanTexture2D.h" />
     <ClInclude Include="Inc\Vulkan\Util\VulkanSubpassParameters.h" />
     <ClInclude Include="Inc\Vulkan\SwapChain\VulkanSwapChain.h" />
     <ClInclude Include="Inc\Vulkan\Util\VulkanFunctions.h" />
@@ -195,6 +199,10 @@
     <ClInclude Include="Inc\RendererAPI\RenderCommand.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Vulkan\DescriptorSets\VulkanDescriptorSet.cpp" />
+    <ClCompile Include="Src\Vulkan\Memory\vk_mem_alloc.cpp" />
+    <ClCompile Include="Src\Vulkan\Texture\VulkanSampler.cpp" />
+    <ClCompile Include="Src\Vulkan\Texture\VulkanTexture2D.cpp" />
     <ClCompile Include="Src\RendererAPI\IGraphicsDevice.cpp" />
     <ClCompile Include="Src\RendererAPI\IIndexBuffer.cpp" />
     <ClCompile Include="Src\RendererAPI\IPipeline.cpp" />
@@ -210,7 +218,7 @@
     <ClCompile Include="Src\RendererAPI\IRenderPass.cpp" />
     <ClCompile Include="Src\RendererAPI\IShader.cpp" />
     <ClCompile Include="Src\RendererAPI\ISwapChain.cpp" />
-    <ClCompile Include="Src\RendererAPI\Texture.cpp" />
+    <ClCompile Include="Src\RendererAPI\ITexture.cpp" />
     <ClCompile Include="Src\Vulkan\Pipeline\VulkanPipeline.cpp" />
     <ClCompile Include="Src\Vulkan\Buffers\VulkanFrameBuffer.cpp" />
     <ClCompile Include="Src\Vulkan\RenderPass\VulkanRenderPass.cpp" />
@@ -220,7 +228,7 @@
     <ClCompile Include="Src\Vulkan\SwapChain\VulkanDepthStencil.cpp" />
     <ClCompile Include="Src\Vulkan\Texture\VulkanImage.cpp" />
     <ClCompile Include="Src\Vulkan\Synchronization\VulkanFence.cpp" />
-    <ClCompile Include="Src\Vulkan\Synchronization\VulkanCommandPool.cpp" />
+    <ClCompile Include="Src\Vulkan\Command\VulkanCommandPool.cpp" />
     <ClCompile Include="Src\Vulkan\Buffers\VulkanCommandBuffers.cpp" />
     <ClCompile Include="Src\Vulkan\Device\VulkanDevice.cpp" />
     <ClCompile Include="Src\Vulkan\Device\VulkanQueue.cpp" />

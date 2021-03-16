@@ -3,7 +3,7 @@
 #include "Vulkan/Util/VulkanParameters.h"
 #include "Vulkan/Memory/VulkanMemoryAllocator.h"
 #include "Vulkan/Buffers/VulkanCommandBuffers.h"
-#include "Vulkan/Synchronization/VulkanCommandPool.h"
+#include "Vulkan/Command/VulkanCommandPool.h"
 #include "Vulkan/Buffers/VulkanFrameBuffer.h"
 #include "Vulkan/Synchronization/VulkanFence.h"
 namespace SingularityEngine::SERenderer
@@ -55,7 +55,7 @@ namespace SingularityEngine::SERenderer
 		bool createCommandPools();
 		bool createCommandBuffers();
 		//cleanup
-		bool destroyCommandBuffers();
+		void destroyCommandBuffers();
 
 		//property acquisition from device
 		bool acquireSwapchainImages();

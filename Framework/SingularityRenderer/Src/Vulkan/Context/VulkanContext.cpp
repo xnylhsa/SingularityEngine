@@ -124,6 +124,7 @@ namespace SingularityEngine::SERenderer
 	void VulkanContext::fillDesiredDeviceExtensions(DesiredExtensions& extensions)
 	{
 		extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+		extensions.push_back(VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME);
 	}
 
 }

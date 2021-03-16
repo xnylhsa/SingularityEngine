@@ -1,6 +1,6 @@
 #pragma once
 #include "Common.h"
-#include "Vulkan/Synchronization/VulkanCommandPool.h"
+#include "Vulkan/Command/VulkanCommandPool.h"
 namespace SingularityEngine::SERenderer
 {
 	class VulkanCommandBuffers

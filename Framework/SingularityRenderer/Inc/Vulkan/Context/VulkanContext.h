@@ -6,7 +6,7 @@
 #include "Vulkan/Texture/VulkanImage.h"
 #include "Vulkan/Memory/VulkanMemoryAllocator.h"
 #include "Vulkan/Buffers/VulkanCommandBuffers.h"
-#include "Vulkan/Synchronization/VulkanCommandPool.h"
+#include "Vulkan/Command/VulkanCommandPool.h"
 #include "Vulkan/Util/VulkanLibraryLoader.h"
 #include "Vulkan/Util/VulkanParameters.h"
 #include "Vulkan/Context/VulkanInstance.h"
