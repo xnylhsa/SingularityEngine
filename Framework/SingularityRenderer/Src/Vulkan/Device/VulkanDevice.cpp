@@ -361,20 +361,11 @@ bool VulkanDevice::initialize()
 	//allocatorInfo.pVulkanFunctions = &functions;
 
 	vmaCreateAllocator(&allocatorInfo, &mVMAAllocator);
-
-	mAllocator = std::make_unique<VulkanMemoryAllocator>(std::dynamic_pointer_cast<VulkanDevice>(shared_from_this()), "Default");
-	createStockSamplers();
-	initBindless();
-
 	return true;
 }
 
 void VulkanDevice::teardown()
 {
-	mBindlesDescripterSetAllocatorInt.reset();
-	mBindlesDescripterSetAllocatorFloat.reset();
-	destroyStockSamplers();
-	mAllocator.reset();
 	vmaDestroyAllocator(mVMAAllocator);
 	destroyDeviceQueues();
 	if (mLogicalDevice)
@@ -439,113 +430,38 @@ VkImage VulkanDevice::createImage()
 	return VK_NULL_HANDLE;
 }
 
-std::shared_ptr<VulkanSampler> VulkanDevice::getStockSampler(SamplerTypes sampler)
+std::pair<VkBuffer, VmaAllocation> VulkanDevice::requestBuffer(VkBufferUsageFlagBits usage, VkDeviceSize size)
 {
-	return mStockSamplers[static_cast<size_t>(sampler)];
+
+	VkBufferCreateInfo bufferInfo = {};
+	bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+	bufferInfo.size = size;
+	bufferInfo.usage = usage;
+
+	VmaAllocationCreateInfo vmaAllocInfo = {};
+	vmaAllocInfo.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
+	VkBuffer buffer;
+	VmaAllocation allocation;
+	VkResult result = vmaCreateBuffer(mVMAAllocator, &bufferInfo, &vmaAllocInfo, &buffer, &allocation, nullptr);
+	ASSERT(result == VK_SUCCESS, "[SERenderer::VulkanBuffer] failed creation!");
+	return std::make_pair(buffer, std::move(allocation));
 }
 
-void VulkanDevice::createStockSamplers()
+void VulkanDevice::unMapBuffer(VmaAllocation* allocation)
 {
-	SamplerCreateInfo info = {};
-	info.maxLOD = VK_LOD_CLAMP_NONE;
-	info.maxAnisotropy = 1.0f;
-	for (unsigned i = 0; i < static_cast<unsigned>(SamplerTypes::Count); i++)
-	{
-		auto mode = static_cast<SamplerTypes>(i);
-
-		switch (mode)
-		{
-		case SamplerTypes::NearestShadow:
-		case SamplerTypes::LinearShadow:
-			info.compareEnable = true;
-			info.compareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
-			break;
-
-		default:
-			info.compareEnable = false;
-			break;
-		}
-
-		switch (mode)
-		{
-		case SamplerTypes::TrilinearClamp:
-		case SamplerTypes::TrilinearWrap:
-			info.mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-			break;
-
-		default:
-			info.mipMapMode = VK_SAMPLER_MIPMAP_MODE_NEAREST;
-			break;
-		}
-
-		switch (mode)
-		{
-		case SamplerTypes::LinearClamp:
-		case SamplerTypes::LinearWrap:
-		case SamplerTypes::TrilinearClamp:
-		case SamplerTypes::TrilinearWrap:
-		case SamplerTypes::LinearShadow:
-			info.magFilter = VK_FILTER_LINEAR;
-			info.minFilter = VK_FILTER_LINEAR;
-			break;
-
-		default:
-			info.magFilter = VK_FILTER_NEAREST;
-			info.minFilter = VK_FILTER_NEAREST;
-			break;
-		}
-
-		switch (mode)
-		{
-		default:
-		case SamplerTypes::LinearWrap:
-		case SamplerTypes::NearestWrap:
-		case SamplerTypes::TrilinearWrap:
-			info.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-			info.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-			info.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-			break;
-
-		case SamplerTypes::LinearClamp:
-		case SamplerTypes::NearestClamp:
-		case SamplerTypes::TrilinearClamp:
-		case SamplerTypes::NearestShadow:
-		case SamplerTypes::LinearShadow:
-			info.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-			info.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-			info.addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-			break;
-		}
-
-		mStockSamplers[i] = std::make_shared<VulkanSampler>(info);
-	}
+	ASSERT(allocation, "[SERenderer::VulkanDevice] Invalid allocation ptr passed in.");
+	vmaUnmapMemory(mVMAAllocator, *allocation);
 }
 
-void VulkanDevice::destroyStockSamplers()
+void* VulkanDevice::mapBuffer(VmaAllocation* allocation)
 {
-	for (auto&& sampler : mStockSamplers)
-	{
-		sampler.reset();
-		sampler = nullptr;
-	}
+	ASSERT(allocation, "[SERenderer::VulkanDevice] Invalid allocation ptr passed in.");
+	void* ret;
+	vmaMapMemory(mVMAAllocator, *allocation, &ret);
+	return ret;
 }
 
-void VulkanDevice::initBindless()
+void VulkanDevice::releaseBuffer(VkBuffer buffer, VmaAllocation allocation)
 {
-	DescriptorSetLayout layout;
-
-	layout.bindingInfos[0].size = VULKAN_UNBOUND_ARRAY;
-	layout.bindingInfos[0].type = BindingType::SeperateImage;
-	for (unsigned i = 1; i < VULKAN_NUM_BINDINGS; i++)
-	{
-		layout.bindingInfos[i].size = 1;
-		layout.bindingInfos[i].type = BindingType::SeperateImage;
-	}
-	uint32_t stagesForSets[VULKAN_NUM_BINDINGS] = { VK_SHADER_STAGE_ALL };
-	mBindlesDescripterSetAllocatorInt = std::make_unique<VulkanDescriptorSetAllocator>(layout, stagesForSets);
-	for (unsigned i = 0; i < VULKAN_NUM_BINDINGS; i++)
-	{
-		layout.bindingInfos[i].isFloatingPoint = true;
-	}
-	mBindlesDescripterSetAllocatorFloat = std::make_unique<VulkanDescriptorSetAllocator>(layout, stagesForSets);
+	vmaDestroyBuffer(mVMAAllocator, buffer, allocation);
 }

@@ -17,6 +17,7 @@ namespace SingularityEngine::SERenderer
 		void invalidate() override;
 		void bind() override;
 
+		void pushConstant(VkShaderStageFlagBits shaderStage, size_t offset, size_t size, void* data);
 		VkPipeline getVulkanPipeline() { return mPipeline; }
 	private:
 		PipelineSpecification mSpecification;

@@ -424,4 +424,9 @@ namespace SingularityEngine::SERenderer
 		mDescriptorImageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 	}
 
+	VulkanTexture2D::~VulkanTexture2D()
+	{
+
+	}
+
 }

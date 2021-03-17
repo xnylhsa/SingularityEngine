@@ -36,14 +36,17 @@ namespace SingularityEngine::SERenderer
 		void teardown() override;
 		std::shared_ptr<VulkanSampler> getStockSampler(SamplerTypes sampler);
 
-
+		std::pair<VkBuffer, VmaAllocation> requestBuffer(VkBufferUsageFlagBits usage, VkDeviceSize size);
 		VkCommandBuffer getCommandBuffer(bool begin, bool compute = false);
 		//TODO setup command buffer class, then have second version of this function that gets a profiled version.
 		void submit(VkCommandBuffer commandBuffer);
 		void submit(VkCommandBuffer commandBuffer, VkQueue queue);
 		VkImage createImage();
 
+		void* mapBuffer(VmaAllocation* allocation);
+		void unMapBuffer(VmaAllocation* allocation);
 
+		void releaseBuffer(VkBuffer buffer, VmaAllocation allocation);
 	private:
 		struct QueueInfo
 		{
@@ -67,10 +70,7 @@ namespace SingularityEngine::SERenderer
 		bool isExtensionSupported(const char* extensionName, const std::vector<VkExtensionProperties>& availableExtensions);
 		bool selectQueueMatchingDesiredCapabilities(VkPhysicalDevice device);
 
-		void createStockSamplers();
-		void destroyStockSamplers();
 
-		void initBindless();
 
 		bool setPhysicalDeviceInfo();
 		VkPhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
@@ -86,9 +86,9 @@ namespace SingularityEngine::SERenderer
 		bool mSupportsUnboundedArrays;
 		std::array<std::shared_ptr<VulkanSampler>, static_cast<size_t>(SamplerTypes::Count)> mStockSamplers;
 
-		std::unique_ptr<VulkanMemoryAllocator> mAllocator;
-		std::unique_ptr<VulkanDescriptorSetAllocator> mBindlesDescripterSetAllocatorInt;
-		std::unique_ptr<VulkanDescriptorSetAllocator> mBindlesDescripterSetAllocatorFloat;
+		//std::unique_ptr<VulkanMemoryAllocator> mAllocator;
+		//std::unique_ptr<VulkanDescriptorSetAllocator> mBindlesDescripterSetAllocatorInt;
+		//std::unique_ptr<VulkanDescriptorSetAllocator> mBindlesDescripterSetAllocatorFloat;
 
 	};
 }

@@ -10,3 +10,6 @@
 [submodule "External/spdlog"]
 	path = External/spdlog
 	url = https://github.com/xnylhsa/spdlog.git
+[submodule "External/assimp"]
+	path = External/assimp
+	url = https://github.com/assimp/assimp.git

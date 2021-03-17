@@ -33,14 +33,21 @@ namespace SingularityEngine::SERenderer
 
 
 		auto descriptorSetLayouts = shader->getAllDescriptorSetLayouts();
-		auto pushConstantRanges = shader->GetVKPushConstantRanges();
-
+		auto pushConstantRanges = shader->getPushConstantRanges();
+		std::array<VkDescriptorSetLayout, 4> compactedLayouts;
+		int s = 0;
+		for (int i = 0; i < 4; i++) {
+			if (descriptorSetLayouts[i] != VK_NULL_HANDLE) {
+				compactedLayouts[s] = descriptorSetLayouts[i];
+				s++;
+			}
+		}
 
 		VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo = {};
 		pipelineLayoutCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipelineLayoutCreateInfo.pNext = nullptr;
-		pipelineLayoutCreateInfo.setLayoutCount = (uint32_t)descriptorSetLayouts.size();
-		pipelineLayoutCreateInfo.pSetLayouts = descriptorSetLayouts.data();
+		pipelineLayoutCreateInfo.setLayoutCount = s;
+		pipelineLayoutCreateInfo.pSetLayouts = compactedLayouts.data();
 		pipelineLayoutCreateInfo.pushConstantRangeCount = (uint32_t)pushConstantRanges.size();
 		pipelineLayoutCreateInfo.pPushConstantRanges = pushConstantRanges.data();
 
@@ -60,8 +67,8 @@ namespace SingularityEngine::SERenderer
 		VkPipelineRasterizationStateCreateInfo rasterizationState = {};
 		rasterizationState.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		rasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
-		rasterizationState.cullMode = VK_CULL_MODE_NONE;
-		rasterizationState.frontFace = VK_FRONT_FACE_CLOCKWISE;
+		rasterizationState.cullMode = VK_CULL_MODE_BACK_BIT;
+		rasterizationState.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		rasterizationState.depthClampEnable = VK_FALSE;
 		rasterizationState.rasterizerDiscardEnable = VK_FALSE;
 		rasterizationState.depthBiasEnable = VK_FALSE;
@@ -94,11 +101,11 @@ namespace SingularityEngine::SERenderer
 		depthStencilState.depthWriteEnable = VK_TRUE;
 		depthStencilState.depthCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
 		depthStencilState.depthBoundsTestEnable = VK_FALSE;
-		depthStencilState.back.failOp = VK_STENCIL_OP_KEEP;
-		depthStencilState.back.passOp = VK_STENCIL_OP_KEEP;
-		depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
-		depthStencilState.stencilTestEnable = VK_FALSE;
-		depthStencilState.front = depthStencilState.back;
+		//depthStencilState.back.failOp = VK_STENCIL_OP_KEEP;
+		//depthStencilState.back.passOp = VK_STENCIL_OP_KEEP;
+		//depthStencilState.back.compareOp = VK_COMPARE_OP_ALWAYS;
+		//depthStencilState.stencilTestEnable = VK_FALSE;
+		//depthStencilState.front = depthStencilState.back;
 
 		VkPipelineMultisampleStateCreateInfo multisampleState = {};
 		multisampleState.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
@@ -248,5 +255,15 @@ namespace SingularityEngine::SERenderer
 
 		vkCmdBindPipeline(cmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, mPipeline);
 	}
+
+	void VulkanPipeline::pushConstant(VkShaderStageFlagBits shaderStage, size_t offset, size_t size, void* data)
+	{
+		ASSERT(data, "[SERenderer::VulkanPipeline] Invalid Data passed into function.");
+		auto* swapchain = dynamic_cast<VulkanSwapChain*>(Renderer::Get()->getSwapchain());
+		VkCommandBuffer cmdBuffer = swapchain->getCurrentCommandBuffer();
+
+		vkCmdPushConstants(cmdBuffer, mPipelineLayout, shaderStage, (uint32_t)offset, (uint32_t)size, data);
+	}
+
 }
 

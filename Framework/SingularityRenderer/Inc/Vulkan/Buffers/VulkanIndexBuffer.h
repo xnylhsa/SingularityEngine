@@ -1,8 +1,7 @@
 #ifndef SINGULARITY_ENGINE_RENDERER_VULKAN_INDEX_BUFFER
 #define SINGULARITY_ENGINE_RENDERER_VULKAN_INDEX_BUFFER
 #include "RendererAPI/IIndexBuffer.h"
-#include "Vulkan/Memory/VulkanMemoryObject.h"
-
+#include "vulkan/Memory/vk_mem_alloc.h"
 namespace SingularityEngine::SERenderer
 {
 	class VulkanIndexBuffer : public IIndexBuffer
@@ -19,7 +18,7 @@ namespace SingularityEngine::SERenderer
 		size_t mSize;
 		Core::Buffer mData;
 		VkBuffer mBuffer;
-		std::unique_ptr<VulkanMemoryObject> mMemoryObject;
+		VmaAllocation mDeviceMemory;
 	};
 }
 #endif

@@ -18,14 +18,19 @@ protected:
 
 	bool onResize(Core::Event& e);
 	void onUpdate() override;
-
+	struct Camera
+	{
+		Math::Matrix4x4 proj;
+		Math::Matrix4x4 view;
+		Math::Matrix4x4 transform;
+	};
 private:
 	SERenderer::ShaderLibrary mShaderLibrary;
 	std::shared_ptr<SERenderer::IPipeline> mPipeline;
 	Core::Timer timer;
 	std::shared_ptr<SERenderer::IVertexBuffer> mVertexBuffer;
 	std::shared_ptr<SERenderer::IIndexBuffer> mIndexBuffer;
-
+	Camera camera;
 
 };
 

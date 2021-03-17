@@ -42,9 +42,9 @@ namespace SingularityEngine::Core
 #if defined(_DEBUG)
 #define LOG(format, ...)\
     MULTILINE_MACRO_BEGIN\
-        char buffer[4096];\
-        int ret = _snprintf_s(buffer, _countof(buffer), _TRUNCATE, "%s(%d) "##format, __FILE__, __LINE__, __VA_ARGS__);\
-        OutputDebugStringA(buffer);\
+        char charbuffer[4096];\
+        int ret = _snprintf_s(charbuffer, _countof(charbuffer), _TRUNCATE, "%s(%d) "##format, __FILE__, __LINE__, __VA_ARGS__);\
+        OutputDebugStringA(charbuffer);\
         if (ret == -1) OutputDebugStringA("** message truncated **\n");\
         OutputDebugStringA("\n");\
     MULTILINE_MACRO_END

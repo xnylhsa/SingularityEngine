@@ -19,7 +19,6 @@ namespace SingularityEngine::SERenderer
 		virtual ~IPipeline() = default;
 		virtual PipelineSpecification& getSpecification() = 0;
 		virtual const PipelineSpecification& getSpecification() const = 0;
-
 		virtual void invalidate() = 0;
 		virtual void bind() = 0;
 		static std::shared_ptr<IPipeline> Create(PipelineSpecification spec);

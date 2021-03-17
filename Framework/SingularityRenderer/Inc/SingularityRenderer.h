@@ -7,4 +7,5 @@
 #include "RendererAPI/IVertexBuffer.h"
 #include "RendererAPI/VertexTypes.h"
 #include "RendererAPI/renderer.h"
+#include "vulkan/Pipeline/VulkanPipeline.h"
 #endif // 

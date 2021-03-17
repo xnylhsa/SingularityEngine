@@ -1,7 +1,7 @@
 #ifndef SINGULARITY_ENGINE_RENDERER_VULKAN_VERTEX_BUFFER
 #define SINGULARITY_ENGINE_RENDERER_VULKAN_VERTEX_BUFFER
 #include "RendererAPI/IVertexBuffer.h"
-#include "Vulkan/Memory/VulkanMemoryObject.h"
+#include "Vulkan/Memory/vk_mem_alloc.h"
 
 namespace SingularityEngine::SERenderer
 {
@@ -19,7 +19,7 @@ namespace SingularityEngine::SERenderer
 		size_t mCount;
 		Core::Buffer mData;
 		VkBuffer mBuffer;
-		std::unique_ptr<VulkanMemoryObject> mMemoryObject;
+		VmaAllocation mDeviceMemory;
 		VertexBufferUsage mUsage;
 	};
 }

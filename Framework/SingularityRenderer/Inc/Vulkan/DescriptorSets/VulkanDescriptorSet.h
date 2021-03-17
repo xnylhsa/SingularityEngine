@@ -1,84 +1,85 @@
 #ifndef SINGULARITY_ENGINE_VULKAN_DESCRIPTOR_SET
 #define SINGULARITY_ENGINE_VULKAN_DESCRIPTOR_SET
 #include "common.h"
-#include "Vulkan/Texture/VulkanSampler.h"
 namespace SingularityEngine::SERenderer
 {
-	enum class BindingType
-	{
-		None,
-		SampledImage,
-		StorageImage,
-		UniformBuffer,
-		StorageBuffer,
-		SampledBuffer,
-		SeperateImage,
-		Sampler,
-		InputAttachment,
-		Count
-	};
-
-	struct BindingInfo
-	{
-		BindingType type = BindingType::None;
-		uint8_t size = 0;
-		bool isFloatingPoint = false;
-		SamplerTypes sampler = SamplerTypes::Count;
-		bool isImutableSampler = false;
-	};
-
-	struct DescriptorSetLayout
-	{
-		BindingInfo bindingInfos[VULKAN_NUM_BINDINGS] = {};
-	};
-
+	class VulkanDevice;
 	class VulkanDescriptorSetAllocator
 	{
 	public:
-		VulkanDescriptorSetAllocator(const DescriptorSetLayout& layout, const uint32_t* stagesForBinding);
-		~VulkanDescriptorSetAllocator();
-		void operator=(const VulkanDescriptorSetAllocator&) = delete;
-		VulkanDescriptorSetAllocator(const VulkanDescriptorSetAllocator&) = delete;
-		VkDescriptorSetLayout getLayout() { return mSetLayout; }
+		struct PoolSizes
+		{
+			std::vector<std::pair<VkDescriptorType, float>> sizes = 
+			{
+				{VK_DESCRIPTOR_TYPE_SAMPLER, 0.5f},
+				{VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 4.0f},
+				{VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 4.f},
+				{VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1.f},
+				{VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1.f},
+				{VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1.f},
+				{VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 2.f},
+				{VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 2.f},
+				{VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1.f},
+				{VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1.f},
+				{VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 0.5f}
+			};
+		};
 
-		void clear();
-		VkDescriptorSet allocateBindlessSet(VkDescriptorPool pool, size_t numDescriptors);
-		VkDescriptorPool allocateBindlessPool(size_t numSets, size_t numDescriptors);
-
+		void resetPools();
+		bool allocate(VkDescriptorSet* set, VkDescriptorSetLayout layout);
+		void init();
+		void cleanup();
 	private:
-		VkDescriptorSetLayout mSetLayout = VK_NULL_HANDLE;
-		std::unordered_map<uint64_t, VkDescriptorSet> mSets;
-		std::vector<VkDescriptorPoolSize> mPoolSizes;
-
-		std::vector<VkDescriptorPool> mPools;
-		bool mBindless = false;
+		VkDescriptorPool grabPool();
+		VkDescriptorPool createPool(int count, VkDescriptorPoolCreateFlags flags);
+		std::shared_ptr<VulkanDevice> mDevice = nullptr;
+		VkDescriptorPool mCurrentPool = VK_NULL_HANDLE;
+		PoolSizes mDescriptorSizes;
+		std::vector<VkDescriptorPool> mUsedPools;
+		std::vector<VkDescriptorPool> mFreePools;
 	};
 
 
-	class VulkanBindlessDescriptorPool
+	class VulkanDescriptorSetLayoutCache 
 	{
 	public:
-		VulkanBindlessDescriptorPool(VulkanDescriptorSetAllocator* allocator, VkDescriptorPool pool);
-		~VulkanBindlessDescriptorPool();
+		void init();
+		void cleanup();
 
-		void operator=(const VulkanBindlessDescriptorPool & other) = delete;
-		VulkanBindlessDescriptorPool(const VulkanBindlessDescriptorPool& other) = delete;
+		VkDescriptorSetLayout createDescriptorLayout(VkDescriptorSetLayoutCreateInfo* info);
 
-		bool allocateDescriptors(size_t count);
-		VkDescriptorSet getDescriptorSet() const;
-
-		//void setTexture(size_t binding, const ImageView& view);
-		//void setTexture_unorm(size_t binding, const ImageView& view);
-		//void setTexture_srgb(size_t binding, const ImageView& view);
+		struct VulkanDescripterLayoutInfo
+		{
+			std::vector<VkDescriptorSetLayoutBinding> bindings;
+			bool operator==(const VulkanDescripterLayoutInfo& other) const;
+			size_t hash() const;
+		}; 
 	private:
-		VulkanDescriptorSetAllocator* mAllocator;
-		VkDescriptorPool mDescriptorPool;
-		VkDescriptorSet mDescriptorSet;
+		struct VulkanDescriptorLayoutHash
+		{
+			std::size_t operator()(const VulkanDescripterLayoutInfo& k) const {
+				return k.hash();
+			}
+		};
 
-		void setTexture(size_t binding, VkImageView view, VkImageLayout layout);
+		std::unordered_map<VulkanDescripterLayoutInfo, VkDescriptorSetLayout, VulkanDescriptorLayoutHash> mLayoutCache;
+		std::shared_ptr<VulkanDevice> mDevice = nullptr;
 	};
 
-
+	class VulkanDescriptorBuilder
+	{
+	public:
+		static VulkanDescriptorBuilder begin(VulkanDescriptorSetLayoutCache* layoutCache, VulkanDescriptorSetAllocator* allocator);
+		VulkanDescriptorBuilder& bindBuffer(uint32_t binding, VkDescriptorBufferInfo* bufferInfo, VkDescriptorType type, VkShaderStageFlags stageFlags);
+		VulkanDescriptorBuilder& bindImage(uint32_t binding, VkDescriptorImageInfo* bufferInfo, VkDescriptorType type, VkShaderStageFlags stageFlags);
+		bool build(VkDescriptorSet& set, VkDescriptorSetLayout& layout);
+		bool build(VkDescriptorSet& set);
+	private:
+		std::vector<VkWriteDescriptorSet> mWrites;
+		std::vector<VkDescriptorSetLayoutBinding> mbindings;
+		VulkanDescriptorSetLayoutCache* mCache;
+		VulkanDescriptorSetAllocator* mAllocator;
+	};
 
 }
 
